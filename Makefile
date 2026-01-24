@@ -1,0 +1,67 @@
+# **************************************************************************** #
+#                                   CUB3D                                      #
+# **************************************************************************** #
+
+NAME		= cub3D
+CC			= cc
+CFLAGS		= -Wall -Wextra -Werror
+RM			= rm -f
+
+# Libraries
+LIBFT_DIR	= ./libft
+LIBFT		= $(LIBFT_DIR)/libft.a
+# adjust MLX flags
+MLX_FLAGS	= -lmlx -lXext -lX11 -lm
+
+# Folders and Files
+SRC_DIR		= src
+OBJ_DIR		= obj
+INC_DIR		= inc
+
+SRCS		= $(SRC_DIR)/main.c \
+			$(SRC_DIR)/parsing/parser.c \
+			$(SRC_DIR)/parsing/map_check.c \
+			$(SRC_DIR)/engine/raycaster.c \
+			$(SRC_DIR)/engine/render.c \
+			$(SRC_DIR)/utils/error_handling.c
+
+OBJS		$(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
+
+# Terminal colors
+GREEN		= \033[0;32m
+RESET		= \033[0m
+
+# Main Rules
+all: $(NAME)
+
+$(NAME): $(LIBFT) $(OBJS)
+	@$(CC) $(CFLAGS) $(OBJS) $(LIBFT) $(MLX_FLAGS) -o $(NAME)
+	@echo "$(GREEN)cub3D compiled successfully!$(RESET)"
+
+# Libft Compilation 
+$(LIBFT):
+	@make -C $(LIBFT_DIR)
+
+# Rule for objects
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
+	@mkdir -p $(dir $@)
+	@$(CC) $(CFLAGS) -I$(INC_DIR) -I$(LIBFT_DIR) -c $< -o $@
+
+# Cleanup
+clean:
+	@$(RM) -r $(OBJ_DIR)
+	@make -C $(LIBFT_DIR) clean
+	@echo "Objects removed."
+
+fclean: clean
+	@$(RM) $(NAME)
+	@make -C $(LIBFT_DIR) fclean
+	@echo "Executable and libraries removed."
+
+re: fclean all
+
+# Bonus Rule [cite: 38]
+bonus: all
+	@echo "$(GREEN)Bonus included (if implemented in _bonus.c files)$(RESET)"
+
+.PHONY: all clean fclean re bonus
