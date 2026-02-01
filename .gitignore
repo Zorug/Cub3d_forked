@@ -1,0 +1,6 @@
+.build
+libft.a
+*.out
+.vscode
+cub3D
+*.txt
