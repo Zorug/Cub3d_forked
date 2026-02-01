@@ -3,6 +3,10 @@
 # **************************************************************************** #
 
 NAME		= cub3D
+
+#==============================================================================#
+#                              COMPILER & FLAGS                                #
+#==============================================================================#
 CC			= cc
 CFLAGS		= -Wall -Wextra -Werror
 RM			= rm -f
@@ -13,24 +17,35 @@ LIBFT		= $(LIBFT_DIR)/libft.a
 # adjust MLX flags
 MLX_FLAGS	= -lmlx -lXext -lX11 -lm
 
+#==============================================================================#
+#                                    PATHS                                     #
+#==============================================================================#
 # Folders and Files
 SRC_DIR		= src
 OBJ_DIR		= obj
 INC_DIR		= inc
 
 SRCS		= $(SRC_DIR)/main.c \
-			$(SRC_DIR)/parsing/parser.c \
-			$(SRC_DIR)/parsing/map_check.c \
-			$(SRC_DIR)/engine/raycaster.c \
-			$(SRC_DIR)/engine/render.c \
-			$(SRC_DIR)/utils/error_handling.c
+			#$(SRC_DIR)/parsing/parser.c \
+			#$(SRC_DIR)/parsing/map_check.c \
+			#$(SRC_DIR)/engine/raycaster.c \
+			#$(SRC_DIR)/engine/render.c \
+			#$(SRC_DIR)/utils/error_handling.c
 
-OBJS		$(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
+#FILES			= 	main.c \
+
+#SRCS			= 	$(addprefix $(SRC_PATH)/, $(FILES)) \
+					#$(addprefix $(SRC_PATH)/builtins/, $(BUILTINS))
+
+OBJS		= $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 
 # Terminal colors
 GREEN		= \033[0;32m
 RESET		= \033[0m
 
+#==============================================================================#
+#                                  RULES                                       #
+#==============================================================================#
 # Main Rules
 all: $(NAME)
 
