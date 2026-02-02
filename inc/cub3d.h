@@ -2,7 +2,8 @@
 # define CUB3D_H
 
 # include "../libft/libft.h"
-# include <mlx.h>
+//# include <mlx.h>
+# include "../minilibx-linux/mlx.h"
 # include <math.h>
 # include <fcntl.h>
 # include <stdio.h>
@@ -19,7 +20,7 @@
 # define KEY_ESC 65307
 
 /* --- Image Structures (MLX) --- */
-typedef struct s_img {
+/*typedef struct s_img {
 	void	*img;
 	char	*addr;
 	int		bits_per_pixel;
@@ -27,16 +28,16 @@ typedef struct s_img {
 	int		endian;
 	int		width;
 	int		height;
-}	t_img;
+}	t_img;*/
 
 /* --- Main Structure --- */
-typedef struct s_data {
-	/* MLX and Window (Person A) */
+/*typedef struct s_data {
+	// MLX and Window (Person A)
 	void	*mlx;
 	void	*win;
 	t_img	screen;
 
-	/* Parsing Data (Person B) */
+	// Parsing Data (Person B)
 	char	**map;				// Map matrix
 	char	*tex_path[4];		// Paths NO, SO, WE, EA [cite: 141]
 	t_img	tex[4];				// Loaded textures
@@ -45,24 +46,25 @@ typedef struct s_data {
 	int		map_width;
 	int		map_height;
 
-	/* Player State (Person A) */
+	// Player State (Person A)
 	double	posX;				// Initial X coordinate
 	double	posY;				// Initial Y coordinate
 	double	dirX;				// Direction vector
 	double	dirY;
 	double	planeX;				// Camera plane (for FOV)
 	double	planeY;
-}	t_data;
+}	t_data;*/
 
-/* --- Prototypes: Parsing (Person B) --- */
+/*
+// --- Prototypes: Parsing (Person B) --- 
 int		init_parser(t_data *data, char *file_path);
 int		validate_map(t_data *data);
 void	parse_error(char *message);	// Must print "Error\n" [cite: 190]
 
-/* --- Prototypes: Graphics Engine (Person A) --- */
+// --- Prototypes: Graphics Engine (Person A) --- 
 int		init_window(t_data *data);
 void	start_raycasting(t_data *data);
 int		handle_keys(int keycode, t_data *data);
-int		close_game(t_data *data);
+int		close_game(t_data *data);*/
 
 #endif
