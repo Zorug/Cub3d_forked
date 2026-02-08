@@ -16,6 +16,7 @@ LIBFT_DIR	= ./libft
 LIBFT		= $(LIBFT_DIR)/libft.a
 # adjust MLX flags
 MLX_FLAGS	= -lmlx -lXext -lX11 -lm
+#MLX_FLAGS	= -L minilibx-linux -lmlx -lXext -lX11 -lm
 
 #==============================================================================#
 #                                    PATHS                                     #
@@ -50,7 +51,8 @@ RESET		= \033[0m
 all: $(NAME)
 
 $(NAME): $(LIBFT) $(OBJS)
-	@$(CC) $(CFLAGS) $(OBJS) $(LIBFT) $(MLX_FLAGS) -o $(NAME)
+	#@$(CC) $(CFLAGS) $(OBJS) $(LIBFT) $(MLX_FLAGS) -o $(NAME)
+	@$(CC) $(OBJS) $(LIBFT) $(MLX_FLAGS) -o $(NAME)
 	@echo "$(GREEN)cub3D compiled successfully!$(RESET)"
 
 # Libft Compilation 
@@ -60,7 +62,8 @@ $(LIBFT):
 # Rule for objects
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 	@mkdir -p $(dir $@)
-	@$(CC) $(CFLAGS) -I$(INC_DIR) -I$(LIBFT_DIR) -c $< -o $@
+	#@$(CC) $(CFLAGS) -I$(INC_DIR) -I$(LIBFT_DIR) -c $< -o $@
+	@$(CC) -I$(INC_DIR) -I$(LIBFT_DIR) -c $< -o $@
 
 # Cleanup
 clean:
