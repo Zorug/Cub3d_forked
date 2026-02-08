@@ -6,72 +6,79 @@
 /*   By: cgross-s <cgross-s@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/01 17:42:29 by cgross-s          #+#    #+#             */
-/*   Updated: 2026/02/02 23:26:49 by cgross-s         ###   ########.fr       */
+/*   Updated: 2026/02/08 18:26:06 by cgross-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/cub3d.h"
-
-/*int	deal_key(int key, void *param)
-{
-	ft_putchar('X');
-	return (0);
-}*/
-
-/*int	handle_close(t_data *data)
-{
-	if (!data)
-		return (0);
-//	free_resources(data);
-	exit (0);
-	return (0);
-}*/
-
-/*int	main()
-{
-	void	*mlx_ptr;
-	void	*win_ptr;
-
-	mlx_ptr = mlx_init();
-	win_ptr = mlx_new_window(mlx_ptr, 500, 500, "mlx 42");
-	mlx_pixel_put(mlx_ptr, win_ptr, 250, 250, 0xFFFFFF);
-	mlx_key_hook(win_ptr, deal_key, (void *)0);
-	//tentar fechar
-	//mlx_hook(win_ptr, 17, 0, handle_close);
-	mlx_loop(mlx_ptr);
-}*/
-
-//#include <mlx.h>
+#define KEY_ESC 65307 //tecla esc
 
 typedef struct	s_data {
-	void	*img;
-	char	*addr;
-	int		bits_per_pixel;
-	int		line_length;
-	int		endian;
+	void	*img; // Ponteiro opaco da MLX para a imagem
+	char	*addr; // Endereço real da memória dos pixels
+	int		bits_per_pixel; // Quantos bits cada pixel ocupa (normalmente 32)
+	int		line_length; // Quantos bytes existem em uma linha
+	int		endian; // Ordem dos bytes (quase sempre 0 no Linux)
 }				t_data;
 
 void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
 {
 	char	*dst;
 
-	dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
-	*(unsigned int*)dst = color;
+	dst = data->addr // começo da imagem na memória
+		+ (y * data->line_length) // pula y linhas
+		+ (x * (data->bits_per_pixel / 8)); //pula x pixels na linha
+	*(unsigned int*)dst = color; // Escreve a cor diretamente na memória
+}
+
+// fechar clicando no x
+int	close_window(void *param)
+{
+	(void)param;
+	exit(0);
+	return (0);
+}
+
+// Ao apertar esc sair
+int	key_hook(int keycode, void *param)
+{
+	if (keycode == KEY_ESC)
+		exit(0);
+	return (0);
 }
 
 int	main(void)
 {
-	void	*mlx;
-	void	*mlx_win;
-	t_data	img;
+	void	*mlx; // conexão com o servidor gráfico
+	void	*mlx_win; // janela
+	t_data	img; // imagem (buffer de pixels)
 
-	mlx = mlx_init();
-	mlx_win = mlx_new_window(mlx, 1920, 1080, "Hello world!");
-	img.img = mlx_new_image(mlx, 1920, 1080);
-	img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length,
-								&img.endian);
-	my_mlx_pixel_put(&img, 5, 5, 0x00FF0000);
+	mlx = mlx_init(); // Conecta ao X11. Sem isso, nada funciona
+	// Cria uma janela vazia
+	mlx_win = mlx_new_window(mlx, 800, 600, "Hello world!");
+	// Cria um buffer de pixels na memória. Ainda não sabemos onde ele está
+	img.img = mlx_new_image(mlx, 800, 600);
+	// img.addr aponta para a memória real
+	// Você pode manipular pixel por pixel
+	// Sem isso, não dá pra desenhar manualmente.
+	img.addr = mlx_get_data_addr(img.img, 
+		&img.bits_per_pixel, &img.line_length, &img.endian);
+	// Desenha um pixel vermelho. Coordenada (10,10)
+	my_mlx_pixel_put(&img, 10, 10, 0x00FF0000);
+	//A imagem vira visível. Copia o buffer para a janela
 	mlx_put_image_to_window(mlx, mlx_win, img.img, 0, 0);
+	// fechar clicando no x
+	mlx_hook(mlx_win, 17, 0, close_window, NULL);
+	// ao apertar esc sai
+	mlx_key_hook(mlx_win, key_hook, NULL);
+	// Mantém a janela aberta. Escuta eventos. Sem isso, o programa fecha imediatamente
 	mlx_loop(mlx);
 }
 
+/*
+[ RAM ] ---> imagem (pixels)
+   |
+   |  mlx_put_image_to_window
+   v
+[ JANELA ]
+*/
