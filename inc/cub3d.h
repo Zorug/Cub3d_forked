@@ -20,7 +20,7 @@
 # define KEY_ESC 65307
 
 /* --- Image Structures (MLX) --- */
-/*typedef struct s_img {
+typedef struct s_img {
 	void	*img;
 	char	*addr;
 	int		bits_per_pixel;
@@ -28,15 +28,17 @@
 	int		endian;
 	int		width;
 	int		height;
-}	t_img;*/
+}	t_img;
 
 /* --- Main Structure --- */
-/*typedef struct s_data {
+typedef struct s_data {
 	// MLX and Window (Person A)
 	void	*mlx;
 	void	*win;
-	t_img	screen;
+//	t_img	screen;
+	t_img	img;
 
+/*
 	// Parsing Data (Person B)
 	char	**map;				// Map matrix
 	char	*tex_path[4];		// Paths NO, SO, WE, EA [cite: 141]
@@ -52,8 +54,8 @@
 	double	dirX;				// Direction vector
 	double	dirY;
 	double	planeX;				// Camera plane (for FOV)
-	double	planeY;
-}	t_data;*/
+	double	planeY;*/
+}	t_data;
 
 /*
 // --- Prototypes: Parsing (Person B) --- 

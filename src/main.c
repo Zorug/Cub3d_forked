@@ -6,50 +6,11 @@
 /*   By: cgross-s <cgross-s@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/01 17:42:29 by cgross-s          #+#    #+#             */
-/*   Updated: 2026/02/08 18:54:37 by cgross-s         ###   ########.fr       */
+/*   Updated: 2026/02/08 19:05:46 by cgross-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/cub3d.h"
-#define KEY_ESC 65307 //tecla esc
-
-/*
-typedef struct	s_data {
-	void	*img; // Ponteiro opaco da MLX para a imagem
-	char	*addr; // Endereço real da memória dos pixels
-	int		bits_per_pixel; // Quantos bits cada pixel ocupa (normalmente 32)
-	int		line_length; // Quantos bytes existem em uma linha
-	int		endian; // Ordem dos bytes (quase sempre 0 no Linux)
-}				t_data;*/
-
-typedef struct s_img
-{
-	void	*img;
-	char	*addr;
-	int		bits_per_pixel;
-	int		line_length;
-	int		endian;
-	int		width;
-	int		height;
-}	t_img;
-
-typedef struct s_data
-{
-	void	*mlx;
-	void	*win;
-	t_img	img;
-}	t_data;
-
-
-/*void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
-{
-	char	*dst;
-
-	dst = data->addr // começo da imagem na memória
-		+ (y * data->line_length) // pula y linhas
-		+ (x * (data->bits_per_pixel / 8)); //pula x pixels na linha
-	*(unsigned int*)dst = color; // Escreve a cor diretamente na memória
-}*/
 
 void	my_mlx_pixel_put(t_img *img, int x, int y, int color)
 {
@@ -60,27 +21,6 @@ void	my_mlx_pixel_put(t_img *img, int x, int y, int color)
 		+ (x * (img->bits_per_pixel / 8));
 	*(unsigned int *)dst = color;
 }
-
-
-/*
-//liberar as memórias do minilibx
-int	close_window(t_data *data)
-{
-	mlx_destroy_image(data->mlx, data->img.img);
-	mlx_destroy_window(data->mlx, data->win);
-	mlx_destroy_display(data->mlx);
-	free(data->mlx);
-	exit(0);
-}*/
-
-
-// fechar clicando no x
-/*int	close_window(void *param)
-{
-	(void)param;
-	exit(0);
-	return (0);
-}*/
 
 int	close_window(t_data *data)
 {
@@ -100,15 +40,6 @@ int	close_window(t_data *data)
 	return (0);
 }
 
-// Ao apertar esc sair
-/*
-int	key_hook(int keycode, void *param)
-{
-	if (keycode == KEY_ESC)
-		exit(0);
-	return (0);
-}*/
-
 int	key_hook(int keycode, t_data *data)
 {
 	if (keycode == KEY_ESC)
@@ -118,9 +49,6 @@ int	key_hook(int keycode, t_data *data)
 
 int	main(void)
 {
-	//void	*mlx; // conexão com o servidor gráfico
-	//void	*mlx_win; // janela
-	//t_data	img; // imagem (buffer de pixels)
 	t_data	data;
 
 	data.mlx = mlx_init(); // Conecta ao X11. Sem isso, nada funciona
