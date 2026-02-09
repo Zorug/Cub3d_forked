@@ -27,9 +27,9 @@ OBJ_DIR		= obj
 INC_DIR		= inc
 
 SRCS		= $(SRC_DIR)/main.c \
-			#$(SRC_DIR)/parsing/parser.c \
-			#$(SRC_DIR)/parsing/map_check.c \
-			#$(SRC_DIR)/engine/raycaster.c \
+			$(SRC_DIR)/leaks.c \
+			$(SRC_DIR)/hooks.c \
+			$(SRC_DIR)/utils.c \
 			#$(SRC_DIR)/engine/render.c \
 			#$(SRC_DIR)/utils/error_handling.c
 
