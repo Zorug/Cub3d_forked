@@ -19,6 +19,28 @@
 # define KEY_RIGHT 65363
 # define KEY_ESC 65307
 
+/*colors*/
+# define RED 0x00FF0000
+# define COLOR_RED     0x00FF0000
+# define COLOR_GREEN   0x0000FF00
+# define COLOR_BLUE    0x000000FF
+# define COLOR_WHITE   0x00FFFFFF
+# define COLOR_BLACK   0x00000000
+
+/*
+typedef enum e_color
+{
+	COLOR_BLACK   = 0x00000000,
+	COLOR_WHITE   = 0x00FFFFFF,
+	COLOR_RED     = 0x00FF0000,
+	COLOR_GREEN   = 0x0000FF00,
+	COLOR_BLUE    = 0x000000FF,
+	COLOR_YELLOW  = 0x00FFFF00,
+	COLOR_CYAN    = 0x0000FFFF,
+	COLOR_MAGENTA = 0x00FF00FF
+}	t_color;
+*/
+
 /* --- Image Structures (MLX) --- */
 typedef struct s_img {
 	void	*img;
@@ -35,8 +57,8 @@ typedef struct s_data {
 	// MLX and Window (Person A)
 	void	*mlx;
 	void	*win;
-//	t_img	screen;
-	t_img	img;
+	t_img	screen;
+//	t_img	img;
 
 /*
 	// Parsing Data (Person B)
@@ -46,15 +68,15 @@ typedef struct s_data {
 	int		floor_color;		// Floor color in Hexadecimal [cite: 161]
 	int		ceiling_color;		// Ceiling color in Hexadecimal [cite: 168]
 	int		map_width;
-	int		map_height;
+	int		map_height;*/
 
 	// Player State (Person A)
 	double	posX;				// Initial X coordinate
 	double	posY;				// Initial Y coordinate
-	double	dirX;				// Direction vector
-	double	dirY;
-	double	planeX;				// Camera plane (for FOV)
-	double	planeY;*/
+	//double	dirX;				// Direction vector
+	//double	dirY;
+	//double	planeX;				// Camera plane (for FOV)
+	//double	planeY;
 }	t_data;
 
 /*
@@ -68,5 +90,12 @@ int		init_window(t_data *data);
 void	start_raycasting(t_data *data);
 int		handle_keys(int keycode, t_data *data);
 int		close_game(t_data *data);*/
+
+/*hooks.c*/
+int	close_window(t_data *data);
+int	key_hook(int keycode, t_data *data);
+
+/*utils.c*/
+void	my_mlx_pixel_put(t_img *img, int x, int y, int color);
 
 #endif
