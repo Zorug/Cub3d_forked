@@ -6,7 +6,7 @@
 /*   By: cgross-s <cgross-s@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/01 17:42:29 by cgross-s          #+#    #+#             */
-/*   Updated: 2026/02/09 23:18:48 by cgross-s         ###   ########.fr       */
+/*   Updated: 2026/02/09 23:26:26 by cgross-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,15 +45,51 @@ void	clear_screen(t_img *img)
 	mlx_put_image_to_window(data->mlx, data->win, data->screen.img, 0, 0);
 }*/
 
+void	draw_circle(t_img *img, int cx, int cy, int radius, int color)
+{
+	int	x;
+	int	y;
+	int	dx;
+	int	dy;
+
+	y = -radius;
+	while (y <= radius)
+	{
+		x = -radius;
+		while (x <= radius)
+		{
+			dx = x;
+			dy = y;
+			if (dx * dx + dy * dy <= radius * radius)
+			{
+				if (cx + x >= 0 && cx + x < img->width
+					&& cy + y >= 0 && cy + y < img->height)
+					my_mlx_pixel_put(img, cx + x, cy + y, color);
+			}
+			x++;
+		}
+		y++;
+	}
+}
+
+
 int	render(t_data *data)
 {
 	clear_screen(&data->screen);
 
-	// teste visual: ponto andando sozinho
+/*	// teste visual: ponto andando sozinho
 	my_mlx_pixel_put(&data->screen,
 		(int)data->posX,
 		(int)data->posY,
-		COLOR_RED);
+		COLOR_RED);*/
+
+	draw_circle(
+		&data->screen,
+		(int)data->posX,
+		(int)data->posY,
+		10,
+		COLOR_RED
+	);
 
 	mlx_put_image_to_window(
 		data->mlx,
