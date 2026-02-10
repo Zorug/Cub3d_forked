@@ -6,7 +6,7 @@
 /*   By: cgross-s <cgross-s@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/01 17:42:29 by cgross-s          #+#    #+#             */
-/*   Updated: 2026/02/09 23:26:26 by cgross-s         ###   ########.fr       */
+/*   Updated: 2026/02/10 21:19:14 by cgross-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,16 +72,46 @@ void	draw_circle(t_img *img, int cx, int cy, int radius, int color)
 	}
 }
 
+void	draw_line(t_img *img,
+	int x0, int y0, int x1, int y1, int color)
+{
+	int	dx;
+	int	dy;
+	int	steps;
+	float	x;
+	float	y;
+	float	x_inc;
+	float	y_inc;
+	int	i;
 
-int	render(t_data *data)
+	dx = x1 - x0;
+	dy = y1 - y0;
+	steps = abs(dx) > abs(dy) ? abs(dx) : abs(dy);
+	x_inc = dx / (float)steps;
+	y_inc = dy / (float)steps;
+	x = x0;
+	y = y0;
+	i = 0;
+	while (i <= steps)
+	{
+		if (x >= 0 && x < img->width && y >= 0 && y < img->height)
+			my_mlx_pixel_put(img, (int)x, (int)y, color);
+		x += x_inc;
+		y += y_inc;
+		i++;
+	}
+}
+
+
+/*int	render(t_data *data)
 {
 	clear_screen(&data->screen);
 
-/*	// teste visual: ponto andando sozinho
-	my_mlx_pixel_put(&data->screen,
-		(int)data->posX,
-		(int)data->posY,
-		COLOR_RED);*/
+	// teste visual: ponto andando sozinho
+	//my_mlx_pixel_put(&data->screen,
+	//	(int)data->posX,
+	//	(int)data->posY,
+	//	COLOR_RED);
 
 	draw_circle(
 		&data->screen,
@@ -99,7 +129,53 @@ int	render(t_data *data)
 		0);
 
 	return (0);
+}*/
+
+int	render(t_data *data)
+{
+	int	line_len;
+	int	end_x;
+	int	end_y;
+
+	clear_screen(&data->screen);
+
+	// círculo = player
+	draw_circle(
+		&data->screen,
+		(int)data->posX,
+		(int)data->posY,
+		10,
+		COLOR_RED
+	);
+
+	// vetor de direção
+	line_len = 40;
+	data->dirX = cos(data->angle);
+	data->dirY = sin(data->angle);
+
+	end_x = data->posX + data->dirX * line_len;
+	end_y = data->posY + data->dirY * line_len;
+
+	draw_line(
+		&data->screen,
+		data->posX,
+		data->posY,
+		end_x,
+		end_y,
+		COLOR_GREEN
+	);
+
+	mlx_put_image_to_window(
+		data->mlx,
+		data->win,
+		data->screen.img,
+		0,
+		0
+	);
+
+	return (0);
 }
+
 
 int	main(void)
 {
@@ -110,6 +186,7 @@ int	main(void)
 	// Cria uma janela vazia
 	data.screen.width = 800;
 	data.screen.height = 600;
+
 	data.win = mlx_new_window(data.mlx,
 		data.screen.width, data.screen.height, "CUB3D");
 	// Cria um buffer de pixels na memória. Ainda não sabemos onde ele está
@@ -126,6 +203,12 @@ int	main(void)
 	//my_mlx_pixel_put(&data.screen, 10, 10, RED);
 	data.posX = 400;
 	data.posY = 300;
+
+	// vetor
+	data.angle = 0; // olhando para a direita
+	data.dirX = cos(data.angle);
+	data.dirY = sin(data.angle);
+
 	//my_mlx_pixel_put(&data.screen, data.posX, data.posY, RED);
 	
 	//A imagem vira visível. Copia o buffer para a janela

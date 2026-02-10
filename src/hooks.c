@@ -6,7 +6,7 @@
 /*   By: cgross-s <cgross-s@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/08 21:32:20 by cgross-s          #+#    #+#             */
-/*   Updated: 2026/02/09 23:08:23 by cgross-s         ###   ########.fr       */
+/*   Updated: 2026/02/10 21:30:10 by cgross-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,27 +31,38 @@ int	close_window(t_data *data)
 	return (0);
 }
 
-/*
-// verify esc
 int	key_hook(int keycode, t_data *data)
 {
-	if (keycode == KEY_ESC)
-		close_window(data);
-	return (0);
-}*/
+	double	speed;
 
-int	key_hook(int keycode, t_data *data)
-{
+	speed = 5.0;
+
 	if (keycode == KEY_W)
-		data->posY -= 10;
+	{
+		data->posX += data->dirX * speed;
+		data->posY += data->dirY * speed;
+	}
 	if (keycode == KEY_S)
-		data->posY += 10;
+	{
+		data->posX -= data->dirX * speed;
+		data->posY -= data->dirY * speed;
+	}
 	if (keycode == KEY_A)
-		data->posX -= 10;
+	{
+		data->posX += data->dirY * speed;
+		data->posY -= data->dirX * speed;
+	}
 	if (keycode == KEY_D)
-		data->posX += 10;
+	{
+		data->posX -= data->dirY * speed;
+		data->posY += data->dirX * speed;
+	}
+	if (keycode == KEY_LEFT)
+		data->angle -= 0.1;
+	if (keycode == KEY_RIGHT)
+		data->angle += 0.1;
 	if (keycode == KEY_ESC)
 		close_window(data);
-	//render(data);
+
 	return (0);
 }

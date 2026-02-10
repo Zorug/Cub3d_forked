@@ -73,8 +73,11 @@ typedef struct s_data {
 	// Player State (Person A)
 	double	posX;				// Initial X coordinate
 	double	posY;				// Initial Y coordinate
-	//double	dirX;				// Direction vector
-	//double	dirY;
+	
+	double	dirX;				// Direction vector
+	double	dirY;
+	double	angle;   // ângulo do player em radianos
+
 	//double	planeX;				// Camera plane (for FOV)
 	//double	planeY;
 }	t_data;
