@@ -6,11 +6,28 @@
 /*   By: cgross-s <cgross-s@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/01 17:42:29 by cgross-s          #+#    #+#             */
-/*   Updated: 2026/02/11 22:55:21 by cgross-s         ###   ########.fr       */
+/*   Updated: 2026/02/12 23:17:55 by cgross-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/cub3d.h"
+
+# define TILE_SIZE 40
+
+static char *test_map[] = {
+	"1111111111",
+	"1000000001",
+	"1000000001",
+	"1000000001",
+	"1001000001",
+	"1001110101",
+	"1000010101",
+	"1000010101",
+	"1000000001",
+	"1111111111",
+	NULL
+};
+
 
 /*void	clear_screen(t_img *img)
 {
@@ -80,6 +97,24 @@ void	draw_circle(t_img *img, int cx, int cy, int radius, int color)
 	}
 }
 
+void	draw_square(t_img *img, int x, int y, int size, int color)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	while (i < size)
+	{
+		j = 0;
+		while (j < size)
+		{
+			my_mlx_pixel_put(img, x + j, y + i, color);
+			j++;
+		}
+		i++;
+	}
+}
+
 void	draw_line(t_img *img,
 	int x0, int y0, int x1, int y1, int color)
 {
@@ -120,6 +155,35 @@ void	draw_line(t_img *img,
 		x += x_inc;
 		y += y_inc;
 		i++;
+	}
+}
+
+void	draw_map(t_data *data)
+{
+	int	x;
+	int	y;
+
+	y = 0;
+	while (y < data->map_height)
+	{
+		x = 0;
+		while (x < data->map_width)
+		{
+			if (data->map[y][x] == '1')
+				draw_square(&data->screen,
+					x * TILE_SIZE,
+					y * TILE_SIZE,
+					TILE_SIZE,
+					COLOR_WHITE);
+			else
+				draw_square(&data->screen,
+					x * TILE_SIZE,
+					y * TILE_SIZE,
+					TILE_SIZE,
+					0x00222222);
+			x++;
+		}
+		y++;
 	}
 }
 
@@ -180,6 +244,9 @@ int	render(t_data *data)
 
 	clear_screen(&data->screen);
 
+	//desenha o mapa
+	draw_map(data);
+
 	// Atualiza vetor principal
 	data->dirX = cos(data->angle);
 	data->dirY = sin(data->angle);
@@ -234,6 +301,28 @@ int	render(t_data *data)
 	return (0);
 }
 
+/*int	render(t_data *data)
+{
+	clear_screen(&data->screen);
+
+	draw_map(data);
+
+	draw_circle(&data->screen,
+		data->posX,
+		data->posY,
+		10,
+		COLOR_RED);
+
+	mlx_put_image_to_window(data->mlx,
+		data->win,
+		data->screen.img,
+		0,
+		0);
+
+	return (0);
+}*/
+
+
 int	main(void)
 {
 	t_data	data;
@@ -259,6 +348,11 @@ int	main(void)
 	// Initial position of the player in the map
 	data.posX = 400;
 	data.posY = 300;
+
+	// mapa
+	data.map = test_map;
+	data.map_height = 10;
+	data.map_width = 10;
 
 	// vetor
 	data.angle = 0; // olhando para a direita

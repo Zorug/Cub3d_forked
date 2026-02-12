@@ -80,6 +80,12 @@ typedef struct s_data {
 	double	fov;	// player FOV angle (rad)
 	//double	planeX;				// Camera plane (for FOV)
 	//double	planeY;
+
+	// relativo ao mapa
+	char	**map;
+	int		map_width;
+	int		map_height;
+
 }	t_data;
 
 /*
