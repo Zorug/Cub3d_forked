@@ -6,13 +6,13 @@
 /*   By: cgross-s <cgross-s@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/01 17:42:29 by cgross-s          #+#    #+#             */
-/*   Updated: 2026/02/15 16:24:56 by cgross-s         ###   ########.fr       */
+/*   Updated: 2026/02/15 16:56:51 by cgross-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/cub3d.h"
 
-# define TILE_SIZE 40
+# define TILE_SIZE 40 // size of a square
 
 static char *test_map[] = {
 	"1111111111",

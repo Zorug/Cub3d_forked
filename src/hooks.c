@@ -6,7 +6,7 @@
 /*   By: cgross-s <cgross-s@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/08 21:32:20 by cgross-s          #+#    #+#             */
-/*   Updated: 2026/02/15 15:49:41 by cgross-s         ###   ########.fr       */
+/*   Updated: 2026/02/15 17:01:28 by cgross-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,12 +31,8 @@ int	close_window(t_data *data)
 	return (0);
 }
 
-int	key_hook(int keycode, t_data *data)
+/*int	key_hook(int keycode, t_data *data)
 {
-	//double	speed;
-
-	//speed = 5.0;
-
 	if (keycode == KEY_W)
 	{
 		data->posX += data->dirX * data->move_speed;
@@ -57,6 +53,76 @@ int	key_hook(int keycode, t_data *data)
 		data->posX -= data->dirY * data->move_speed;
 		data->posY += data->dirX * data->move_speed;
 	}
+	if (keycode == KEY_LEFT)
+		data->angle -= data->rot_speed;
+	if (keycode == KEY_RIGHT)
+		data->angle += data->rot_speed;
+	if (keycode == KEY_ESC)
+		close_window(data);
+
+	return (0);
+}*/
+
+static int	is_walkable(t_data *data, double x, double y)
+{
+	if (x < 0 || y < 0)
+		return (0);
+	if (x >= data->map_width || y >= data->map_height)
+		return (0);
+	if (data->map[(int)y][(int)x] == '1')
+		return (0);
+	return (1);
+}
+
+int	key_hook(int keycode, t_data *data)
+{
+	double	newX;
+	double	newY;
+
+	if (keycode == KEY_W)
+	{
+		newX = data->posX + data->dirX * data->move_speed;
+		newY = data->posY + data->dirY * data->move_speed;
+
+		if (is_walkable(data, newX, data->posY))
+			data->posX = newX;
+		if (is_walkable(data, data->posX, newY))
+			data->posY = newY;
+	}
+
+	if (keycode == KEY_S)
+	{
+		newX = data->posX - data->dirX * data->move_speed;
+		newY = data->posY - data->dirY * data->move_speed;
+
+		if (is_walkable(data, newX, data->posY))
+			data->posX = newX;
+		if (is_walkable(data, data->posX, newY))
+			data->posY = newY;
+	}
+
+	if (keycode == KEY_A) // strafe esquerda
+	{
+		newX = data->posX + data->dirY * data->move_speed;
+		newY = data->posY - data->dirX * data->move_speed;
+
+		if (is_walkable(data, newX, data->posY))
+			data->posX = newX;
+		if (is_walkable(data, data->posX, newY))
+			data->posY = newY;
+	}
+
+	if (keycode == KEY_D) // strafe direita
+	{
+		newX = data->posX - data->dirY * data->move_speed;
+		newY = data->posY + data->dirX * data->move_speed;
+
+		if (is_walkable(data, newX, data->posY))
+			data->posX = newX;
+		if (is_walkable(data, data->posX, newY))
+			data->posY = newY;
+	}
+
 	if (keycode == KEY_LEFT)
 		data->angle -= data->rot_speed;
 	if (keycode == KEY_RIGHT)
