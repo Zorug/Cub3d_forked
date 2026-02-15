@@ -117,5 +117,6 @@ int	key_hook(int keycode, t_data *data);
 
 /* utils.c */
 void	my_mlx_pixel_put(t_img *img, int x, int y, int color);
+void	clear_screen(t_img *img);
 
 #endif
