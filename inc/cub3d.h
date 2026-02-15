@@ -104,11 +104,43 @@ void	start_raycasting(t_data *data);
 int		handle_keys(int keycode, t_data *data);
 int		close_game(t_data *data);*/
 
+/* Estruturas geométricas */
+typedef struct s_point
+{
+	int	x;
+	int	y;
+}	t_point;
+
+typedef struct s_circle
+{
+	t_point	center;
+	int		radius;
+	int		color;
+}	t_circle;
+
+typedef struct s_line
+{
+	t_point	start;
+	t_point	end;
+	int		color;
+}	t_line;
+
+typedef struct s_square
+{
+	t_point	pos;
+	int		size;
+	int		color;
+}	t_square;
+
+
 /* draw.c */
-void	draw_circle(t_img *img, int cx, int cy, int radius, int color);
-void	draw_square(t_img *img, int x, int y, int size, int color);
-void	draw_line(t_img *img,
-	int x0, int y0, int x1, int y1, int color);
+//void	draw_circle(t_img *img, int cx, int cy, int radius, int color);
+void	draw_circle(t_img *img, t_circle *c);
+//void	draw_square(t_img *img, int x, int y, int size, int color);
+void	draw_square(t_img *img, t_square *s);
+//void	draw_line(t_img *img,
+//	int x0, int y0, int x1, int y1, int color);
+void	draw_line(t_img *img, t_line *l);
 void	draw_map(t_data *data);
 
 /* hooks.c */

@@ -6,7 +6,7 @@
 /*   By: cgross-s <cgross-s@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/01 17:42:29 by cgross-s          #+#    #+#             */
-/*   Updated: 2026/02/15 18:12:39 by cgross-s         ###   ########.fr       */
+/*   Updated: 2026/02/15 19:17:18 by cgross-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,42 +94,62 @@ int	render(t_data *data)
 	data->dirY = sin(data->angle);
 
 	// Desenha player
-	draw_circle(&data->screen,
+	/*draw_circle(&data->screen,
 		data->posX * TILE_SIZE,
 		data->posY * TILE_SIZE,
 		TILE_SIZE / 4,
-		COLOR_RED);
+		COLOR_RED);*/
+	t_circle	player;
+	player.center.x = data->posX * TILE_SIZE;
+	player.center.y = data->posY * TILE_SIZE;
+	player.radius = TILE_SIZE / 4;
+	player.color = COLOR_RED;
+	draw_circle(&data->screen, &player);
 
-	draw_line(&data->screen,
+
+	/*draw_line(&data->screen,
 		data->posX * TILE_SIZE,
 		data->posY * TILE_SIZE,
 		(data->posX + data->dirX) * TILE_SIZE,
 		(data->posY + data->dirY) * TILE_SIZE,
-		COLOR_GREEN);
+		COLOR_GREEN);*/
+	t_line	dir;
+	dir.start.x = data->posX * TILE_SIZE;
+	dir.start.y = data->posY * TILE_SIZE;
+	dir.end.x = (data->posX + data->dirX) * TILE_SIZE;
+	dir.end.y = (data->posY + data->dirY) * TILE_SIZE;
+	dir.color = COLOR_GREEN;
+	draw_line(&data->screen, &dir);
 
 	// Limites do FOV
 	left_angle = data->angle - data->fov / 2;
 	right_angle = data->angle + data->fov / 2;
 
-	left_x = (data->posX + cos(left_angle)) * TILE_SIZE;
-	left_y = (data->posY + sin(left_angle)) * TILE_SIZE;
+	//right_x = (data->posX + cos(right_angle)) * TILE_SIZE;
+	//right_y = (data->posY + sin(right_angle)) * TILE_SIZE;
+	dir.end.x = (data->posX + cos(right_angle)) * TILE_SIZE;
+	dir.end.y = (data->posY + sin(right_angle)) * TILE_SIZE;
+	dir.color = COLOR_BLUE;
 
-	right_x = (data->posX + cos(right_angle)) * TILE_SIZE;
-	right_y = (data->posY + sin(right_angle)) * TILE_SIZE;
-
-	draw_line(&data->screen, // linha limite FOV
+	/*draw_line(&data->screen, // linha limite FOV
 		data->posX * TILE_SIZE,
 		data->posY * TILE_SIZE,
 		right_x,
 		right_y,
-		COLOR_BLUE);
+		COLOR_BLUE);*/
+	draw_line(&data->screen, &dir);
 
-	draw_line(&data->screen, // linha limite FOV esquerdo
+	//left_x = (data->posX + cos(left_angle)) * TILE_SIZE;
+	//left_y = (data->posY + sin(left_angle)) * TILE_SIZE;
+	dir.end.x = (data->posX + cos(left_angle)) * TILE_SIZE;
+	dir.end.y = (data->posY + sin(left_angle)) * TILE_SIZE;
+	/*draw_line(&data->screen, // linha limite FOV esquerdo
 		data->posX * TILE_SIZE,
 		data->posY * TILE_SIZE,
 		left_x,
 		left_y,
-		COLOR_BLUE);
+		COLOR_BLUE);*/
+	draw_line(&data->screen, &dir);
 
 	mlx_put_image_to_window(data->mlx,
 		data->win,
