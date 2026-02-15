@@ -6,7 +6,7 @@
 /*   By: cgross-s <cgross-s@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/08 21:32:20 by cgross-s          #+#    #+#             */
-/*   Updated: 2026/02/10 21:30:10 by cgross-s         ###   ########.fr       */
+/*   Updated: 2026/02/15 15:49:41 by cgross-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,34 +33,34 @@ int	close_window(t_data *data)
 
 int	key_hook(int keycode, t_data *data)
 {
-	double	speed;
+	//double	speed;
 
-	speed = 5.0;
+	//speed = 5.0;
 
 	if (keycode == KEY_W)
 	{
-		data->posX += data->dirX * speed;
-		data->posY += data->dirY * speed;
+		data->posX += data->dirX * data->move_speed;
+		data->posY += data->dirY * data->move_speed;
 	}
 	if (keycode == KEY_S)
 	{
-		data->posX -= data->dirX * speed;
-		data->posY -= data->dirY * speed;
+		data->posX -= data->dirX * data->move_speed;
+		data->posY -= data->dirY * data->move_speed;
 	}
 	if (keycode == KEY_A)
 	{
-		data->posX += data->dirY * speed;
-		data->posY -= data->dirX * speed;
+		data->posX += data->dirY * data->move_speed;
+		data->posY -= data->dirX * data->move_speed;
 	}
 	if (keycode == KEY_D)
 	{
-		data->posX -= data->dirY * speed;
-		data->posY += data->dirX * speed;
+		data->posX -= data->dirY * data->move_speed;
+		data->posY += data->dirX * data->move_speed;
 	}
 	if (keycode == KEY_LEFT)
-		data->angle -= 0.1;
+		data->angle -= data->rot_speed;
 	if (keycode == KEY_RIGHT)
-		data->angle += 0.1;
+		data->angle += data->rot_speed;
 	if (keycode == KEY_ESC)
 		close_window(data);
 

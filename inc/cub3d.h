@@ -78,6 +78,8 @@ typedef struct s_data {
 	double	angle;   // position angle of the player throught the map
 
 	double	fov;	// player FOV angle (rad)
+	double	move_speed; // speed of the player
+	double	rot_speed; // speed of rotation
 	//double	planeX;				// Camera plane (for FOV)
 	//double	planeY;
 
