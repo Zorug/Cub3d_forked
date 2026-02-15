@@ -6,7 +6,7 @@
 /*   By: cgross-s <cgross-s@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/01 17:42:29 by cgross-s          #+#    #+#             */
-/*   Updated: 2026/02/15 19:17:18 by cgross-s         ###   ########.fr       */
+/*   Updated: 2026/02/15 21:53:44 by cgross-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,12 +68,6 @@ void	find_player(t_data *data)
 		y++;
 	}
 }
-
-/* Apaga o frame anterior */
-/*void	clear_screen(t_img *img)
-{
-	ft_bzero(img->addr, img->line_length * img->height);
-}*/
 
 int	render(t_data *data)
 {
@@ -151,11 +145,11 @@ int	render(t_data *data)
 		COLOR_BLUE);*/
 	draw_line(&data->screen, &dir);
 
-	mlx_put_image_to_window(data->mlx,
-		data->win,
-		data->screen.img,
-		0,
-		0);
+	// first ray to cast
+	cast_single_ray(data);
+
+	mlx_put_image_to_window(data->mlx, data->win,
+		data->screen.img, 0, 0);
 
 	return (0);
 }

@@ -147,6 +147,9 @@ void	draw_map(t_data *data);
 int	close_window(t_data *data);
 int	key_hook(int keycode, t_data *data);
 
+/* raycast.c */
+void cast_single_ray(t_data *data);
+
 /* utils.c */
 void	my_mlx_pixel_put(t_img *img, int x, int y, int color);
 void	clear_screen(t_img *img);

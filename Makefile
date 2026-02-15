@@ -30,7 +30,7 @@ SRCS		= $(SRC_DIR)/main.c \
 			$(SRC_DIR)/hooks.c \
 			$(SRC_DIR)/utils.c \
 			$(SRC_DIR)/draw.c \
-			#$(SRC_DIR)/test_map.c
+			$(SRC_DIR)/raycast.c
 
 #FILES			= 	main.c \
 

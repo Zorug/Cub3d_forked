@@ -6,7 +6,7 @@
 /*   By: cgross-s <cgross-s@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/15 17:46:13 by cgross-s          #+#    #+#             */
-/*   Updated: 2026/02/15 19:35:52 by cgross-s         ###   ########.fr       */
+/*   Updated: 2026/02/15 19:53:51 by cgross-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,8 @@ void	draw_circle(t_img *img, t_circle *c)
 			{
 				if (c->center.x + x >= 0 && c->center.x + x < img->width
 					&& c->center.y + y >= 0 && c->center.y + y < img->height)
-					my_mlx_pixel_put(
-						img,
-						c->center.x + x,
-						c->center.y + y,
-						c->color);
+					my_mlx_pixel_put(img, c->center.x + x,
+						c->center.y + y, c->color);
 			}
 			x++;
 		}
@@ -55,11 +52,8 @@ void	draw_square(t_img *img, t_square *s)
 		j = 0;
 		while (j < s->size)
 		{
-			my_mlx_pixel_put(
-				img,
-				s->pos.x + j,
-				s->pos.y + i,
-				s->color);
+			my_mlx_pixel_put(img, s->pos.x + j,
+				s->pos.y + i, s->color);
 			j++;
 		}
 		i++;
