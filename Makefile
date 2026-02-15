@@ -14,9 +14,8 @@ RM			= rm -f
 # Libraries
 LIBFT_DIR	= ./libft
 LIBFT		= $(LIBFT_DIR)/libft.a
-# adjust MLX flags
-MLX_FLAGS	= -lmlx -lXext -lX11 -lm
-#MLX_FLAGS	= -L minilibx-linux -lmlx -lXext -lX11 -lm
+MLX_DIR		= ./minilibx-linux
+MLX_FLAGS	= -L $(MLX_DIR) -lmlx -lXext -lX11 -lm
 
 #==============================================================================#
 #                                    PATHS                                     #
