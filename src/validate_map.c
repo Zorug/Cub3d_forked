@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: tnuno-mo <tnuno-mo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/02/15 18:13:44 by tnuno-mo          #+#    #+#             */
-/*   Updated: 2026/02/15 18:22:34 by tnuno-mo         ###   ########.fr       */
+/*   Created: 2026/02/15 18:34:00 by tnuno-mo          #+#    #+#             */
+/*   Updated: 2026/02/15 18:35:05 by tnuno-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,30 +14,24 @@
 #include "cub3d.h"
 
 
-/*
- * Checks if a character is valid in the map.
- * Valid characters: '0', '1', 'N', 'S', 'E', 'W', and space.
- */
+// Checks if a character is valid in the map.
+// Valid characters: '0', '1', 'N', 'S', 'E', 'W', and space.
 int	is_valid_map_char(char c)
 {
 	return (c == '0' || c == '1' || c == 'N' || c == 'S' || c == 'E' || c == 'W' || c == ' ');
 }
 
 
-/*
- * Checks if a character represents a player start position.
- * Valid player characters: 'N', 'S', 'E', 'W'.
- */
+// Checks if a character represents a player start position.
+// Valid player characters: 'N', 'S', 'E', 'W'.
 int	is_player_char(char c)
 {
 	return (c == 'N' || c == 'S' || c == 'E' || c == 'W');
 }
 
 
-/*
- * Counts the number of player start positions in the map.
- * Returns the count of 'N', 'S', 'E', or 'W' found.
- */
+// Counts the number of player start positions in the map.
+// Returns the count of 'N', 'S', 'E', or 'W' found.
 int	count_player_positions(char **map)
 {
        int i;
@@ -61,10 +55,8 @@ int	count_player_positions(char **map)
 }
 
 
-/*
- * Checks if a line contains only valid map characters.
- * Returns 1 if valid, 0 otherwise.
- */
+// Checks if a line contains only valid map characters.
+// Returns 1 if valid, 0 otherwise.
 int	is_line_map(const char *line)
 {
        int i;
@@ -80,9 +72,7 @@ int	is_line_map(const char *line)
 }
 
 
-/*
- * Frees a dynamically allocated map (array of strings).
- */
+// Frees a dynamically allocated map (array of strings).
 void	free_map(char **map)
 {
        int i;
@@ -97,11 +87,9 @@ void	free_map(char **map)
 }
 
 
-/*
- * Checks if the map is closed (surrounded by walls).
- * Returns 1 if the map is closed, 0 otherwise.
- * Spaces are treated as outside the map and must not touch '0' or player positions.
- */
+// Checks if the map is closed (surrounded by walls).
+// Returns 1 if the map is closed, 0 otherwise.
+// Spaces are treated as outside the map and must not touch '0' or player positions.
 int	is_map_closed(char **map)
 {
        int i;
@@ -133,13 +121,11 @@ int	is_map_closed(char **map)
 }
 
 
-/*
- * Validates the map by checking:
- * - All characters are valid
- * - Exactly one player start position exists
- * - The map is closed by walls
- * Returns 1 if the map is valid, 0 otherwise.
- */
+// Validates the map by checking:
+// - All characters are valid
+// - Exactly one player start position exists
+// - The map is closed by walls
+// Returns 1 if the map is valid, 0 otherwise.
 int	validate_map(char **map)
 {
 	int i;
@@ -156,4 +142,18 @@ int	validate_map(char **map)
 	if (!is_map_closed(map))
 		return (0);
 	return (1);
+}
+
+
+// Validates the entire .cub map file:
+// - Checks file extension
+// - Checks for unique and valid texture/color definitions
+// - Extracts and validates the map block
+// - Ensures map is the last element
+// Returns 1 if valid, 0 otherwise.
+int	validate_map_file(const char *filename)
+{
+	// ...existing code...
+	// (Implementation to be added: open file, parse lines, check elements, call validate_map)
+	return (1); // Placeholder
 }

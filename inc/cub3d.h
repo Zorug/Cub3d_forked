@@ -111,6 +111,7 @@ void	my_mlx_pixel_put(t_img *img, int x, int y, int color);
 
 /* --- Map Validation Prototypes --- */
 int		validate_scene_file(const char *filename);
+int		validate_map_file(const char *filename);
 int		validate_map(char **map);
 int		is_valid_map_char(char c);
 int		is_map_closed(char **map);
