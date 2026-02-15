@@ -6,43 +6,37 @@
 /*   By: cgross-s <cgross-s@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/15 17:46:13 by cgross-s          #+#    #+#             */
-/*   Updated: 2026/02/15 17:50:01 by cgross-s         ###   ########.fr       */
+/*   Updated: 2026/02/15 19:35:52 by cgross-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/cub3d.h"
 
 /* (x - cx)² + (y - cy)² <= r² */
-void	draw_circle(t_img *img, int cx, int cy, int radius, int color)
+void	draw_circle(t_img *img, t_circle *c)
 {
 	int	x;
 	int	y;
-	int	dx; // distância horizontal ao centro
-	int	dy; // distância vertical ao centro
+	int	dx;
+	int	dy;
 
-	y = -radius;
-
-	while (y <= radius) // Você percorre um quadrado centrado no círculo:
+	y = -c->radius;
+	while (y <= c->radius)
 	{
-		x = -radius;
-		while (x <= radius)
+		x = -c->radius;
+		while (x <= c->radius)
 		{
 			dx = x;
 			dy = y;
-			
-/*	* dx * dx + dy * dy = distância² do centro
-	* evita sqrt (caríssimo)
-	* compara com radius²
-	👉 se passar, o pixel está dentro do círculo*/
-			if (dx * dx + dy * dy <= radius * radius)
+			if (dx * dx + dy * dy <= c->radius * c->radius)
 			{
-/*	Evita:
-	* escrever fora da imagem
-	* segmentation fault
-	* comportamento indefinido */
-				if (cx + x >= 0 && cx + x < img->width
-					&& cy + y >= 0 && cy + y < img->height)
-					my_mlx_pixel_put(img, cx + x, cy + y, color);
+				if (c->center.x + x >= 0 && c->center.x + x < img->width
+					&& c->center.y + y >= 0 && c->center.y + y < img->height)
+					my_mlx_pixel_put(
+						img,
+						c->center.x + x,
+						c->center.y + y,
+						c->color);
 			}
 			x++;
 		}
@@ -50,61 +44,54 @@ void	draw_circle(t_img *img, int cx, int cy, int radius, int color)
 	}
 }
 
-void	draw_square(t_img *img, int x, int y, int size, int color)
+void	draw_square(t_img *img, t_square *s)
 {
 	int	i;
 	int	j;
 
 	i = 0;
-	while (i < size)
+	while (i < s->size)
 	{
 		j = 0;
-		while (j < size)
+		while (j < s->size)
 		{
-			my_mlx_pixel_put(img, x + j, y + i, color);
+			my_mlx_pixel_put(
+				img,
+				s->pos.x + j,
+				s->pos.y + i,
+				s->color);
 			j++;
 		}
 		i++;
 	}
 }
 
-void	draw_line(t_img *img,
-	int x0, int y0, int x1, int y1, int color)
+void	draw_line(t_img *img, t_line *l)
 {
-	int	dx;
-	int	dy;
-	int	steps;
+	int		dx;
+	int		dy;
+	int		steps;
 	float	x;
 	float	y;
 	float	x_inc;
 	float	y_inc;
-	int	i;
+	int		i;
 
-	// Vetor da linha
-	dx = x1 - x0;
-	dy = y1 - y0;
-
-	// Quantos passos?
+	dx = l->end.x - l->start.x;
+	dy = l->end.y - l->start.y;
 	steps = abs(dx) > abs(dy) ? abs(dx) : abs(dy);
 
-	// Incrementos por passo
 	x_inc = dx / (float)steps;
 	y_inc = dy / (float)steps;
 
-	// Caminhada do pixel
-	x = x0;
-	y = y0;
+	x = l->start.x;
+	y = l->start.y;
 
-	// Loop principal
 	i = 0;
 	while (i <= steps)
 	{
-		// checa limites
 		if (x >= 0 && x < img->width && y >= 0 && y < img->height)
-			// converte float → int (pixel mais próximo)
-			my_mlx_pixel_put(img, (int)x, (int)y, color);
-
-		// Avanço: anda pixel a pixel pela linha.
+			my_mlx_pixel_put(img, (int)x, (int)y, l->color);
 		x += x_inc;
 		y += y_inc;
 		i++;
@@ -113,8 +100,11 @@ void	draw_line(t_img *img,
 
 void	draw_map(t_data *data)
 {
-	int	x;
-	int	y;
+	int			x;
+	int			y;
+	t_square	tile;
+
+	tile.size = TILE_SIZE;
 
 	y = 0;
 	while (y < data->map_height)
@@ -122,18 +112,15 @@ void	draw_map(t_data *data)
 		x = 0;
 		while (x < data->map_width)
 		{
+			tile.pos.x = x * TILE_SIZE;
+			tile.pos.y = y * TILE_SIZE;
+
 			if (data->map[y][x] == '1')
-				draw_square(&data->screen,
-					x * TILE_SIZE,
-					y * TILE_SIZE,
-					TILE_SIZE,
-					COLOR_WHITE);
+				tile.color = COLOR_WHITE;
 			else
-				draw_square(&data->screen,
-					x * TILE_SIZE,
-					y * TILE_SIZE,
-					TILE_SIZE,
-					0x00222222);
+				tile.color = 0x00222222;
+
+			draw_square(&data->screen, &tile);
 			x++;
 		}
 		y++;
