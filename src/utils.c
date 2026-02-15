@@ -6,7 +6,7 @@
 /*   By: cgross-s <cgross-s@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/08 21:33:15 by cgross-s          #+#    #+#             */
-/*   Updated: 2026/02/08 21:33:30 by cgross-s         ###   ########.fr       */
+/*   Updated: 2026/02/15 18:02:29 by cgross-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,3 +22,8 @@ void	my_mlx_pixel_put(t_img *img, int x, int y, int color)
 	*(unsigned int *)dst = color;
 }
 
+/* Apaga o frame anterior */
+void	clear_screen(t_img *img)
+{
+	ft_bzero(img->addr, img->line_length * img->height);
+}
