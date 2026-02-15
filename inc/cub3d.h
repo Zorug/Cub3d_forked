@@ -58,7 +58,6 @@ typedef struct s_data {
 	void	*mlx;
 	void	*win;
 	t_img	screen;
-//	t_img	img;
 
 /*
 	// Parsing Data (Person B)
@@ -73,10 +72,22 @@ typedef struct s_data {
 	// Player State (Person A)
 	double	posX;				// Initial X coordinate
 	double	posY;				// Initial Y coordinate
-	//double	dirX;				// Direction vector
-	//double	dirY;
+	
+	double	dirX;				// Direction vector
+	double	dirY;
+	double	angle;   // position angle of the player throught the map
+
+	double	fov;	// player FOV angle (rad)
+	double	move_speed; // speed of the player
+	double	rot_speed; // speed of rotation
 	//double	planeX;				// Camera plane (for FOV)
 	//double	planeY;
+
+	// relativo ao mapa
+	char	**map;
+	int		map_width;
+	int		map_height;
+
 }	t_data;
 
 /*

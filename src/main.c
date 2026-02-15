@@ -6,11 +6,70 @@
 /*   By: cgross-s <cgross-s@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/01 17:42:29 by cgross-s          #+#    #+#             */
-/*   Updated: 2026/02/09 23:26:26 by cgross-s         ###   ########.fr       */
+/*   Updated: 2026/02/15 16:03:08 by cgross-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/cub3d.h"
+
+# define TILE_SIZE 40
+
+static char *test_map[] = {
+	"1111111111",
+	"1000000001",
+	"1000000001",
+	"100000W001",
+	"1001000001",
+	"1001110101",
+	"1000010101",
+	"1000010101",
+	"1000000001",
+	"1111111111",
+	NULL
+};
+
+// direction of the player
+void	set_player_direction(t_data *data, char c)
+{
+	if (c == 'N')
+		data->angle = -M_PI / 2;
+	else if (c == 'S')
+		data->angle = M_PI / 2;
+	else if (c == 'E')
+		data->angle = 0;
+	else if (c == 'W')
+		data->angle = M_PI;
+
+	data->dirX = cos(data->angle);
+	data->dirY = sin(data->angle);
+}
+
+// Player start position
+void	find_player(t_data *data)
+{
+	int	y;
+	int	x;
+
+	y = 0;
+	while (y < data->map_height)
+	{
+		x = 0;
+		while (x < data->map_width)
+		{
+			if (ft_strchr("NSEW", data->map[y][x]))
+			{
+				data->posX = x + 0.5;
+				data->posY = y + 0.5;
+				set_player_direction(data, data->map[y][x]);
+				data->map[y][x] = '0';
+				return ;
+			}
+			x++;
+		}
+		y++;
+	}
+}
+
 
 /*void	clear_screen(t_img *img)
 {
@@ -32,36 +91,44 @@
 	}
 }*/
 
+/*
+** Apaga o frame anterior
+
+*/
 void	clear_screen(t_img *img)
 {
 	ft_bzero(img->addr, img->line_length * img->height);
 }
 
-
-/*void	render(t_data *data)
-{
-	clear_screen(&data->screen);
-	draw_circle(&data->screen, data->posX, data->posY, 10, RED);
-	mlx_put_image_to_window(data->mlx, data->win, data->screen.img, 0, 0);
-}*/
-
 void	draw_circle(t_img *img, int cx, int cy, int radius, int color)
 {
 	int	x;
 	int	y;
-	int	dx;
-	int	dy;
+	int	dx; // distância horizontal ao centro
+	int	dy; // distância vertical ao centro
 
 	y = -radius;
-	while (y <= radius)
+
+	// (x - cx)² + (y - cy)² <= r²
+
+	while (y <= radius) // Você percorre um quadrado centrado no círculo:
 	{
 		x = -radius;
 		while (x <= radius)
 		{
 			dx = x;
 			dy = y;
+			
+/*	* dx * dx + dy * dy = distância² do centro
+	* evita sqrt (caríssimo)
+	* compara com radius²
+	👉 se passar, o pixel está dentro do círculo*/
 			if (dx * dx + dy * dy <= radius * radius)
 			{
+/*	Evita:
+	* escrever fora da imagem
+	* segmentation fault
+	* comportamento indefinido */
 				if (cx + x >= 0 && cx + x < img->width
 					&& cy + y >= 0 && cy + y < img->height)
 					my_mlx_pixel_put(img, cx + x, cy + y, color);
@@ -72,17 +139,105 @@ void	draw_circle(t_img *img, int cx, int cy, int radius, int color)
 	}
 }
 
-
-int	render(t_data *data)
+void	draw_square(t_img *img, int x, int y, int size, int color)
 {
+	int	i;
+	int	j;
+
+	i = 0;
+	while (i < size)
+	{
+		j = 0;
+		while (j < size)
+		{
+			my_mlx_pixel_put(img, x + j, y + i, color);
+			j++;
+		}
+		i++;
+	}
+}
+
+void	draw_line(t_img *img,
+	int x0, int y0, int x1, int y1, int color)
+{
+	int	dx;
+	int	dy;
+	int	steps;
+	float	x;
+	float	y;
+	float	x_inc;
+	float	y_inc;
+	int	i;
+
+	// Vetor da linha
+	dx = x1 - x0;
+	dy = y1 - y0;
+
+	// Quantos passos?
+	steps = abs(dx) > abs(dy) ? abs(dx) : abs(dy);
+
+	// Incrementos por passo
+	x_inc = dx / (float)steps;
+	y_inc = dy / (float)steps;
+
+	// Caminhada do pixel
+	x = x0;
+	y = y0;
+
+	// Loop principal
+	i = 0;
+	while (i <= steps)
+	{
+		// checa limites
+		if (x >= 0 && x < img->width && y >= 0 && y < img->height)
+			// converte float → int (pixel mais próximo)
+			my_mlx_pixel_put(img, (int)x, (int)y, color);
+
+		// Avanço: anda pixel a pixel pela linha.
+		x += x_inc;
+		y += y_inc;
+		i++;
+	}
+}
+
+void	draw_map(t_data *data)
+{
+	int	x;
+	int	y;
+
+	y = 0;
+	while (y < data->map_height)
+	{
+		x = 0;
+		while (x < data->map_width)
+		{
+			if (data->map[y][x] == '1')
+				draw_square(&data->screen,
+					x * TILE_SIZE,
+					y * TILE_SIZE,
+					TILE_SIZE,
+					COLOR_WHITE);
+			else
+				draw_square(&data->screen,
+					x * TILE_SIZE,
+					y * TILE_SIZE,
+					TILE_SIZE,
+					0x00222222);
+			x++;
+		}
+		y++;
+	}
+}
+
+/*int	render(t_data *data)
+{
+	int	line_len;
+	int	end_x;
+	int	end_y;
+
 	clear_screen(&data->screen);
 
-/*	// teste visual: ponto andando sozinho
-	my_mlx_pixel_put(&data->screen,
-		(int)data->posX,
-		(int)data->posY,
-		COLOR_RED);*/
-
+	// círculo = player
 	draw_circle(
 		&data->screen,
 		(int)data->posX,
@@ -91,8 +246,117 @@ int	render(t_data *data)
 		COLOR_RED
 	);
 
+	// vetor de direção
+	line_len = 40;
+	data->dirX = cos(data->angle);
+	data->dirY = sin(data->angle);
+
+	end_x = data->posX + data->dirX * line_len;
+	end_y = data->posY + data->dirY * line_len;
+
+	draw_line(
+		&data->screen,
+		data->posX,
+		data->posY,
+		end_x,
+		end_y,
+		COLOR_GREEN
+	);
+
 	mlx_put_image_to_window(
 		data->mlx,
+		data->win,
+		data->screen.img,
+		0,
+		0
+	);
+
+	return (0);
+}*/
+
+int	render(t_data *data)
+{
+	//int	line_len;
+	double	left_angle;
+	double	right_angle;
+	int	left_x;
+	int	left_y;
+	int	right_x;
+	int	right_y;
+
+	clear_screen(&data->screen);
+
+	//desenha o mapa
+	draw_map(data);
+
+	// Atualiza vetor principal
+	data->dirX = cos(data->angle);
+	data->dirY = sin(data->angle);
+
+	// Desenha player
+	//draw_circle(&data->screen,
+	//	data->posX,
+	//	data->posY,
+	//	10,
+	//	COLOR_RED);
+	draw_circle(&data->screen,
+		data->posX * TILE_SIZE,
+		data->posY * TILE_SIZE,
+		TILE_SIZE / 4,
+		COLOR_RED);
+
+	// Linha principal (direção)
+	//line_len = 80;
+
+	//draw_line(&data->screen,
+	//	data->posX,
+	//	data->posY,
+	//	data->posX + data->dirX * line_len,
+	//	data->posY + data->dirY * line_len,
+	//	COLOR_GREEN);
+	draw_line(&data->screen,
+		data->posX * TILE_SIZE,
+		data->posY * TILE_SIZE,
+		(data->posX + data->dirX) * TILE_SIZE,
+		(data->posY + data->dirY) * TILE_SIZE,
+		COLOR_GREEN);
+
+	// Limites do FOV
+	left_angle = data->angle - data->fov / 2;
+	right_angle = data->angle + data->fov / 2;
+
+	//left_x = data->posX + cos(left_angle) * line_len;
+	//left_y = data->posY + sin(left_angle) * line_len;
+	left_x = (data->posX + cos(left_angle)) * TILE_SIZE;
+	left_y = (data->posY + sin(left_angle)) * TILE_SIZE;
+
+
+	//right_x = data->posX + cos(right_angle) * line_len;
+	//right_y = data->posY + sin(right_angle) * line_len;
+	right_x = (data->posX + cos(right_angle)) * TILE_SIZE;
+	right_y = (data->posY + sin(right_angle)) * TILE_SIZE;
+
+	draw_line(&data->screen, // linha limite FOV
+		data->posX * TILE_SIZE,
+		data->posY * TILE_SIZE,
+		right_x,
+		right_y,
+		COLOR_BLUE);
+
+	//draw_line(&data->screen,
+	//	data->posX,
+	//	data->posY,
+	//	right_x,
+	//	right_y,
+	//	COLOR_BLUE);
+	draw_line(&data->screen, // linha limite FOV esquerdo
+		data->posX * TILE_SIZE,
+		data->posY * TILE_SIZE,
+		left_x,
+		left_y,
+		COLOR_BLUE);
+
+	mlx_put_image_to_window(data->mlx,
 		data->win,
 		data->screen.img,
 		0,
@@ -101,15 +365,39 @@ int	render(t_data *data)
 	return (0);
 }
 
+/*int	render(t_data *data)
+{
+	clear_screen(&data->screen);
+
+	draw_map(data);
+
+	draw_circle(&data->screen,
+		data->posX,
+		data->posY,
+		10,
+		COLOR_RED);
+
+	mlx_put_image_to_window(data->mlx,
+		data->win,
+		data->screen.img,
+		0,
+		0);
+
+	return (0);
+}*/
+
+
 int	main(void)
 {
 	t_data	data;
+	int		i;
 
 	data.mlx = mlx_init(); // Conecta ao X11. Sem isso, nada funciona
 
 	// Cria uma janela vazia
 	data.screen.width = 800;
 	data.screen.height = 600;
+
 	data.win = mlx_new_window(data.mlx,
 		data.screen.width, data.screen.height, "CUB3D");
 	// Cria um buffer de pixels na memória. Ainda não sabemos onde ele está
@@ -122,10 +410,41 @@ int	main(void)
 	data.screen.addr = mlx_get_data_addr(data.screen.img, 
 		&data.screen.bits_per_pixel, &data.screen.line_length, &data.screen.endian);
 
-	// Desenha um pixel vermelho. Coordenada (X,Y)
-	//my_mlx_pixel_put(&data.screen, 10, 10, RED);
-	data.posX = 400;
-	data.posY = 300;
+	// Initial position of the player in the map
+	//data.posX = 400;
+	//data.posY = 300;
+
+
+	// mapa
+	i = 0;
+	data.map_height = 0;// aqui estava a dar um segfail
+	//data.map = test_map;
+	while (test_map[data.map_height]) // evitando erro, não esquece: free
+		data.map_height++;
+	data.map = malloc(sizeof(char *) * (data.map_height + 1)); //FREE IT!
+	while (i < data.map_height)
+	{
+		data.map[i] = ft_strdup(test_map[i]);
+		i++;
+	}
+	data.map[i] = NULL;
+	data.map_width = ft_strlen(data.map[0]);
+//	data.map_height = 10;
+//	data.map_width = 10;
+
+	// player
+	find_player(&data);
+	//data.angle = 0; // olhando para a direita
+	data.dirX = cos(data.angle);
+	data.dirY = sin(data.angle);
+
+	// fov angle (M_PI is working fine, form math.h)
+	data.fov = M_PI / 3;
+	data.move_speed = 0.5;
+	data.rot_speed = 0.4;
+
+
+
 	//my_mlx_pixel_put(&data.screen, data.posX, data.posY, RED);
 	
 	//A imagem vira visível. Copia o buffer para a janela
