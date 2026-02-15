@@ -6,14 +6,15 @@
 /*   By: cgross-s <cgross-s@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/01 17:42:29 by cgross-s          #+#    #+#             */
-/*   Updated: 2026/02/15 16:56:51 by cgross-s         ###   ########.fr       */
+/*   Updated: 2026/02/15 17:50:49 by cgross-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/cub3d.h"
 
-# define TILE_SIZE 40 // size of a square
+// # define TILE_SIZE 40 // size of a square
 
+/* map for test */
 static char *test_map[] = {
 	"1111111111",
 	"1000000001",
@@ -70,36 +71,13 @@ void	find_player(t_data *data)
 	}
 }
 
-
-/*void	clear_screen(t_img *img)
-{
-	int	x;
-	int	y;
-
-	y = 0;
-//	while (y < 600)
-	while (y < img->height)
-	{
-		x = 0;
-		//while (x < 800)
-		while (x < img->width)
-		{
-			my_mlx_pixel_put(img, x, y, 0x00000000);
-			x++;
-		}
-		y++;
-	}
-}*/
-
-/*
-** Apaga o frame anterior
-
-*/
+/* Apaga o frame anterior */
 void	clear_screen(t_img *img)
 {
 	ft_bzero(img->addr, img->line_length * img->height);
 }
 
+/* (x - cx)² + (y - cy)² <= r²
 void	draw_circle(t_img *img, int cx, int cy, int radius, int color)
 {
 	int	x;
@@ -109,8 +87,6 @@ void	draw_circle(t_img *img, int cx, int cy, int radius, int color)
 
 	y = -radius;
 
-	// (x - cx)² + (y - cy)² <= r²
-
 	while (y <= radius) // Você percorre um quadrado centrado no círculo:
 	{
 		x = -radius;
@@ -119,16 +95,16 @@ void	draw_circle(t_img *img, int cx, int cy, int radius, int color)
 			dx = x;
 			dy = y;
 			
-/*	* dx * dx + dy * dy = distância² do centro
+	* dx * dx + dy * dy = distância² do centro
 	* evita sqrt (caríssimo)
 	* compara com radius²
-	👉 se passar, o pixel está dentro do círculo*/
+	👉 se passar, o pixel está dentro do círculo
 			if (dx * dx + dy * dy <= radius * radius)
 			{
-/*	Evita:
+	Evita:
 	* escrever fora da imagem
 	* segmentation fault
-	* comportamento indefinido */
+	* comportamento indefinido 
 				if (cx + x >= 0 && cx + x < img->width
 					&& cy + y >= 0 && cy + y < img->height)
 					my_mlx_pixel_put(img, cx + x, cy + y, color);
@@ -137,9 +113,9 @@ void	draw_circle(t_img *img, int cx, int cy, int radius, int color)
 		}
 		y++;
 	}
-}
+}*/
 
-void	draw_square(t_img *img, int x, int y, int size, int color)
+/*void	draw_square(t_img *img, int x, int y, int size, int color)
 {
 	int	i;
 	int	j;
@@ -155,9 +131,9 @@ void	draw_square(t_img *img, int x, int y, int size, int color)
 		}
 		i++;
 	}
-}
+}*/
 
-void	draw_line(t_img *img,
+/*void	draw_line(t_img *img,
 	int x0, int y0, int x1, int y1, int color)
 {
 	int	dx;
@@ -198,9 +174,9 @@ void	draw_line(t_img *img,
 		y += y_inc;
 		i++;
 	}
-}
+}*/
 
-void	draw_map(t_data *data)
+/* void	draw_map(t_data *data)
 {
 	int	x;
 	int	y;
@@ -227,7 +203,7 @@ void	draw_map(t_data *data)
 		}
 		y++;
 	}
-}
+}*/ 
 
 /*int	render(t_data *data)
 {

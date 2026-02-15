@@ -29,7 +29,7 @@ SRCS		= $(SRC_DIR)/main.c \
 			$(SRC_DIR)/leaks.c \
 			$(SRC_DIR)/hooks.c \
 			$(SRC_DIR)/utils.c \
-			#$(SRC_DIR)/engine/render.c \
+			$(SRC_DIR)/draw.c \
 			#$(SRC_DIR)/utils/error_handling.c
 
 #FILES			= 	main.c \

@@ -2,13 +2,15 @@
 # define CUB3D_H
 
 # include "../libft/libft.h"
-//# include <mlx.h>
 # include "../minilibx-linux/mlx.h"
 # include <math.h>
 # include <fcntl.h>
 # include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
+# include <stdbool.h>	// true and false
+
+# define TILE_SIZE 40 // size of a square
 
 /* --- Key Definitions (Linux) --- */
 # define KEY_W 119
@@ -102,11 +104,18 @@ void	start_raycasting(t_data *data);
 int		handle_keys(int keycode, t_data *data);
 int		close_game(t_data *data);*/
 
-/*hooks.c*/
+/* draw.c */
+void	draw_circle(t_img *img, int cx, int cy, int radius, int color);
+void	draw_square(t_img *img, int x, int y, int size, int color);
+void	draw_line(t_img *img,
+	int x0, int y0, int x1, int y1, int color);
+void	draw_map(t_data *data);
+
+/* hooks.c */
 int	close_window(t_data *data);
 int	key_hook(int keycode, t_data *data);
 
-/*utils.c*/
+/* utils.c */
 void	my_mlx_pixel_put(t_img *img, int x, int y, int color);
 
 #endif
