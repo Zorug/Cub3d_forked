@@ -109,4 +109,14 @@ int	key_hook(int keycode, t_data *data);
 /*utils.c*/
 void	my_mlx_pixel_put(t_img *img, int x, int y, int color);
 
+/* --- Map Validation Prototypes --- */
+int		validate_scene_file(const char *filename);
+int		validate_map(char **map);
+int		is_valid_map_char(char c);
+int		is_map_closed(char **map);
+int		count_player_positions(char **map);
+int		is_player_char(char c);
+int		is_line_map(const char *line);
+void	free_map(char **map);
+
 #endif
