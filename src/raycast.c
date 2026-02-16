@@ -6,7 +6,7 @@
 /*   By: cgross-s <cgross-s@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/15 21:31:40 by cgross-s          #+#    #+#             */
-/*   Updated: 2026/02/16 22:46:16 by cgross-s         ###   ########.fr       */
+/*   Updated: 2026/02/16 22:57:33 by cgross-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ void cast_single_ray(t_data *data, double rayAngle)
 	int hit = 0;      // bateu na parede?
 	int side;         // 0 = X, 1 = Y
 
-	while (hit == 0)
+	/*while (hit == 0)
 	{
 		if (sideDistX < sideDistY) // Decide qual linha o raio cruza primeiro
 		{
@@ -97,7 +97,33 @@ void cast_single_ray(t_data *data, double rayAngle)
 
 		if (data->map[mapY][mapX] == '1') // Aqui o raio bateu, fim do loop
 			hit = 1;
+	}*/
+
+
+	while (hit == 0)
+	{
+		if (sideDistX < sideDistY)
+		{
+			sideDistX += deltaDistX;
+			mapX += stepX;
+			side = 0;
+		}
+		else
+		{
+			sideDistY += deltaDistY;
+			mapY += stepY;
+			side = 1;
+		}
+
+		// 🔒 PROTEÇÃO DE LIMITES (AQUI)
+		if (mapX < 0 || mapX >= data->map_width ||
+			mapY < 0 || mapY >= data->map_height)
+			break;
+
+		if (data->map[mapY][mapX] == '1')
+			hit = 1;
 	}
+
 
 	//printf("Ray at tile (%d, %d)\n", mapX, mapY);
 	//Agora precisamos calcular:
