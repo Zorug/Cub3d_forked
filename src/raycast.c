@@ -6,20 +6,24 @@
 /*   By: cgross-s <cgross-s@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/15 21:31:40 by cgross-s          #+#    #+#             */
-/*   Updated: 2026/02/16 22:35:10 by cgross-s         ###   ########.fr       */
+/*   Updated: 2026/02/16 22:46:16 by cgross-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/cub3d.h"
 
 /* just calculate the ray */
-void cast_single_ray(t_data *data)
+//void cast_single_ray(t_data *data)
+void cast_single_ray(t_data *data, double rayAngle)
 {
-    double rayDirX; // angulo do raio
-    double rayDirY;
+    //double rayDirX; // angulo do raio
+    //double rayDirY;
 
-    rayDirX = cos(data->angle);
-    rayDirY = sin(data->angle);
+	double rayDirX = cos(rayAngle);
+    double rayDirY = sin(rayAngle);
+
+    //rayDirX = cos(data->angle);
+    //rayDirY = sin(data->angle);
 
 	//posição no mapa em tile sizes
 	int mapX = (int)data->posX;

@@ -148,7 +148,8 @@ int	close_window(t_data *data);
 int	key_hook(int keycode, t_data *data);
 
 /* raycast.c */
-void cast_single_ray(t_data *data);
+//void cast_single_ray(t_data *data);
+void cast_single_ray(t_data *data, double rayAngle);
 
 /* utils.c */
 void	my_mlx_pixel_put(t_img *img, int x, int y, int color);

@@ -6,7 +6,7 @@
 /*   By: cgross-s <cgross-s@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/01 17:42:29 by cgross-s          #+#    #+#             */
-/*   Updated: 2026/02/15 21:53:44 by cgross-s         ###   ########.fr       */
+/*   Updated: 2026/02/16 22:39:49 by cgross-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,7 +146,17 @@ int	render(t_data *data)
 	draw_line(&data->screen, &dir);
 
 	// first ray to cast
-	cast_single_ray(data);
+	//cast_single_ray(data);
+	int i;
+	int rays = 60;
+	double startAngle = data->angle - data->fov / 2;
+	double angleStep = data->fov / rays;
+
+	for (i = 0; i < rays; i++)
+	{
+		cast_single_ray(data, startAngle + i * angleStep);
+	}
+
 
 	mlx_put_image_to_window(data->mlx, data->win,
 		data->screen.img, 0, 0);
