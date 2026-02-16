@@ -6,7 +6,7 @@
 /*   By: cgross-s <cgross-s@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/15 21:31:40 by cgross-s          #+#    #+#             */
-/*   Updated: 2026/02/15 22:21:04 by cgross-s         ###   ########.fr       */
+/*   Updated: 2026/02/16 22:35:10 by cgross-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,105 @@ void cast_single_ray(t_data *data)
 			hit = 1;
 	}
 
-	printf("Ray at tile (%d, %d)\n", mapX, mapY);
+	//printf("Ray at tile (%d, %d)\n", mapX, mapY);
+	//Agora precisamos calcular:
+		//a distância REAL do jogador até a parede,
+		//sem distorção de fish-eye
+	double perpWallDist;
+
+	if (side == 0) // Se bateu numa parede vertical (X)
+	{
+		perpWallDist = (mapX - data->posX + (1 - stepX) / 2) / rayDirX;
+	}
+	else // Se bateu numa parede horizontal (Y)
+	{
+		perpWallDist = (mapY - data->posY + (1 - stepY) / 2) / rayDirY;
+	}
+/*
+🔍 O que significa cada parte?
+
+🔹 mapX - posX
+➡️ Distância do jogador até o tile atingido
+
+🔹 (1 - stepX) / 2
+➡️ Ajuste fino:
+stepX = 1 → entra pelo lado esquerdo
+stepX = -1 → entra pelo lado direito
+Isso posiciona o impacto na borda correta do tile
+
+🔹 / rayDirX
+➡️ Projeta a distância perpendicularmente
+*/
+
+	//printf("Perp distance: %f\n", perpWallDist);
+
+// Agora você vai transformar distância em altura na tela.
+// Converter: distância da parede (perpWallDist)
+// em: altura vertical da parede em pixels
+/*🧠 A ideia fundamental
+Quanto mais perto a parede:
+- ela parece mais alta
+Quanto mais longe:
+- ela parece mais baixa
+Isso é perspectiva básica.*/
+/*📌 Exemplo:
+tela = 600 px
+parede a 1.0 tile → 600 px
+parede a 2.0 tiles → 300 px
+parede a 3.0 tiles → 200 px
+
+	int lineHeight;
+	int drawStart;
+	int drawEnd;
+
+	lineHeight = (int)(data->screen.height / perpWallDist);
+
+	drawStart = -lineHeight / 2 + data->screen.height / 2;
+	drawEnd = lineHeight / 2 + data->screen.height / 2;
+
+	if (drawStart < 0)
+		drawStart = 0;
+	if (drawEnd >= data->screen.height)
+		drawEnd = data->screen.height - 1;
+*/
+
+/*	double hitX;
+	double hitY;
+
+	if (side == 0)
+	{
+		hitX = mapX;
+		hitY = data->posY + perpWallDist * rayDirY;
+	}
+	else
+	{
+		hitY = mapY;
+		hitX = data->posX + perpWallDist * rayDirX;
+	}*/
+
+	double hitX;
+	double hitY;
+
+	if (side == 0) // parede vertical
+	{
+		hitX = mapX + (stepX == -1 ? 1.0 : 0.0);
+		hitY = data->posY + perpWallDist * rayDirY;
+	}
+	else // parede horizontal
+	{
+		hitY = mapY + (stepY == -1 ? 1.0 : 0.0);
+		hitX = data->posX + perpWallDist * rayDirX;
+	}
+
+	t_line ray;
+
+	ray.start.x = data->posX * TILE_SIZE;
+	ray.start.y = data->posY * TILE_SIZE;
+	ray.end.x = hitX * TILE_SIZE;
+	ray.end.y = hitY * TILE_SIZE;
+	ray.color = COLOR_YELLOW;
+
+	draw_line(&data->screen, &ray);
+
 
 }

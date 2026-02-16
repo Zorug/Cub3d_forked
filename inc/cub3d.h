@@ -22,14 +22,14 @@
 # define KEY_ESC 65307
 
 /*colors*/
-# define RED 0x00FF0000
+/*# define RED 0x00FF0000
 # define COLOR_RED     0x00FF0000
 # define COLOR_GREEN   0x0000FF00
 # define COLOR_BLUE    0x000000FF
 # define COLOR_WHITE   0x00FFFFFF
-# define COLOR_BLACK   0x00000000
+# define COLOR_BLACK   0x00000000*/
 
-/*
+
 typedef enum e_color
 {
 	COLOR_BLACK   = 0x00000000,
@@ -41,7 +41,7 @@ typedef enum e_color
 	COLOR_CYAN    = 0x0000FFFF,
 	COLOR_MAGENTA = 0x00FF00FF
 }	t_color;
-*/
+
 
 /* --- Image Structures (MLX) --- */
 typedef struct s_img {
