@@ -124,14 +124,22 @@ typedef struct s_square
 	int		color;
 }	t_square;
 
+/* variables used in draw_line(), draw.c*/
+typedef struct s_dda
+{
+	int		dx; // distância horizontal total
+	int		dy; // distância vertical total
+	int		steps; // quantos pixels desenhar
+	float	x; // posição atual X
+	float	y; // posição atual Y
+	float	x_inc; // avanço em X por passo
+	float	y_inc; // avanço em Y por passo
+	int		i; // contador do loop
+}	t_dda;
 
 /* draw.c */
-//void	draw_circle(t_img *img, int cx, int cy, int radius, int color);
 void	draw_circle(t_img *img, t_circle *c);
-//void	draw_square(t_img *img, int x, int y, int size, int color);
 void	draw_square(t_img *img, t_square *s);
-//void	draw_line(t_img *img,
-//	int x0, int y0, int x1, int y1, int color);
 void	draw_line(t_img *img, t_line *l);
 void	draw_map(t_data *data);
 

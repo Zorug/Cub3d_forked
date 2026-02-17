@@ -6,7 +6,7 @@
 /*   By: cgross-s <cgross-s@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/15 17:46:13 by cgross-s          #+#    #+#             */
-/*   Updated: 2026/02/17 21:53:12 by cgross-s         ###   ########.fr       */
+/*   Updated: 2026/02/17 23:19:46 by cgross-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,8 @@ void	draw_square(t_img *img, t_square *s)
 	}
 }
 
-void	draw_line(t_img *img, t_line *l)
+/* Draw a line using DDA algorithm */
+/*void	draw_line(t_img *img, t_line *l)
 {
 	int		dx;
 	int		dy;
@@ -73,14 +74,14 @@ void	draw_line(t_img *img, t_line *l)
 
 	dx = l->end.x - l->start.x;
 	dy = l->end.y - l->start.y;
-	steps = abs(dx) > abs(dy) ? abs(dx) : abs(dy);
-
+	if (abs(dx) > abs(dy))
+		steps = abs(dx);
+	else
+		steps = abs(dy);
 	x_inc = dx / (float)steps;
 	y_inc = dy / (float)steps;
-
 	x = l->start.x;
 	y = l->start.y;
-
 	i = 0;
 	while (i <= steps)
 	{
@@ -89,6 +90,46 @@ void	draw_line(t_img *img, t_line *l)
 		x += x_inc;
 		y += y_inc;
 		i++;
+	}
+}*/
+
+/* variables used in draw_line(), draw.c*/
+/*typedef struct s_dda
+{
+	int		dx; // distância horizontal total
+	int		dy; // distância vertical total
+	int		steps; // quantos pixels desenhar
+	float	x; // posição atual X
+	float	y; // posição atual Y
+	float	x_inc; // avanço em X por passo
+	float	y_inc; // avanço em Y por passo
+	int		i; // contador do loop
+}	t_dda;*/
+
+/* Draw a line using DDA algorithm */
+void	draw_line(t_img *img, t_line *l)
+{
+	t_dda	d;
+
+	d.dx = l->end.x - l->start.x;
+	d.dy = l->end.y - l->start.y;
+	if (abs(d.dx) > abs(d.dy))
+		d.steps = abs(d.dx);
+	else
+		d.steps = abs(d.dy);
+	d.x_inc = d.dx / (float)d.steps;
+	d.y_inc = d.dy / (float)d.steps;
+	d.x = l->start.x;
+	d.y = l->start.y;
+	d.i = 0;
+	while (d.i <= d.steps)
+	{
+		if (d.x >= 0 && d.x < img->width
+			&& d.y >= 0 && d.y < img->height)
+			my_mlx_pixel_put(img, (int)d.x, (int)d.y, l->color);
+		d.x += d.x_inc;
+		d.y += d.y_inc;
+		d.i++;
 	}
 }
 
@@ -99,7 +140,6 @@ void	draw_map(t_data *data)
 	t_square	tile;
 
 	tile.size = TILE_SIZE;
-
 	y = 0;
 	while (y < data->map_height)
 	{
@@ -108,12 +148,10 @@ void	draw_map(t_data *data)
 		{
 			tile.pos.x = x * TILE_SIZE;
 			tile.pos.y = y * TILE_SIZE;
-
 			if (data->map[y][x] == '1')
 				tile.color = COLOR_WHITE;
 			else
 				tile.color = COLOR_GRAY;
-
 			draw_square(&data->screen, &tile);
 			x++;
 		}
