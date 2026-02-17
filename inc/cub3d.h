@@ -21,15 +21,6 @@
 # define KEY_RIGHT 65363
 # define KEY_ESC 65307
 
-/*colors*/
-/*# define RED 0x00FF0000
-# define COLOR_RED     0x00FF0000
-# define COLOR_GREEN   0x0000FF00
-# define COLOR_BLUE    0x000000FF
-# define COLOR_WHITE   0x00FFFFFF
-# define COLOR_BLACK   0x00000000*/
-
-
 typedef enum e_color
 {
 	COLOR_BLACK   = 0x00000000,
@@ -39,7 +30,8 @@ typedef enum e_color
 	COLOR_BLUE    = 0x000000FF,
 	COLOR_YELLOW  = 0x00FFFF00,
 	COLOR_CYAN    = 0x0000FFFF,
-	COLOR_MAGENTA = 0x00FF00FF
+	COLOR_MAGENTA = 0x00FF00FF,
+	COLOR_GRAY    = 0x00222222
 }	t_color;
 
 

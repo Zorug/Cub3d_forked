@@ -6,7 +6,7 @@
 /*   By: cgross-s <cgross-s@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/15 17:46:13 by cgross-s          #+#    #+#             */
-/*   Updated: 2026/02/15 19:53:51 by cgross-s         ###   ########.fr       */
+/*   Updated: 2026/02/17 21:53:12 by cgross-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,7 @@ void	draw_map(t_data *data)
 			if (data->map[y][x] == '1')
 				tile.color = COLOR_WHITE;
 			else
-				tile.color = 0x00222222;
+				tile.color = COLOR_GRAY;
 
 			draw_square(&data->screen, &tile);
 			x++;
