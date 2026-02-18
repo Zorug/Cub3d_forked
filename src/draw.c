@@ -6,7 +6,7 @@
 /*   By: cgross-s <cgross-s@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/15 17:46:13 by cgross-s          #+#    #+#             */
-/*   Updated: 2026/02/15 19:53:51 by cgross-s         ###   ########.fr       */
+/*   Updated: 2026/02/18 22:39:47 by cgross-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,35 +60,30 @@ void	draw_square(t_img *img, t_square *s)
 	}
 }
 
+/* Draw a line using DDA algorithm */
 void	draw_line(t_img *img, t_line *l)
 {
-	int		dx;
-	int		dy;
-	int		steps;
-	float	x;
-	float	y;
-	float	x_inc;
-	float	y_inc;
-	int		i;
+	t_dda	d;
 
-	dx = l->end.x - l->start.x;
-	dy = l->end.y - l->start.y;
-	steps = abs(dx) > abs(dy) ? abs(dx) : abs(dy);
-
-	x_inc = dx / (float)steps;
-	y_inc = dy / (float)steps;
-
-	x = l->start.x;
-	y = l->start.y;
-
-	i = 0;
-	while (i <= steps)
+	d.dx = l->end.x - l->start.x;
+	d.dy = l->end.y - l->start.y;
+	if (abs(d.dx) > abs(d.dy))
+		d.steps = abs(d.dx);
+	else
+		d.steps = abs(d.dy);
+	d.x_inc = d.dx / (float)d.steps;
+	d.y_inc = d.dy / (float)d.steps;
+	d.x = l->start.x;
+	d.y = l->start.y;
+	d.i = 0;
+	while (d.i <= d.steps)
 	{
-		if (x >= 0 && x < img->width && y >= 0 && y < img->height)
-			my_mlx_pixel_put(img, (int)x, (int)y, l->color);
-		x += x_inc;
-		y += y_inc;
-		i++;
+		if (d.x >= 0 && d.x < img->width
+			&& d.y >= 0 && d.y < img->height)
+			my_mlx_pixel_put(img, (int)d.x, (int)d.y, l->color);
+		d.x += d.x_inc;
+		d.y += d.y_inc;
+		d.i++;
 	}
 }
 
@@ -99,7 +94,6 @@ void	draw_map(t_data *data)
 	t_square	tile;
 
 	tile.size = TILE_SIZE;
-
 	y = 0;
 	while (y < data->map_height)
 	{
@@ -108,12 +102,10 @@ void	draw_map(t_data *data)
 		{
 			tile.pos.x = x * TILE_SIZE;
 			tile.pos.y = y * TILE_SIZE;
-
 			if (data->map[y][x] == '1')
 				tile.color = COLOR_WHITE;
 			else
-				tile.color = 0x00222222;
-
+				tile.color = COLOR_GRAY;
 			draw_square(&data->screen, &tile);
 			x++;
 		}

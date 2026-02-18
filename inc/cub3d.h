@@ -21,15 +21,6 @@
 # define KEY_RIGHT 65363
 # define KEY_ESC 65307
 
-/*colors*/
-/*# define RED 0x00FF0000
-# define COLOR_RED     0x00FF0000
-# define COLOR_GREEN   0x0000FF00
-# define COLOR_BLUE    0x000000FF
-# define COLOR_WHITE   0x00FFFFFF
-# define COLOR_BLACK   0x00000000*/
-
-
 typedef enum e_color
 {
 	COLOR_BLACK   = 0x00000000,
@@ -39,7 +30,8 @@ typedef enum e_color
 	COLOR_BLUE    = 0x000000FF,
 	COLOR_YELLOW  = 0x00FFFF00,
 	COLOR_CYAN    = 0x0000FFFF,
-	COLOR_MAGENTA = 0x00FF00FF
+	COLOR_MAGENTA = 0x00FF00FF,
+	COLOR_GRAY    = 0x00222222
 }	t_color;
 
 
@@ -132,14 +124,22 @@ typedef struct s_square
 	int		color;
 }	t_square;
 
+/* variables used in draw_line(), draw.c*/
+typedef struct s_dda
+{
+	int		dx; // distância horizontal total
+	int		dy; // distância vertical total
+	int		steps; // quantos pixels desenhar
+	float	x; // posição atual X
+	float	y; // posição atual Y
+	float	x_inc; // avanço em X por passo
+	float	y_inc; // avanço em Y por passo
+	int		i; // contador do loop
+}	t_dda;
 
 /* draw.c */
-//void	draw_circle(t_img *img, int cx, int cy, int radius, int color);
 void	draw_circle(t_img *img, t_circle *c);
-//void	draw_square(t_img *img, int x, int y, int size, int color);
 void	draw_square(t_img *img, t_square *s);
-//void	draw_line(t_img *img,
-//	int x0, int y0, int x1, int y1, int color);
 void	draw_line(t_img *img, t_line *l);
 void	draw_map(t_data *data);
 
