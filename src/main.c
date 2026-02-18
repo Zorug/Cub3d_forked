@@ -6,7 +6,7 @@
 /*   By: cgross-s <cgross-s@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/01 17:42:29 by cgross-s          #+#    #+#             */
-/*   Updated: 2026/02/16 22:39:49 by cgross-s         ###   ########.fr       */
+/*   Updated: 2026/02/18 22:53:18 by cgross-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,11 +88,6 @@ int	render(t_data *data)
 	data->dirY = sin(data->angle);
 
 	// Desenha player
-	/*draw_circle(&data->screen,
-		data->posX * TILE_SIZE,
-		data->posY * TILE_SIZE,
-		TILE_SIZE / 4,
-		COLOR_RED);*/
 	t_circle	player;
 	player.center.x = data->posX * TILE_SIZE;
 	player.center.y = data->posY * TILE_SIZE;
@@ -100,13 +95,7 @@ int	render(t_data *data)
 	player.color = COLOR_RED;
 	draw_circle(&data->screen, &player);
 
-
-	/*draw_line(&data->screen,
-		data->posX * TILE_SIZE,
-		data->posY * TILE_SIZE,
-		(data->posX + data->dirX) * TILE_SIZE,
-		(data->posY + data->dirY) * TILE_SIZE,
-		COLOR_GREEN);*/
+	// desenha linha
 	t_line	dir;
 	dir.start.x = data->posX * TILE_SIZE;
 	dir.start.y = data->posY * TILE_SIZE;
@@ -119,30 +108,14 @@ int	render(t_data *data)
 	left_angle = data->angle - data->fov / 2;
 	right_angle = data->angle + data->fov / 2;
 
-	//right_x = (data->posX + cos(right_angle)) * TILE_SIZE;
-	//right_y = (data->posY + sin(right_angle)) * TILE_SIZE;
 	dir.end.x = (data->posX + cos(right_angle)) * TILE_SIZE;
 	dir.end.y = (data->posY + sin(right_angle)) * TILE_SIZE;
 	dir.color = COLOR_BLUE;
 
-	/*draw_line(&data->screen, // linha limite FOV
-		data->posX * TILE_SIZE,
-		data->posY * TILE_SIZE,
-		right_x,
-		right_y,
-		COLOR_BLUE);*/
 	draw_line(&data->screen, &dir);
 
-	//left_x = (data->posX + cos(left_angle)) * TILE_SIZE;
-	//left_y = (data->posY + sin(left_angle)) * TILE_SIZE;
 	dir.end.x = (data->posX + cos(left_angle)) * TILE_SIZE;
 	dir.end.y = (data->posY + sin(left_angle)) * TILE_SIZE;
-	/*draw_line(&data->screen, // linha limite FOV esquerdo
-		data->posX * TILE_SIZE,
-		data->posY * TILE_SIZE,
-		left_x,
-		left_y,
-		COLOR_BLUE);*/
 	draw_line(&data->screen, &dir);
 
 	// first ray to cast
@@ -156,7 +129,6 @@ int	render(t_data *data)
 	{
 		cast_single_ray(data, startAngle + i * angleStep);
 	}
-
 
 	mlx_put_image_to_window(data->mlx, data->win,
 		data->screen.img, 0, 0);
@@ -190,7 +162,6 @@ int	main(void)
 	// mapa
 	i = 0;
 	data.map_height = 0;// aqui estava a dar um segfail
-	//data.map = test_map;
 	while (test_map[data.map_height]) // evitando erro, não esquece: free
 		data.map_height++;
 	data.map = malloc(sizeof(char *) * (data.map_height + 1)); //FREE IT!
@@ -204,7 +175,6 @@ int	main(void)
 
 	// player
 	find_player(&data);
-	//data.angle = 0; // olhando para a direita
 	data.dirX = cos(data.angle);
 	data.dirY = sin(data.angle);
 

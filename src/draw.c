@@ -6,7 +6,7 @@
 /*   By: cgross-s <cgross-s@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/15 17:46:13 by cgross-s          #+#    #+#             */
-/*   Updated: 2026/02/17 23:19:46 by cgross-s         ###   ########.fr       */
+/*   Updated: 2026/02/18 22:39:47 by cgross-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,52 +59,6 @@ void	draw_square(t_img *img, t_square *s)
 		i++;
 	}
 }
-
-/* Draw a line using DDA algorithm */
-/*void	draw_line(t_img *img, t_line *l)
-{
-	int		dx;
-	int		dy;
-	int		steps;
-	float	x;
-	float	y;
-	float	x_inc;
-	float	y_inc;
-	int		i;
-
-	dx = l->end.x - l->start.x;
-	dy = l->end.y - l->start.y;
-	if (abs(dx) > abs(dy))
-		steps = abs(dx);
-	else
-		steps = abs(dy);
-	x_inc = dx / (float)steps;
-	y_inc = dy / (float)steps;
-	x = l->start.x;
-	y = l->start.y;
-	i = 0;
-	while (i <= steps)
-	{
-		if (x >= 0 && x < img->width && y >= 0 && y < img->height)
-			my_mlx_pixel_put(img, (int)x, (int)y, l->color);
-		x += x_inc;
-		y += y_inc;
-		i++;
-	}
-}*/
-
-/* variables used in draw_line(), draw.c*/
-/*typedef struct s_dda
-{
-	int		dx; // distância horizontal total
-	int		dy; // distância vertical total
-	int		steps; // quantos pixels desenhar
-	float	x; // posição atual X
-	float	y; // posição atual Y
-	float	x_inc; // avanço em X por passo
-	float	y_inc; // avanço em Y por passo
-	int		i; // contador do loop
-}	t_dda;*/
 
 /* Draw a line using DDA algorithm */
 void	draw_line(t_img *img, t_line *l)
