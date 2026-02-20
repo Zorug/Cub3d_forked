@@ -6,7 +6,7 @@
 /*   By: cgross-s <cgross-s@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/01 17:42:29 by cgross-s          #+#    #+#             */
-/*   Updated: 2026/02/18 22:53:18 by cgross-s         ###   ########.fr       */
+/*   Updated: 2026/02/20 22:50:57 by cgross-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,113 +27,27 @@ static char *test_map[] = {
 	NULL
 };
 
-/* direction of the player */
-void	set_player_direction(t_data *data, char c)
+void	load_map(t_data *data, char **src_map)
 {
-	if (c == 'N')
-		data->angle = -M_PI / 2;
-	else if (c == 'S')
-		data->angle = M_PI / 2;
-	else if (c == 'E')
-		data->angle = 0;
-	else if (c == 'W')
-		data->angle = M_PI;
+	int	i;
 
-	data->dirX = cos(data->angle);
-	data->dirY = sin(data->angle);
-}
+	i = 0;
+	data->map_height = 0;
+	while (src_map[data->map_height])
+		data->map_height++;
 
-/* Player start position */
-void	find_player(t_data *data)
-{
-	int	y;
-	int	x;
+	data->map = malloc(sizeof(char *) * (data->map_height + 1)); // cuidar com o free!!
+	if (!data->map)
+		return ; // depois você pode tratar erro melhor
 
-	y = 0;
-	while (y < data->map_height)
+	while (i < data->map_height)
 	{
-		x = 0;
-		while (x < data->map_width)
-		{
-			if (ft_strchr("NSEW", data->map[y][x]))
-			{
-				data->posX = x + 0.5;
-				data->posY = y + 0.5;
-				set_player_direction(data, data->map[y][x]);
-				data->map[y][x] = '0';
-				return ;
-			}
-			x++;
-		}
-		y++;
+		data->map[i] = ft_strdup(src_map[i]);
+		i++;
 	}
-}
+	data->map[i] = NULL;
 
-int	render(t_data *data)
-{
-	double	left_angle;
-	double	right_angle;
-	int	left_x;
-	int	left_y;
-	int	right_x;
-	int	right_y;
-
-	clear_screen(&data->screen);
-
-	//desenha o mapa
-	draw_map(data);
-
-	// Atualiza vetor principal
-	data->dirX = cos(data->angle);
-	data->dirY = sin(data->angle);
-
-	// Desenha player
-	t_circle	player;
-	player.center.x = data->posX * TILE_SIZE;
-	player.center.y = data->posY * TILE_SIZE;
-	player.radius = TILE_SIZE / 4;
-	player.color = COLOR_RED;
-	draw_circle(&data->screen, &player);
-
-	// desenha linha
-	t_line	dir;
-	dir.start.x = data->posX * TILE_SIZE;
-	dir.start.y = data->posY * TILE_SIZE;
-	dir.end.x = (data->posX + data->dirX) * TILE_SIZE;
-	dir.end.y = (data->posY + data->dirY) * TILE_SIZE;
-	dir.color = COLOR_GREEN;
-	draw_line(&data->screen, &dir);
-
-	// Limites do FOV
-	left_angle = data->angle - data->fov / 2;
-	right_angle = data->angle + data->fov / 2;
-
-	dir.end.x = (data->posX + cos(right_angle)) * TILE_SIZE;
-	dir.end.y = (data->posY + sin(right_angle)) * TILE_SIZE;
-	dir.color = COLOR_BLUE;
-
-	draw_line(&data->screen, &dir);
-
-	dir.end.x = (data->posX + cos(left_angle)) * TILE_SIZE;
-	dir.end.y = (data->posY + sin(left_angle)) * TILE_SIZE;
-	draw_line(&data->screen, &dir);
-
-	// first ray to cast
-	//cast_single_ray(data);
-	int i;
-	int rays = 60;
-	double startAngle = data->angle - data->fov / 2;
-	double angleStep = data->fov / rays;
-
-	for (i = 0; i < rays; i++)
-	{
-		cast_single_ray(data, startAngle + i * angleStep);
-	}
-
-	mlx_put_image_to_window(data->mlx, data->win,
-		data->screen.img, 0, 0);
-
-	return (0);
+	data->map_width = ft_strlen(data->map[0]);
 }
 
 int	main(void)
@@ -144,13 +58,13 @@ int	main(void)
 	data.mlx = mlx_init(); // Conecta ao X11. Sem isso, nada funciona
 
 	// Cria uma janela vazia
-	data.screen.width = 800;
-	data.screen.height = 600;
+	data.screen.width = 800; // start
+	data.screen.height = 600; // start
 
-	data.win = mlx_new_window(data.mlx,
+	data.win = mlx_new_window(data.mlx, //start
 		data.screen.width, data.screen.height, "CUB3D");
 	// Cria um buffer de pixels na memória. Ainda não sabemos onde ele está
-	data.screen.img = mlx_new_image(data.mlx,
+	data.screen.img = mlx_new_image(data.mlx, //start
 		data.screen.width, data.screen.height);
 
 	// img.addr aponta para a memória real
@@ -160,8 +74,9 @@ int	main(void)
 		&data.screen.bits_per_pixel, &data.screen.line_length, &data.screen.endian);
 
 	// mapa
-	i = 0;
-	data.map_height = 0;// aqui estava a dar um segfail
+	load_map(&data, test_map);
+/*	i = 0;
+	data.map_height = 0; // inicia o contador de posição
 	while (test_map[data.map_height]) // evitando erro, não esquece: free
 		data.map_height++;
 	data.map = malloc(sizeof(char *) * (data.map_height + 1)); //FREE IT!
@@ -171,7 +86,8 @@ int	main(void)
 		i++;
 	}
 	data.map[i] = NULL;
-	data.map_width = ft_strlen(data.map[0]);
+	data.map_width = ft_strlen(data.map[0]);*/
+	
 
 	// player
 	find_player(&data);
