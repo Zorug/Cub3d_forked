@@ -6,7 +6,7 @@
 /*   By: cgross-s <cgross-s@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/15 17:46:13 by cgross-s          #+#    #+#             */
-/*   Updated: 2026/02/18 22:39:47 by cgross-s         ###   ########.fr       */
+/*   Updated: 2026/02/20 21:47:01 by cgross-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,22 +60,23 @@ void	draw_square(t_img *img, t_square *s)
 	}
 }
 
-/* Draw a line using DDA algorithm */
+/* Draw a line using DDA algorithm 
+https://www.youtube.com/watch?v=Oyp3eq580jA */
 void	draw_line(t_img *img, t_line *l)
 {
 	t_dda	d;
 
 	d.dx = l->end.x - l->start.x;
 	d.dy = l->end.y - l->start.y;
-	if (abs(d.dx) > abs(d.dy))
+	if (abs(d.dx) > abs(d.dy)) // the size of the step is based on the bigger value
 		d.steps = abs(d.dx);
 	else
 		d.steps = abs(d.dy);
-	d.x_inc = d.dx / (float)d.steps;
-	d.y_inc = d.dy / (float)d.steps;
-	d.x = l->start.x;
-	d.y = l->start.y;
-	d.i = 0;
+	d.x_inc = d.dx / (float)d.steps; // incremento em x
+	d.y_inc = d.dy / (float)d.steps; // incremento em y
+	d.x = l->start.x; // x inicial
+	d.y = l->start.y; // y inicial
+	d.i = 0; // counter
 	while (d.i <= d.steps)
 	{
 		if (d.x >= 0 && d.x < img->width

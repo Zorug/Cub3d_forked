@@ -6,15 +6,34 @@
 /*   By: cgross-s <cgross-s@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/08 21:32:20 by cgross-s          #+#    #+#             */
-/*   Updated: 2026/02/18 22:38:06 by cgross-s         ###   ########.fr       */
+/*   Updated: 2026/02/20 22:57:31 by cgross-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/cub3d.h"
 
+/*clear map leaks*/
+void	free_map(t_data *data)
+{
+	int	i;
+
+	if (!data->map)
+		return ;
+	i = 0;
+	while (data->map[i])
+	{
+		free(data->map[i]);
+		i++;
+	}
+	free(data->map);
+	data->map = NULL;
+}
+
+
 /* close and clear leaks */
 int	close_window(t_data *data)
 {
+	free_map(data);
 	if (!data)
 		exit(0);
 	if (data->screen.img)

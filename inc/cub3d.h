@@ -13,13 +13,16 @@
 # define TILE_SIZE 40 // size of a square
 
 /* --- Key Definitions (Linux) --- */
-# define KEY_W 119
-# define KEY_A 97
-# define KEY_S 115
-# define KEY_D 100
-# define KEY_LEFT 65361
-# define KEY_RIGHT 65363
-# define KEY_ESC 65307
+typedef enum e_key
+{
+	KEY_W     = 119,
+	KEY_A     = 97,
+	KEY_S     = 115,
+	KEY_D     = 100,
+	KEY_LEFT  = 65361,
+	KEY_RIGHT = 65363,
+	KEY_ESC   = 65307
+}	t_key;
 
 typedef enum e_color
 {
@@ -144,16 +147,21 @@ void	draw_line(t_img *img, t_line *l);
 void	draw_map(t_data *data);
 
 /* hooks.c */
-int	close_window(t_data *data);
-int	key_hook(int keycode, t_data *data);
+void	free_map(t_data *data);
+int		close_window(t_data *data);
+int		key_hook(int keycode, t_data *data);
 
 /* raycast.c */
-//void cast_single_ray(t_data *data);
 void cast_single_ray(t_data *data, double rayAngle);
+
+/* render.c */
+int	render(t_data *data);
 
 /* utils.c */
 void	my_mlx_pixel_put(t_img *img, int x, int y, int color);
 void	clear_screen(t_img *img);
+void	set_player_direction(t_data *data, char c);
+void	find_player(t_data *data);
 
 /* --- Map Validation Prototypes --- */
 int		validate_scene_file(const char *filename);
@@ -164,6 +172,6 @@ int		is_map_closed(char **map);
 int		count_player_positions(char **map);
 int		is_player_char(char c);
 int		is_line_map(const char *line);
-void	free_map(char **map);
+//void	free_map(char **map);
 
 #endif
