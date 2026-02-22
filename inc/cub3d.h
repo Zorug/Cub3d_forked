@@ -221,7 +221,8 @@ void	init_mouse(t_data *data);
 void	init_hooks(t_data *data);
 
 /* raycast/raycast.c */
-void cast_single_ray(t_data *data, double rayAngle);
+//void cast_single_ray(t_data *data, double rayAngle);
+void	cast_single_ray(t_data *data, double ray_angle, t_ray *ray);
 /* raycast/init_dda.c */
 void	init_dda(t_data *data, t_ray *ray);
 
