@@ -6,39 +6,11 @@
 /*   By: cgross-s <cgross-s@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/20 22:13:17 by cgross-s          #+#    #+#             */
-/*   Updated: 2026/02/22 18:11:10 by cgross-s         ###   ########.fr       */
+/*   Updated: 2026/02/22 21:38:31 by cgross-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/cub3d.h"
-
-/*void	draw_minimap(t_data *data)
-{
-	int	x;
-	int	y;
-	int	tile;
-
-	tile = TILE_SIZE * MINIMAP_SCALE;
-	y = 0;
-	while (y < data->map_height)
-	{
-		x = 0;
-		while (x < data->map_width)
-		{
-			if (data->map[y][x] == '1')
-				draw_rect(
-					&data->screen,
-					x * tile + MINIMAP_OFFSET_X,
-					y * tile + MINIMAP_OFFSET_Y,
-					tile,
-					tile,
-					COLOR_GRAY
-				);
-			x++;
-		}
-		y++;
-	}
-}*/
 
 void	draw_minimap(t_data *data)
 {
@@ -82,69 +54,81 @@ void	draw_player_minimap(t_data *data)
 	draw_circle(&data->screen, &player);
 }
 
+void	render_3d_view(t_data *data)
+{
+	int		x;
+	double	camera_x;
+	double	ray_angle;
+	t_ray	ray;
+	int		line_height;
+	int		draw_start;
+	int		draw_end;
+	int		y;
+
+	x = 0;
+	while (x < data->screen.width)
+	{
+		camera_x = 2.0 * x / (double)data->screen.width - 1.0;
+		ray_angle = data->angle
+			+ atan(camera_x * tan(data->fov / 2));
+
+		cast_single_ray(data, ray_angle, &ray);
+
+		line_height = (int)(data->screen.height / ray.perp_wall_dist);
+
+		draw_start = -line_height / 2 + data->screen.height / 2;
+		draw_end = line_height / 2 + data->screen.height / 2;
+
+		if (draw_start < 0)
+			draw_start = 0;
+		if (draw_end >= data->screen.height)
+			draw_end = data->screen.height - 1;
+
+		y = draw_start;
+		while (y <= draw_end)
+		{
+			my_mlx_pixel_put(&data->screen, x, y, COLOR_RED);
+			y++;
+		}
+		x++;
+	}
+}
+
 int	render(t_data *data)
 {
-	double	left_angle;
-	double	right_angle;
-	int	left_x;
-	int	left_y;
-	int	right_x;
-	int	right_y;
+	//double	left_angle;
+	//double	right_angle;
+	//int	left_x;
+	//int	left_y;
+	//int	right_x;
+	//int	right_y;
 
 	clear_screen(&data->screen);
+
+	// 3D
+	render_3d_view(data);
 
 	//desenha o mapa
 	//draw_map(data);
 	draw_minimap(data);
 
 	// Atualiza vetor principal
-	data->dirX = cos(data->angle);
-	data->dirY = sin(data->angle);
+	//data->dirX = cos(data->angle);
+	//data->dirY = sin(data->angle);
 
 	// Desenha player
-	/*t_circle	player;
-	///////////////////
-	player.center.x = data->posX * TILE_SIZE;
-	player.center.y = data->posY * TILE_SIZE;
-	player.radius = TILE_SIZE / 4;
-	player.color = COLOR_RED;
-	draw_circle(&data->screen, &player);*/
 	draw_player_minimap(data);
 
-	// desenha linha
-	/*t_line	dir;
-	/////////////7
-	dir.start.x = data->posX * TILE_SIZE;
-	dir.start.y = data->posY * TILE_SIZE;
-	dir.end.x = (data->posX + data->dirX) * TILE_SIZE;
-	dir.end.y = (data->posY + data->dirY) * TILE_SIZE;
-	dir.color = COLOR_GREEN;
-	draw_line(&data->screen, &dir);*/
-
-	// Limites do FOV
-	/*left_angle = data->angle - data->fov / 2;
-	right_angle = data->angle + data->fov / 2;
-
-	dir.end.x = (data->posX + cos(right_angle)) * TILE_SIZE;
-	dir.end.y = (data->posY + sin(right_angle)) * TILE_SIZE;
-	dir.color = COLOR_BLUE;
-
-	draw_line(&data->screen, &dir);
-
-	dir.end.x = (data->posX + cos(left_angle)) * TILE_SIZE;
-	dir.end.y = (data->posY + sin(left_angle)) * TILE_SIZE;
-	draw_line(&data->screen, &dir);*/
-
 	// first ray to cast
-	int i;
-	int rays = 60;
-	double startAngle = data->angle - data->fov / 2;
-	double angleStep = data->fov / rays;
+	//int i;
+	//int rays = 60;
+	//double startAngle = data->angle - data->fov / 2;
+	//double angleStep = data->fov / rays;
 
-	for (i = 0; i < rays; i++)
-	{
-		cast_single_ray(data, startAngle + i * angleStep);
-	}
+	//for (i = 0; i < rays; i++)
+	//{
+	//	cast_single_ray(data, startAngle + i * angleStep);
+	//}
 
 	mlx_put_image_to_window(data->mlx, data->win,
 		data->screen.img, 0, 0);

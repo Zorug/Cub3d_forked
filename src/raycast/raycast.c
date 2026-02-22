@@ -6,7 +6,7 @@
 /*   By: cgross-s <cgross-s@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/15 21:31:40 by cgross-s          #+#    #+#             */
-/*   Updated: 2026/02/22 18:04:48 by cgross-s         ###   ########.fr       */
+/*   Updated: 2026/02/22 21:35:57 by cgross-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ void	draw_ray_debug(t_data *data, t_ray *ray)
 	draw_ray_minimap(data, ray);
 }
 
-void	cast_single_ray(t_data *data, double ray_angle)
+/*void	cast_single_ray(t_data *data, double ray_angle)
 {
 	t_ray	ray;
 
@@ -114,4 +114,14 @@ void	cast_single_ray(t_data *data, double ray_angle)
 	compute_perp_distance(data, &ray);
 	compute_hit_position(data, &ray);
 	draw_ray_debug(data, &ray);
+}*/
+
+void	cast_single_ray(t_data *data, double ray_angle, t_ray *ray)
+{
+	init_ray_direction(data, ray, ray_angle);
+	init_dda(data, ray);
+	perform_dda(data, ray);
+	compute_perp_distance(data, ray);
+	compute_hit_position(data, ray);
+	draw_ray_debug(data, ray);
 }

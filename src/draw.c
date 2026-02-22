@@ -6,7 +6,7 @@
 /*   By: cgross-s <cgross-s@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/15 17:46:13 by cgross-s          #+#    #+#             */
-/*   Updated: 2026/02/22 17:26:37 by cgross-s         ###   ########.fr       */
+/*   Updated: 2026/02/22 21:04:04 by cgross-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,7 +124,7 @@ void	draw_line(t_img *img, t_line *l)
 	}
 }
 
-void	draw_map(t_data *data)
+/*void	draw_map(t_data *data)
 {
 	int			x;
 	int			y;
@@ -148,4 +148,4 @@ void	draw_map(t_data *data)
 		}
 		y++;
 	}
-}
+}*/
