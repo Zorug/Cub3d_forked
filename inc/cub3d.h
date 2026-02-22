@@ -200,6 +200,13 @@ int		close_window(t_data *data);
 int		key_hook(int keycode, t_data *data);
 int		mouse_move(int x, int y, t_data *data);
 
+/* initialization.c */
+void	init_mlx(t_data *data);
+void	init_screen(t_data *data);
+void	init_player(t_data *data);
+void	init_mouse(t_data *data);
+void	init_hooks(t_data *data);
+
 /* raycast/raycast.c */
 void cast_single_ray(t_data *data, double rayAngle);
 /* raycast/init_dda.c */

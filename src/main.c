@@ -6,7 +6,7 @@
 /*   By: cgross-s <cgross-s@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/01 17:42:29 by cgross-s          #+#    #+#             */
-/*   Updated: 2026/02/22 16:26:26 by cgross-s         ###   ########.fr       */
+/*   Updated: 2026/02/22 16:37:17 by cgross-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,130 +45,6 @@ void	load_map(t_data *data, char **src_map)
 	}
 	data->map[i] = NULL;
 	data->map_width = ft_strlen(data->map[0]);
-}
-
-/*int	main(void)
-{
-	t_data	data;
-	int		i;
-
-	data.mlx = mlx_init(); // Conecta ao X11. Sem isso, nada funciona
-
-	// Cria uma janela vazia
-	data.screen.width = 800; // start
-	data.screen.height = 600; // start
-
-	data.win = mlx_new_window(data.mlx, //start
-		data.screen.width, data.screen.height, "CUB3D");
-	// Cria um buffer de pixels na memória. Ainda não sabemos onde ele está
-	data.screen.img = mlx_new_image(data.mlx, //start
-		data.screen.width, data.screen.height);
-
-	// img.addr aponta para a memória real
-	// Você pode manipular pixel por pixel
-	// Sem isso, não dá pra desenhar manualmente.
-	data.screen.addr = mlx_get_data_addr(data.screen.img, 
-		&data.screen.bits_per_pixel, &data.screen.line_length, &data.screen.endian);
-
-	// mapa
-	load_map(&data, test_map);
-
-	// player
-	find_player(&data);
-	data.dirX = cos(data.angle);
-	data.dirY = sin(data.angle);
-
-	// fov angle (M_PI is working fine, form math.h)
-	data.fov = M_PI / 3;
-	data.move_speed = 0.5;
-	data.rot_speed = 0.4;
-
-	// mouse moving stuffs
-	data.mouse_enabled = 0;           // começa desligado
-	data.mouse_sensitivity = 0.002;
-	data.win_center_x = data.screen.width / 2;
-	data.win_center_y = data.screen.height / 2;
-	mlx_hook(data.win, 6, 1L << 6, mouse_move, &data);
-
-	// ao apertar esc sai
-	mlx_key_hook(data.win, key_hook, &data);
-	// fechar clicando no x
-	mlx_hook(data.win, 17, 0, close_window, &data);
-	//chamar o render
-	mlx_loop_hook(data.mlx, render, &data);
-	// Mantém a janela aberta. Escuta eventos. Sem isso, o programa fecha imediatamente
-	mlx_loop(data.mlx);
-}*/
-
-/* Inicialização da MLX e janela */
-void	init_mlx(t_data *data)
-{
-	data->mlx = mlx_init();
-	//if (!data->mlx)
-	//	exit_error("mlx_init failed");
-
-	data->screen.width = 800;
-	data->screen.height = 600;
-
-	data->win = mlx_new_window(
-		data->mlx,
-		data->screen.width,
-		data->screen.height,
-		"CUB3D"
-	);
-	//if (!data->win)
-	//	exit_error("mlx_new_window failed");
-}
-
-/* Inicialização da imagem (framebuffer) */
-void	init_screen(t_data *data)
-{
-	data->screen.img = mlx_new_image(
-		data->mlx,
-		data->screen.width,
-		data->screen.height
-	);
-	//if (!data->screen.img)
-	//	exit_error("mlx_new_image failed");
-
-	data->screen.addr = mlx_get_data_addr(
-		data->screen.img,
-		&data->screen.bits_per_pixel,
-		&data->screen.line_length,
-		&data->screen.endian
-	);
-}
-
-/* Inicialização do jogador e parâmetros do jogo */
-void	init_player(t_data *data)
-{
-	find_player(data);
-
-	data->dirX = cos(data->angle);
-	data->dirY = sin(data->angle);
-
-	data->fov = M_PI / 3;
-	data->move_speed = 0.5;
-	data->rot_speed = 0.4;
-}
-
-/* Inicialização do mouse */
-void	init_mouse(t_data *data)
-{
-	data->mouse_enabled = 0;
-	data->mouse_sensitivity = 0.002;
-	data->win_center_x = data->screen.width / 2;
-	data->win_center_y = data->screen.height / 2;
-
-	mlx_hook(data->win, 6, 1L << 6, mouse_move, data);
-}
-
-/* Hooks gerais (teclado, fechar, loop) */
-void	init_hooks(t_data *data)
-{
-	mlx_key_hook(data->win, key_hook, data);
-	mlx_hook(data->win, 17, 0, close_window, data);
-	mlx_loop_hook(data->mlx, render, data);
 }
 
 int	main(void)
