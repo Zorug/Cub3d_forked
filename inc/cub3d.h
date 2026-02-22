@@ -38,6 +38,10 @@ typedef enum e_color
 	COLOR_GRAY    = 0x00222222
 }	t_color;
 
+#define MINIMAP_SCALE 0.25
+#define MINIMAP_OFFSET_X 10
+#define MINIMAP_OFFSET_Y 10
+
 /* --- Image Structures (MLX) --- */
 typedef struct s_img {
 	void	*img;
@@ -128,6 +132,14 @@ typedef struct s_square
 	int		color;
 }	t_square;
 
+typedef struct s_rect
+{
+	t_point	pos;
+	int		width;
+	int		height;
+	int		color;
+}	t_rect;
+
 /* variables used in draw_line(), draw.c*/
 typedef struct s_dda
 {
@@ -190,6 +202,7 @@ typedef struct s_ray
 
 /* draw.c */
 void	draw_circle(t_img *img, t_circle *c);
+void	draw_rect(t_img *img, t_rect *r);
 void	draw_square(t_img *img, t_square *s);
 void	draw_line(t_img *img, t_line *l);
 void	draw_map(t_data *data);

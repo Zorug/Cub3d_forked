@@ -6,7 +6,7 @@
 /*   By: cgross-s <cgross-s@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/15 17:46:13 by cgross-s          #+#    #+#             */
-/*   Updated: 2026/02/20 21:47:01 by cgross-s         ###   ########.fr       */
+/*   Updated: 2026/02/22 17:26:37 by cgross-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	draw_circle(t_img *img, t_circle *c)
 	}
 }
 
-void	draw_square(t_img *img, t_square *s)
+/*void	draw_square(t_img *img, t_square *s)
 {
 	int	i;
 	int	j;
@@ -58,6 +58,42 @@ void	draw_square(t_img *img, t_square *s)
 		}
 		i++;
 	}
+}*/
+
+void	draw_rect(t_img *img, t_rect *r)
+{
+	int	x;
+	int	y;
+
+	y = 0;
+	while (y < r->height)
+	{
+		x = 0;
+		while (x < r->width)
+		{
+			if (r->pos.x + x >= 0 && r->pos.x + x < img->width
+				&& r->pos.y + y >= 0 && r->pos.y + y < img->height)
+				my_mlx_pixel_put(
+					img,
+					r->pos.x + x,
+					r->pos.y + y,
+					r->color
+				);
+			x++;
+		}
+		y++;
+	}
+}
+
+void	draw_square(t_img *img, t_square *s)
+{
+	t_rect	r;
+
+	r.pos = s->pos;
+	r.width = s->size;
+	r.height = s->size;
+	r.color = s->color;
+	draw_rect(img, &r);
 }
 
 /* Draw a line using DDA algorithm 
