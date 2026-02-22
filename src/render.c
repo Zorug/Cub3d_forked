@@ -6,7 +6,7 @@
 /*   By: cgross-s <cgross-s@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/20 22:13:17 by cgross-s          #+#    #+#             */
-/*   Updated: 2026/02/22 17:48:20 by cgross-s         ###   ########.fr       */
+/*   Updated: 2026/02/22 18:11:10 by cgross-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,17 +112,17 @@ int	render(t_data *data)
 	draw_player_minimap(data);
 
 	// desenha linha
-	t_line	dir;
+	/*t_line	dir;
 	/////////////7
 	dir.start.x = data->posX * TILE_SIZE;
 	dir.start.y = data->posY * TILE_SIZE;
 	dir.end.x = (data->posX + data->dirX) * TILE_SIZE;
 	dir.end.y = (data->posY + data->dirY) * TILE_SIZE;
 	dir.color = COLOR_GREEN;
-	draw_line(&data->screen, &dir);
+	draw_line(&data->screen, &dir);*/
 
 	// Limites do FOV
-	left_angle = data->angle - data->fov / 2;
+	/*left_angle = data->angle - data->fov / 2;
 	right_angle = data->angle + data->fov / 2;
 
 	dir.end.x = (data->posX + cos(right_angle)) * TILE_SIZE;
@@ -133,7 +133,7 @@ int	render(t_data *data)
 
 	dir.end.x = (data->posX + cos(left_angle)) * TILE_SIZE;
 	dir.end.y = (data->posY + sin(left_angle)) * TILE_SIZE;
-	draw_line(&data->screen, &dir);
+	draw_line(&data->screen, &dir);*/
 
 	// first ray to cast
 	int i;
