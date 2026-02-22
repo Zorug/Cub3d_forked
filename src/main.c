@@ -6,7 +6,7 @@
 /*   By: cgross-s <cgross-s@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/01 17:42:29 by cgross-s          #+#    #+#             */
-/*   Updated: 2026/02/22 11:52:27 by cgross-s         ###   ########.fr       */
+/*   Updated: 2026/02/22 13:41:03 by cgross-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,10 @@ int	main(void)
 	data.move_speed = 0.5;
 	data.rot_speed = 0.4;
 	
+	data.mouse_init = 0;
+	data.mouse_sensitivity = 0.002;
+	mlx_hook(data.win, 6, 1L << 6, mouse_move, &data);
+
 	// ao apertar esc sai
 	mlx_key_hook(data.win, key_hook, &data);
 	// fechar clicando no x

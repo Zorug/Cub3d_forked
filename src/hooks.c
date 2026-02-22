@@ -6,7 +6,7 @@
 /*   By: cgross-s <cgross-s@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/08 21:32:20 by cgross-s          #+#    #+#             */
-/*   Updated: 2026/02/20 22:57:31 by cgross-s         ###   ########.fr       */
+/*   Updated: 2026/02/22 13:38:33 by cgross-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,5 +108,32 @@ int	key_hook(int keycode, t_data *data)
 	handle_rotation(keycode, data);
 	if (keycode == KEY_ESC)
 		close_window(data);
+	return (0);
+}
+
+int	mouse_move(int x, int y, t_data *data)
+{
+	int	delta_x;
+
+	(void)y;
+
+	if (!data->mouse_init)
+	{
+		data->mouse_x = x;
+		data->mouse_init = 1;
+		return (0);
+	}
+
+	delta_x = x - data->mouse_x;
+	data->mouse_x = x;
+
+	data->angle += delta_x * data->mouse_sensitivity;
+
+	// Mantém o ângulo sempre entre 0 e 2π
+	if (data->angle < 0)
+		data->angle += 2 * M_PI;
+	if (data->angle > 2 * M_PI)
+		data->angle -= 2 * M_PI;
+
 	return (0);
 }

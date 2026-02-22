@@ -56,16 +56,6 @@ typedef struct s_data {
 	void	*win;
 	t_img	screen;
 
-/*
-	// Parsing Data (Person B)
-	char	**map;				// Map matrix
-	char	*tex_path[4];		// Paths NO, SO, WE, EA [cite: 141]
-	t_img	tex[4];				// Loaded textures
-	int		floor_color;		// Floor color in Hexadecimal [cite: 161]
-	int		ceiling_color;		// Ceiling color in Hexadecimal [cite: 168]
-	int		map_width;
-	int		map_height;*/
-
 	// Player State (Person A)
 	double	posX;				// Initial X coordinate
 	double	posY;				// Initial Y coordinate
@@ -73,6 +63,12 @@ typedef struct s_data {
 	double	dirX;				// Direction vector
 	double	dirY;
 	double	angle;   // position angle of the player throught the map
+
+	// related to moving with mouse
+	int		mouse_x; // última posição X conhecida
+	int		mouse_y;
+	int		mouse_init; // evita salto gigante no primeiro movimento
+	double	mouse_sensitivity; // controla a velocidade da rotação
 
 	double	fov;	// player FOV angle (rad)
 	double	move_speed; // speed of the player
@@ -84,7 +80,15 @@ typedef struct s_data {
 	char	**map;
 	int		map_width;
 	int		map_height;
-
+	/*
+	// Parsing Data (Person B)
+	char	**map;				// Map matrix
+	char	*tex_path[4];		// Paths NO, SO, WE, EA [cite: 141]
+	t_img	tex[4];				// Loaded textures
+	int		floor_color;		// Floor color in Hexadecimal [cite: 161]
+	int		ceiling_color;		// Ceiling color in Hexadecimal [cite: 168]
+	int		map_width;
+	int		map_height;*/
 }	t_data;
 
 /*
@@ -197,6 +201,7 @@ void	draw_map(t_data *data);
 void	free_map(t_data *data);
 int		close_window(t_data *data);
 int		key_hook(int keycode, t_data *data);
+int		mouse_move(int x, int y, t_data *data);
 
 /* raycast/raycast.c */
 void cast_single_ray(t_data *data, double rayAngle);
