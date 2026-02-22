@@ -21,7 +21,8 @@ typedef enum e_key
 	KEY_D     = 100,
 	KEY_LEFT  = 65361,
 	KEY_RIGHT = 65363,
-	KEY_ESC   = 65307
+	KEY_ESC   = 65307,
+	KEY_M     = 109		// mouse activate
 }	t_key;
 
 typedef enum e_color
@@ -65,16 +66,22 @@ typedef struct s_data {
 	double	angle;   // position angle of the player throught the map
 
 	// related to moving with mouse
-	int		mouse_x; // última posição X conhecida
-	int		mouse_y;
-	int		mouse_init; // evita salto gigante no primeiro movimento
-	double	mouse_sensitivity; // controla a velocidade da rotação
+	//int		mouse_x; // última posição X conhecida
+	//int		mouse_y;
+	//int		mouse_init; // evita salto gigante no primeiro movimento
+	//double	mouse_sensitivity; // controla a velocidade da rotação
 
 	double	fov;	// player FOV angle (rad)
 	double	move_speed; // speed of the player
 	double	rot_speed; // speed of rotation
 	//double	planeX;				// Camera plane (for FOV)
 	//double	planeY;
+
+	// related to moving with mouse
+	int		mouse_enabled;
+	double	mouse_sensitivity;
+	int		win_center_x;
+	int		win_center_y;
 
 	// relativo ao mapa
 	char	**map;
