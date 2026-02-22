@@ -6,60 +6,13 @@
 /*   By: cgross-s <cgross-s@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/15 21:31:40 by cgross-s          #+#    #+#             */
-/*   Updated: 2026/02/22 11:48:40 by cgross-s         ###   ########.fr       */
+/*   Updated: 2026/02/22 12:11:34 by cgross-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/cub3d.h"
 
-/*Essa struct guarda tudo o que o raio precisa saber para andar.*/
-/*typedef struct s_ray
-{
-	// Direção do raio (normalizado)
-	// São as componentes do vetor direção do raio.
-	double	ray_dir_x;
-	double	ray_dir_y;
-
-	// Posição atual do raio no mapa (em tiles)
-	// A célula do mapa (data->map[y][x]) onde o raio está agora.
-	int		map_x;
-	int		map_y;
-
-	// Distância para atravessar 1 tile (deltaDist)
-	// Quanto o raio precisa andar (em distância real) para cruzar 1 
-	// linha vertical ou 1 linha horizontal do grid.
-	double	delta_dist_x;
-	double	delta_dist_y;
-
-	// Distância até a próxima borda do tile
-	// Distância desde a posição atual do jogador até:
-	double	side_dist_x; // a próxima linha vertical
-	double	side_dist_y; // a próxima linha horizontal
-
-	// Direção do passo no mapa
-	// Dizem para qual lado o raio anda no grid.
-	// +1 → direita / baixo
-	// -1 → esquerda / cima
-	int		step_x;
-	int		step_y;
-
-	// Indica qual tipo de parede foi atingida:
-	int		side;        // 0 = vertical, 1 = horizontal
-	// 0 → ainda não bateu
-	// 1 → encontrou parede ('1')
-	int		hit;
-
-	// Distância perpendicular à parede
-	// A distância real e corrigida do jogador até a parede.
-	double	perp_wall_dist;
-
-	// Ponto exato de impacto (em coordenadas do mundo)
-	// O ponto exato onde o raio bateu na parede, em coordenadas do mundo (tiles).
-	double	hit_x;
-	double	hit_y;
-}	t_ray;*/
-
-/*calcular a direção do raio e a célula inicial do mapa*/
+/*set initial directions and position in the map (in map pos [0, 1])*/
 void	init_ray_direction(t_data *data, t_ray *ray, double ray_angle)
 {
 	ray->ray_dir_x = cos(ray_angle);
@@ -68,19 +21,28 @@ void	init_ray_direction(t_data *data, t_ray *ray, double ray_angle)
 	ray->map_y = (int)data->posY;
 }
 
+// -----------------------------------------------------------------
 /*Responsável por preparar tudo antes do loop DDA.*/
-void	init_dda(t_data *data, t_ray *ray)
+/*Ela não lança o raio ainda, apenas configura tudo
+o que o DDA precisa para funcionar corretamente.
+Antes do raio começar a “andar” pelo mapa, precisamos dizer:
+- em que direção ele anda
+- quanto ele anda por tile
+- qual será o primeiro limite que ele vai cruzar*/
+static void	init_delta_dist(t_ray *ray)
 {
 	if (ray->ray_dir_x == 0)
 		ray->delta_dist_x = 1e30;
 	else
 		ray->delta_dist_x = fabs(1 / ray->ray_dir_x);
-
 	if (ray->ray_dir_y == 0)
 		ray->delta_dist_y = 1e30;
 	else
 		ray->delta_dist_y = fabs(1 / ray->ray_dir_y);
+}
 
+static void	init_step_x(t_data *data, t_ray *ray)
+{
 	if (ray->ray_dir_x < 0)
 	{
 		ray->step_x = -1;
@@ -93,6 +55,10 @@ void	init_dda(t_data *data, t_ray *ray)
 		ray->side_dist_x = (ray->map_x + 1.0 - data->posX)
 			* ray->delta_dist_x;
 	}
+}
+
+static void	init_step_y(t_data *data, t_ray *ray)
+{
 	if (ray->ray_dir_y < 0)
 	{
 		ray->step_y = -1;
@@ -105,8 +71,17 @@ void	init_dda(t_data *data, t_ray *ray)
 		ray->side_dist_y = (ray->map_y + 1.0 - data->posY)
 			* ray->delta_dist_y;
 	}
+}
+
+void	init_dda(t_data *data, t_ray *ray)
+{
+	init_delta_dist(ray);
+	init_step_x(data, ray);
+	init_step_y(data, ray);
 	ray->hit = 0;
 }
+
+//---------------------------------------------------------------
 
 /*Aqui acontece o algoritmo DDA em si.*/
 void	perform_dda(t_data *data, t_ray *ray)

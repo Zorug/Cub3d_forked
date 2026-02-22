@@ -6,7 +6,7 @@
 /*   By: cgross-s <cgross-s@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/01 17:42:29 by cgross-s          #+#    #+#             */
-/*   Updated: 2026/02/20 22:50:57 by cgross-s         ###   ########.fr       */
+/*   Updated: 2026/02/22 11:52:27 by cgross-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,19 +75,6 @@ int	main(void)
 
 	// mapa
 	load_map(&data, test_map);
-/*	i = 0;
-	data.map_height = 0; // inicia o contador de posição
-	while (test_map[data.map_height]) // evitando erro, não esquece: free
-		data.map_height++;
-	data.map = malloc(sizeof(char *) * (data.map_height + 1)); //FREE IT!
-	while (i < data.map_height)
-	{
-		data.map[i] = ft_strdup(test_map[i]);
-		i++;
-	}
-	data.map[i] = NULL;
-	data.map_width = ft_strlen(data.map[0]);*/
-	
 
 	// player
 	find_player(&data);
