@@ -6,20 +6,23 @@
 /*   By: cgross-s <cgross-s@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/22 12:34:20 by cgross-s          #+#    #+#             */
-/*   Updated: 2026/02/22 12:34:57 by cgross-s         ###   ########.fr       */
+/*   Updated: 2026/02/22 12:56:48 by cgross-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/cub3d.h"
 
-// -----------------------------------------------------------------
-/*Responsável por preparar tudo antes do loop DDA.*/
-/*Ela não lança o raio ainda, apenas configura tudo
-o que o DDA precisa para funcionar corretamente.
-Antes do raio começar a “andar” pelo mapa, precisamos dizer:
-- em que direção ele anda
-- quanto ele anda por tile
-- qual será o primeiro limite que ele vai cruzar*/
+/*
+📌 O que significa?
+	- delta_dist_x = distância que o raio percorre para atravessar 1 tile 
+	no eixo X
+	- delta_dist_y = o mesmo, mas no eixo Y
+📐 Matemática:
+	- Se ray_dir_x é pequeno → o raio é quase vertical → demora muito 
+	para cruzar uma linha vertical
+	- Se ray_dir_x == 0 → nunca cruza → usamos um número gigante (1e30)
+👉 Isto evita divisão por zero e mantém a lógica do DDA correta.
+*/
 static void	init_delta_dist(t_ray *ray)
 {
 	if (ray->ray_dir_x == 0)
@@ -32,6 +35,19 @@ static void	init_delta_dist(t_ray *ray)
 		ray->delta_dist_y = fabs(1 / ray->ray_dir_y);
 }
 
+/*
+Step: Define para que lado o raio anda no mapa
+
+O que é side_dist_x?
+➡️ Distância do jogador até a primeira linha vertical que o raio vai cruzar.
+	- Se o raio vai para a esquerda:
+		- distância até a borda esquerda do tile
+	- Se vai para a direita:
+		- distância até a borda direita do tile
+O mesmo vale para side_dist_y.
+🧠 O DDA usa isto para decidir:
+	“Cruzo primeiro uma linha vertical ou horizontal?”
+*/
 static void	init_step_x(t_data *data, t_ray *ray)
 {
 	if (ray->ray_dir_x < 0)
@@ -64,10 +80,17 @@ static void	init_step_y(t_data *data, t_ray *ray)
 	}
 }
 
+/*Responsável por preparar tudo antes do loop DDA.*/
+/*Ela não lança o raio ainda, apenas configura tudo
+o que o DDA precisa para funcionar corretamente.
+Antes do raio começar a “andar” pelo mapa, precisamos dizer:
+- em que direção ele anda
+- quanto ele anda por tile
+- qual será o primeiro limite que ele vai cruzar*/
 void	init_dda(t_data *data, t_ray *ray)
 {
 	init_delta_dist(ray);
 	init_step_x(data, ray);
 	init_step_y(data, ray);
-	ray->hit = 0;
+	ray->hit = 0; // ainda não bateu em parede
 }
