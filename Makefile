@@ -25,14 +25,15 @@ SRC_DIR		= src
 OBJ_DIR		= obj
 INC_DIR		= inc
 
-SRCS		= $(SRC_DIR)/main.c \
+SRCS	=	$(SRC_DIR)/main.c \
 			$(SRC_DIR)/leaks.c \
 			$(SRC_DIR)/hooks.c \
 			$(SRC_DIR)/utils.c \
 			$(SRC_DIR)/draw.c \
 			$(SRC_DIR)/raycast/raycast.c \
 			$(SRC_DIR)/raycast/init_dda.c \
-			$(SRC_DIR)/render.c
+			$(SRC_DIR)/render.c \
+			$(SRC_DIR)/initialization.c 
 
 #FILES			= 	main.c \
 

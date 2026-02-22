@@ -22,7 +22,7 @@ typedef enum e_key
 	KEY_LEFT  = 65361,
 	KEY_RIGHT = 65363,
 	KEY_ESC   = 65307,
-	KEY_M     = 109		// mouse activate
+	KEY_M     = 109		// mouse activation
 }	t_key;
 
 typedef enum e_color
@@ -38,6 +38,9 @@ typedef enum e_color
 	COLOR_GRAY    = 0x00222222
 }	t_color;
 
+#define MINIMAP_SCALE 0.25
+#define MINIMAP_OFFSET_X 10
+#define MINIMAP_OFFSET_Y 10
 
 /* --- Image Structures (MLX) --- */
 typedef struct s_img {
@@ -65,12 +68,6 @@ typedef struct s_data {
 	double	dirY;
 	double	angle;   // position angle of the player throught the map
 
-	// related to moving with mouse
-	//int		mouse_x; // última posição X conhecida
-	//int		mouse_y;
-	//int		mouse_init; // evita salto gigante no primeiro movimento
-	//double	mouse_sensitivity; // controla a velocidade da rotação
-
 	double	fov;	// player FOV angle (rad)
 	double	move_speed; // speed of the player
 	double	rot_speed; // speed of rotation
@@ -84,18 +81,15 @@ typedef struct s_data {
 	int		win_center_y;
 
 	// relativo ao mapa
-	char	**map;
+	char	**map;		// Map matrix
 	int		map_width;
 	int		map_height;
 	/*
 	// Parsing Data (Person B)
-	char	**map;				// Map matrix
 	char	*tex_path[4];		// Paths NO, SO, WE, EA [cite: 141]
 	t_img	tex[4];				// Loaded textures
 	int		floor_color;		// Floor color in Hexadecimal [cite: 161]
-	int		ceiling_color;		// Ceiling color in Hexadecimal [cite: 168]
-	int		map_width;
-	int		map_height;*/
+	int		ceiling_color;		// Ceiling color in Hexadecimal [cite: 168]*/
 }	t_data;
 
 /*
@@ -138,17 +132,25 @@ typedef struct s_square
 	int		color;
 }	t_square;
 
+typedef struct s_rect
+{
+	t_point	pos;
+	int		width;
+	int		height;
+	int		color;
+}	t_rect;
+
 /* variables used in draw_line(), draw.c*/
 typedef struct s_dda
 {
-	int		dx; // distância horizontal total
-	int		dy; // distância vertical total
-	int		steps; // quantos pixels desenhar
-	float	x; // posição atual X
-	float	y; // posição atual Y
-	float	x_inc; // avanço em X por passo
-	float	y_inc; // avanço em Y por passo
-	int		i; // contador do loop
+	int		dx;		// distância horizontal total
+	int		dy;		// distância vertical total
+	int		steps;	// quantos pixels desenhar
+	float	x;		// posição atual X
+	float	y;		// posição atual Y
+	float	x_inc;	// avanço em X por passo
+	float	y_inc;	// avanço em Y por passo
+	int		i;		// contador do loop
 }	t_dda;
 
 /*Essa struct guarda tudo o que o raio precisa saber para andar, raycast.c*/
@@ -200,6 +202,7 @@ typedef struct s_ray
 
 /* draw.c */
 void	draw_circle(t_img *img, t_circle *c);
+void	draw_rect(t_img *img, t_rect *r);
 void	draw_square(t_img *img, t_square *s);
 void	draw_line(t_img *img, t_line *l);
 void	draw_map(t_data *data);
@@ -209,6 +212,13 @@ void	free_map(t_data *data);
 int		close_window(t_data *data);
 int		key_hook(int keycode, t_data *data);
 int		mouse_move(int x, int y, t_data *data);
+
+/* initialization.c */
+void	init_mlx(t_data *data);
+void	init_screen(t_data *data);
+void	init_player(t_data *data);
+void	init_mouse(t_data *data);
+void	init_hooks(t_data *data);
 
 /* raycast/raycast.c */
 void cast_single_ray(t_data *data, double rayAngle);
