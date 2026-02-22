@@ -138,7 +138,7 @@ typedef struct s_dda
 	float	y;		// posição atual Y
 	float	x_inc;	// avanço em X por passo
 	float	y_inc;	// avanço em Y por passo
-	int		i;	// contador do loop
+	int		i;		// contador do loop
 }	t_dda;
 
 /*Essa struct guarda tudo o que o raio precisa saber para andar, raycast.c*/
