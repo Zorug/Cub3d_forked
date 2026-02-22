@@ -6,7 +6,7 @@
 /*   By: cgross-s <cgross-s@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/01 17:42:29 by cgross-s          #+#    #+#             */
-/*   Updated: 2026/02/20 22:50:57 by cgross-s         ###   ########.fr       */
+/*   Updated: 2026/02/22 15:28:51 by cgross-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,11 @@ int	main(void)
 	data.screen.width = 800; // start
 	data.screen.height = 600; // start
 
+	// posiciona o centro da janela (mouse moving)
+	//data.win_center_x = data.screen.width / 2;
+	//data.win_center_y = data.screen.height / 2;
+
+
 	data.win = mlx_new_window(data.mlx, //start
 		data.screen.width, data.screen.height, "CUB3D");
 	// Cria um buffer de pixels na memória. Ainda não sabemos onde ele está
@@ -75,19 +80,6 @@ int	main(void)
 
 	// mapa
 	load_map(&data, test_map);
-/*	i = 0;
-	data.map_height = 0; // inicia o contador de posição
-	while (test_map[data.map_height]) // evitando erro, não esquece: free
-		data.map_height++;
-	data.map = malloc(sizeof(char *) * (data.map_height + 1)); //FREE IT!
-	while (i < data.map_height)
-	{
-		data.map[i] = ft_strdup(test_map[i]);
-		i++;
-	}
-	data.map[i] = NULL;
-	data.map_width = ft_strlen(data.map[0]);*/
-	
 
 	// player
 	find_player(&data);
@@ -99,6 +91,25 @@ int	main(void)
 	data.move_speed = 0.5;
 	data.rot_speed = 0.4;
 	
+	/*data.mouse_init = 0;
+	data.mouse_sensitivity = 0.002;
+	mlx_hook(data.win, 6, 1L << 6, mouse_move, &data);*/
+
+	// mouse moving stuffs
+/*	data.mouse_sensitivity = 0.002;
+	data.win_center_x = data.screen.width / 2;
+	data.win_center_y = data.screen.height / 2;
+	mlx_mouse_hide(data.mlx, data.win);
+	mlx_mouse_move(data.mlx, data.win,
+		data.win_center_x,
+		data.win_center_y);
+	mlx_hook(data.win, 6, 1L << 6, mouse_move, &data);*/
+	data.mouse_enabled = 0;           // começa desligado
+	data.mouse_sensitivity = 0.002;
+	data.win_center_x = data.screen.width / 2;
+	data.win_center_y = data.screen.height / 2;
+	mlx_hook(data.win, 6, 1L << 6, mouse_move, &data);
+
 	// ao apertar esc sai
 	mlx_key_hook(data.win, key_hook, &data);
 	// fechar clicando no x

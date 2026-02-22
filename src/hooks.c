@@ -6,7 +6,7 @@
 /*   By: cgross-s <cgross-s@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/08 21:32:20 by cgross-s          #+#    #+#             */
-/*   Updated: 2026/02/20 22:57:31 by cgross-s         ###   ########.fr       */
+/*   Updated: 2026/02/22 15:28:27 by cgross-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,11 +102,104 @@ static void	handle_rotation(int keycode, t_data *data)
 		data->angle += data->rot_speed;
 }
 
+static void	toggle_mouse(t_data *data)
+{
+	data->mouse_enabled = !data->mouse_enabled;
+	if (data->mouse_enabled)
+	{
+		mlx_mouse_hide(data->mlx, data->win);
+		mlx_mouse_move(data->mlx, data->win,
+			data->win_center_x,
+			data->win_center_y);
+	}
+	else
+		mlx_mouse_show(data->mlx, data->win);
+}
+
 int	key_hook(int keycode, t_data *data)
 {
 	handle_movement(keycode, data);
 	handle_rotation(keycode, data);
 	if (keycode == KEY_ESC)
 		close_window(data);
+	if (keycode == KEY_M)
+		toggle_mouse(data);
+	return (0);
+}
+
+/*int	mouse_move(int x, int y, t_data *data)
+{
+	int	delta_x;
+
+	(void)y;
+
+	if (!data->mouse_init)
+	{
+		data->mouse_x = x;
+		data->mouse_init = 1;
+		return (0);
+	}
+
+	delta_x = x - data->mouse_x;
+	data->mouse_x = x;
+
+	data->angle += delta_x * data->mouse_sensitivity;
+
+	// Mantém o ângulo sempre entre 0 e 2π
+	if (data->angle < 0)
+		data->angle += 2 * M_PI;
+	if (data->angle > 2 * M_PI)
+		data->angle -= 2 * M_PI;
+
+	return (0);
+}*/
+
+/*int	mouse_move(int x, int y, t_data *data)
+{
+	int	delta_x;
+
+	(void)y;
+
+	// diferença em relação ao centro
+	delta_x = x - data->win_center_x;
+
+	// aplica rotação
+	data->angle += delta_x * data->mouse_sensitivity;
+
+	// normaliza ângulo
+	if (data->angle < 0)
+		data->angle += 2 * M_PI;
+	if (data->angle > 2 * M_PI)
+		data->angle -= 2 * M_PI;
+
+	// força o mouse de volta ao centro
+	mlx_mouse_move(data->mlx, data->win,
+		data->win_center_x,
+		data->win_center_y);
+
+	return (0);
+}*/
+
+int	mouse_move(int x, int y, t_data *data)
+{
+	int	delta_x;
+
+	(void)y;
+
+	if (!data->mouse_enabled)
+		return (0);
+
+	delta_x = x - data->win_center_x;
+	data->angle += delta_x * data->mouse_sensitivity;
+
+	if (data->angle < 0)
+		data->angle += 2 * M_PI;
+	if (data->angle > 2 * M_PI)
+		data->angle -= 2 * M_PI;
+
+	mlx_mouse_move(data->mlx, data->win,
+		data->win_center_x,
+		data->win_center_y);
+
 	return (0);
 }
