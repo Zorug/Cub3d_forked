@@ -6,7 +6,7 @@
 /*   By: cgross-s <cgross-s@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/15 21:31:40 by cgross-s          #+#    #+#             */
-/*   Updated: 2026/02/22 12:11:34 by cgross-s         ###   ########.fr       */
+/*   Updated: 2026/02/22 12:34:44 by cgross-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ Antes do raio começar a “andar” pelo mapa, precisamos dizer:
 - em que direção ele anda
 - quanto ele anda por tile
 - qual será o primeiro limite que ele vai cruzar*/
-static void	init_delta_dist(t_ray *ray)
+/*static void	init_delta_dist(t_ray *ray)
 {
 	if (ray->ray_dir_x == 0)
 		ray->delta_dist_x = 1e30;
@@ -80,7 +80,7 @@ void	init_dda(t_data *data, t_ray *ray)
 	init_step_y(data, ray);
 	ray->hit = 0;
 }
-
+*/
 //---------------------------------------------------------------
 
 /*Aqui acontece o algoritmo DDA em si.*/

@@ -198,8 +198,10 @@ void	free_map(t_data *data);
 int		close_window(t_data *data);
 int		key_hook(int keycode, t_data *data);
 
-/* raycast.c */
+/* raycast/raycast.c */
 void cast_single_ray(t_data *data, double rayAngle);
+/* raycast/init_dda.c */
+void	init_dda(t_data *data, t_ray *ray);
 
 /* render.c */
 int	render(t_data *data);
