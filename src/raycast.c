@@ -6,224 +6,161 @@
 /*   By: cgross-s <cgross-s@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/15 21:31:40 by cgross-s          #+#    #+#             */
-/*   Updated: 2026/02/16 22:57:33 by cgross-s         ###   ########.fr       */
+/*   Updated: 2026/02/22 10:58:37 by cgross-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/cub3d.h"
 
-/* just calculate the ray */
-//void cast_single_ray(t_data *data)
-void cast_single_ray(t_data *data, double rayAngle)
+typedef struct s_ray
 {
-    //double rayDirX; // angulo do raio
-    //double rayDirY;
+	double	ray_dir_x;
+	double	ray_dir_y;
 
-	double rayDirX = cos(rayAngle);
-    double rayDirY = sin(rayAngle);
+	int		map_x;
+	int		map_y;
 
-    //rayDirX = cos(data->angle);
-    //rayDirY = sin(data->angle);
+	double	delta_dist_x;
+	double	delta_dist_y;
 
-	//posição no mapa em tile sizes
-	int mapX = (int)data->posX;
-    int mapY = (int)data->posY;
+	double	side_dist_x;
+	double	side_dist_y;
 
-    // daqui para baixo: DDA
-	//printf("rayDir: %f %f\n", rayDirX, rayDirY);
-	//printf("map tile: (%d, %d)\n", mapX, mapY);
+	int		step_x;
+	int		step_y;
 
-	// quanto o raio precisa andar para atravessar 1 tile no eixo X ou Y
-	double deltaDistX;
-	double deltaDistY;
-	if (rayDirX == 0)
-		deltaDistX = 1e30;
+	int		side;        // 0 = vertical, 1 = horizontal
+	int		hit;
+
+	double	perp_wall_dist;
+
+	double	hit_x;
+	double	hit_y;
+}	t_ray;
+
+/*calcular a direção do raio e a célula inicial do mapa*/
+void	init_ray_direction(t_data *data, t_ray *ray, double ray_angle)
+{
+	ray->ray_dir_x = cos(ray_angle);
+	ray->ray_dir_y = sin(ray_angle);
+	ray->map_x = (int)data->posX;
+	ray->map_y = (int)data->posY;
+}
+
+/*Responsável por preparar tudo antes do loop DDA.*/
+void	init_dda(t_data *data, t_ray *ray)
+{
+	if (ray->ray_dir_x == 0)
+		ray->delta_dist_x = 1e30;
 	else
-		deltaDistX = fabs(1 / rayDirX);
-	if (rayDirY == 0)
-		deltaDistY = 1e30;
+		ray->delta_dist_x = fabs(1 / ray->ray_dir_x);
+
+	if (ray->ray_dir_y == 0)
+		ray->delta_dist_y = 1e30;
 	else
-		deltaDistY = fabs(1 / rayDirY);
+		ray->delta_dist_y = fabs(1 / ray->ray_dir_y);
 
-	// Quando o raio anda no mapa, ele anda para qual lado?
-	int stepX;
-	int stepY;
-
-	if (rayDirX < 0)
-		stepX = -1;
-	else
-		stepX = 1;
-
-	if (rayDirY < 0)
-		stepY = -1;
-	else
-		stepY = 1;
-
-// Qual é a distância do jogador até a primeira borda do tile em X e Y?
-	double sideDistX;
-	double sideDistY;
-
-	if (rayDirX < 0)
-		sideDistX = (data->posX - mapX) * deltaDistX;
-	else
-		sideDistX = (mapX + 1.0 - data->posX) * deltaDistX;
-
-	if (rayDirY < 0)
-		sideDistY = (data->posY - mapY) * deltaDistY;
-	else
-		sideDistY = (mapY + 1.0 - data->posY) * deltaDistY;
-
-	// Loop DDA:
-	//	comparar sideDistX vs sideDistY
-	//	avançar no mapa
-	//	detectar parede
-	int hit = 0;      // bateu na parede?
-	int side;         // 0 = X, 1 = Y
-
-	/*while (hit == 0)
+	if (ray->ray_dir_x < 0)
 	{
-		if (sideDistX < sideDistY) // Decide qual linha o raio cruza primeiro
+		ray->step_x = -1;
+		ray->side_dist_x = (data->posX - ray->map_x)
+			* ray->delta_dist_x;
+	}
+	else
+	{
+		ray->step_x = 1;
+		ray->side_dist_x = (ray->map_x + 1.0 - data->posX)
+			* ray->delta_dist_x;
+	}
+	if (ray->ray_dir_y < 0)
+	{
+		ray->step_y = -1;
+		ray->side_dist_y = (data->posY - ray->map_y)
+			* ray->delta_dist_y;
+	}
+	else
+	{
+		ray->step_y = 1;
+		ray->side_dist_y = (ray->map_y + 1.0 - data->posY)
+			* ray->delta_dist_y;
+	}
+	ray->hit = 0;
+}
+
+/*Aqui acontece o algoritmo DDA em si.*/
+void	perform_dda(t_data *data, t_ray *ray)
+{
+	while (ray->hit == 0)
+	{
+		if (ray->side_dist_x < ray->side_dist_y)
 		{
-			sideDistX += deltaDistX; // Prepara a próxima borda
-			mapX += stepX; // Anda exatamente 1 tile
-			side = 0; // parede vertical (E/W)
+			ray->side_dist_x += ray->delta_dist_x;
+			ray->map_x += ray->step_x;
+			ray->side = 0;
 		}
 		else
 		{
-			sideDistY += deltaDistY;
-			mapY += stepY;
-			side = 1; // parede horizontal (N/S)
+			ray->side_dist_y += ray->delta_dist_y;
+			ray->map_y += ray->step_y;
+			ray->side = 1;
 		}
-
-		if (data->map[mapY][mapX] == '1') // Aqui o raio bateu, fim do loop
-			hit = 1;
-	}*/
-
-
-	while (hit == 0)
-	{
-		if (sideDistX < sideDistY)
-		{
-			sideDistX += deltaDistX;
-			mapX += stepX;
-			side = 0;
-		}
-		else
-		{
-			sideDistY += deltaDistY;
-			mapY += stepY;
-			side = 1;
-		}
-
-		// 🔒 PROTEÇÃO DE LIMITES (AQUI)
-		if (mapX < 0 || mapX >= data->map_width ||
-			mapY < 0 || mapY >= data->map_height)
-			break;
-
-		if (data->map[mapY][mapX] == '1')
-			hit = 1;
+		if (ray->map_x < 0 || ray->map_x >= data->map_width
+			|| ray->map_y < 0 || ray->map_y >= data->map_height)
+			break ;
+		if (data->map[ray->map_y][ray->map_x] == '1')
+			ray->hit = 1;
 	}
+}
 
+/*Responsável por corrigir o fish-eye.*/
+void	compute_perp_distance(t_data *data, t_ray *ray)
+{
+	if (ray->side == 0)
+		ray->perp_wall_dist = (ray->map_x - data->posX
+				+ (1 - ray->step_x) / 2) / ray->ray_dir_x;
+	else
+		ray->perp_wall_dist = (ray->map_y - data->posY
+				+ (1 - ray->step_y) / 2) / ray->ray_dir_y;
+}
 
-	//printf("Ray at tile (%d, %d)\n", mapX, mapY);
-	//Agora precisamos calcular:
-		//a distância REAL do jogador até a parede,
-		//sem distorção de fish-eye
-	double perpWallDist;
-
-	if (side == 0) // Se bateu numa parede vertical (X)
+/*Aqui calculamos onde exatamente o raio bateu, em coordenadas do mundo.*/
+void	compute_hit_position(t_data *data, t_ray *ray)
+{
+	if (ray->side == 0)
 	{
-		perpWallDist = (mapX - data->posX + (1 - stepX) / 2) / rayDirX;
-	}
-	else // Se bateu numa parede horizontal (Y)
-	{
-		perpWallDist = (mapY - data->posY + (1 - stepY) / 2) / rayDirY;
-	}
-/*
-🔍 O que significa cada parte?
-
-🔹 mapX - posX
-➡️ Distância do jogador até o tile atingido
-
-🔹 (1 - stepX) / 2
-➡️ Ajuste fino:
-stepX = 1 → entra pelo lado esquerdo
-stepX = -1 → entra pelo lado direito
-Isso posiciona o impacto na borda correta do tile
-
-🔹 / rayDirX
-➡️ Projeta a distância perpendicularmente
-*/
-
-	//printf("Perp distance: %f\n", perpWallDist);
-
-// Agora você vai transformar distância em altura na tela.
-// Converter: distância da parede (perpWallDist)
-// em: altura vertical da parede em pixels
-/*🧠 A ideia fundamental
-Quanto mais perto a parede:
-- ela parece mais alta
-Quanto mais longe:
-- ela parece mais baixa
-Isso é perspectiva básica.*/
-/*📌 Exemplo:
-tela = 600 px
-parede a 1.0 tile → 600 px
-parede a 2.0 tiles → 300 px
-parede a 3.0 tiles → 200 px
-
-	int lineHeight;
-	int drawStart;
-	int drawEnd;
-
-	lineHeight = (int)(data->screen.height / perpWallDist);
-
-	drawStart = -lineHeight / 2 + data->screen.height / 2;
-	drawEnd = lineHeight / 2 + data->screen.height / 2;
-
-	if (drawStart < 0)
-		drawStart = 0;
-	if (drawEnd >= data->screen.height)
-		drawEnd = data->screen.height - 1;
-*/
-
-/*	double hitX;
-	double hitY;
-
-	if (side == 0)
-	{
-		hitX = mapX;
-		hitY = data->posY + perpWallDist * rayDirY;
+		ray->hit_x = ray->map_x + (ray->step_x == -1);
+		ray->hit_y = data->posY
+			+ ray->perp_wall_dist * ray->ray_dir_y;
 	}
 	else
 	{
-		hitY = mapY;
-		hitX = data->posX + perpWallDist * rayDirX;
-	}*/
-
-	double hitX;
-	double hitY;
-
-	if (side == 0) // parede vertical
-	{
-		hitX = mapX + (stepX == -1 ? 1.0 : 0.0);
-		hitY = data->posY + perpWallDist * rayDirY;
+		ray->hit_y = ray->map_y + (ray->step_y == -1);
+		ray->hit_x = data->posX
+			+ ray->perp_wall_dist * ray->ray_dir_x;
 	}
-	else // parede horizontal
-	{
-		hitY = mapY + (stepY == -1 ? 1.0 : 0.0);
-		hitX = data->posX + perpWallDist * rayDirX;
-	}
+}
 
-	t_line ray;
+/*Somente visualização no minimapa.*/
+void	draw_ray_debug(t_data *data, t_ray *ray)
+{
+	t_line	line;
 
-	ray.start.x = data->posX * TILE_SIZE;
-	ray.start.y = data->posY * TILE_SIZE;
-	ray.end.x = hitX * TILE_SIZE;
-	ray.end.y = hitY * TILE_SIZE;
-	ray.color = COLOR_YELLOW;
+	line.start.x = data->posX * TILE_SIZE;
+	line.start.y = data->posY * TILE_SIZE;
+	line.end.x = ray->hit_x * TILE_SIZE;
+	line.end.y = ray->hit_y * TILE_SIZE;
+	line.color = COLOR_YELLOW;
+	draw_line(&data->screen, &line);
+}
 
-	draw_line(&data->screen, &ray);
+void	cast_single_ray(t_data *data, double ray_angle)
+{
+	t_ray	ray;
 
-
+	init_ray_direction(data, &ray, ray_angle);
+	init_dda(data, &ray);
+	perform_dda(data, &ray);
+	compute_perp_distance(data, &ray);
+	compute_hit_position(data, &ray);
+	draw_ray_debug(data, &ray);
 }
