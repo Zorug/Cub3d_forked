@@ -6,7 +6,7 @@
 /*   By: cgross-s <cgross-s@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/15 21:31:40 by cgross-s          #+#    #+#             */
-/*   Updated: 2026/02/24 22:26:24 by cgross-s         ###   ########.fr       */
+/*   Updated: 2026/02/24 22:48:21 by cgross-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,9 +89,16 @@ void	draw_ray_minimap(t_data *data, t_ray *ray)
 }
 
 /*Somente visualização no minimapa.*/
-void	draw_ray_debug(t_data *data, t_ray *ray)
+/*void	draw_ray_debug(t_data *data, t_ray *ray)
 {
 	// 🔽 Ray no minimapa (ESCALA REDUZIDA)
+	draw_ray_minimap(data, ray);
+}*/
+
+void	draw_ray_debug(t_data *data, t_ray *ray)
+{
+	if (!data->show_rays) // verifica seleção de raios
+		return ;
 	draw_ray_minimap(data, ray);
 }
 

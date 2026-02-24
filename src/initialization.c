@@ -6,7 +6,7 @@
 /*   By: cgross-s <cgross-s@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/22 16:35:11 by cgross-s          #+#    #+#             */
-/*   Updated: 2026/02/23 23:05:27 by cgross-s         ###   ########.fr       */
+/*   Updated: 2026/02/24 22:42:52 by cgross-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,4 +84,7 @@ void	init_hooks(t_data *data)
 	mlx_key_hook(data->win, key_hook, data);
 	mlx_hook(data->win, 17, 0, close_window, data);
 	mlx_loop_hook(data->mlx, render, data);
+
+	// raios visiveis
+	data->show_rays = 1;
 }

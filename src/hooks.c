@@ -6,7 +6,7 @@
 /*   By: cgross-s <cgross-s@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/08 21:32:20 by cgross-s          #+#    #+#             */
-/*   Updated: 2026/02/24 22:24:57 by cgross-s         ###   ########.fr       */
+/*   Updated: 2026/02/24 22:46:22 by cgross-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,15 +109,35 @@ static void	handle_movement(int keycode, t_data *data)
 		move_player(data,
 			-data->dirX * data->move_speed,
 			-data->dirY * data->move_speed);
-	else if (keycode == KEY_A)
+	else if (keycode == KEY_D)
 		move_player(data,
 			-data->dirY * data->move_speed,
 			data->dirX * data->move_speed);
-	else if (keycode == KEY_D)
+	else if (keycode == KEY_A)
 		move_player(data,
 			data->dirY * data->move_speed,
 			-data->dirX * data->move_speed);
 }
+
+/*static void	handle_movement(int keycode, t_data *data)
+{
+	if (keycode == KEY_W)
+		move_player(data,
+			data->dirX * data->move_speed,
+			data->dirY * data->move_speed);
+	else if (keycode == KEY_S)
+		move_player(data,
+			-data->dirX * data->move_speed,
+			-data->dirY * data->move_speed);
+	else if (keycode == KEY_A) // strafe LEFT
+		move_player(data,
+			-data->dirY * data->move_speed,
+			data->dirX * data->move_speed);
+	else if (keycode == KEY_D) // strafe RIGHT
+		move_player(data,
+			data->dirY * data->move_speed,
+			-data->dirX * data->move_speed);
+}*/
 
 /*static void	handle_rotation(int keycode, t_data *data)
 {
@@ -171,6 +191,8 @@ int	key_hook(int keycode, t_data *data)
 		close_window(data);
 	if (keycode == KEY_M)
 		toggle_mouse(data);
+	if (keycode == KEY_R)
+		data->show_rays = !data->show_rays;
 	return (0);
 }
 
