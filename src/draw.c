@@ -6,7 +6,7 @@
 /*   By: cgross-s <cgross-s@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/15 17:46:13 by cgross-s          #+#    #+#             */
-/*   Updated: 2026/02/22 21:04:04 by cgross-s         ###   ########.fr       */
+/*   Updated: 2026/02/23 22:31:38 by cgross-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,25 +40,6 @@ void	draw_circle(t_img *img, t_circle *c)
 		y++;
 	}
 }
-
-/*void	draw_square(t_img *img, t_square *s)
-{
-	int	i;
-	int	j;
-
-	i = 0;
-	while (i < s->size)
-	{
-		j = 0;
-		while (j < s->size)
-		{
-			my_mlx_pixel_put(img, s->pos.x + j,
-				s->pos.y + i, s->color);
-			j++;
-		}
-		i++;
-	}
-}*/
 
 void	draw_rect(t_img *img, t_rect *r)
 {
@@ -123,29 +104,3 @@ void	draw_line(t_img *img, t_line *l)
 		d.i++;
 	}
 }
-
-/*void	draw_map(t_data *data)
-{
-	int			x;
-	int			y;
-	t_square	tile;
-
-	tile.size = TILE_SIZE;
-	y = 0;
-	while (y < data->map_height)
-	{
-		x = 0;
-		while (x < data->map_width)
-		{
-			tile.pos.x = x * TILE_SIZE;
-			tile.pos.y = y * TILE_SIZE;
-			if (data->map[y][x] == '1')
-				tile.color = COLOR_WHITE;
-			else
-				tile.color = COLOR_GRAY;
-			draw_square(&data->screen, &tile);
-			x++;
-		}
-		y++;
-	}
-}*/
