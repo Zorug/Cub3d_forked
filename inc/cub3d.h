@@ -68,6 +68,9 @@ typedef struct s_data {
 	double	dirY;
 	double	angle;   // position angle of the player throught the map
 
+	double	planeX;
+	double	planeY;
+
 	double	fov;	// player FOV angle (rad)
 	double	move_speed; // speed of the player
 	double	rot_speed; // speed of rotation
@@ -221,13 +224,16 @@ void	init_mouse(t_data *data);
 void	init_hooks(t_data *data);
 
 /* raycast/raycast.c */
-//void cast_single_ray(t_data *data, double rayAngle);
-void	cast_single_ray(t_data *data, double ray_angle, t_ray *ray);
+//void	cast_single_ray(t_data *data, double ray_angle, t_ray *ray);
+void	cast_single_ray(t_data *data, t_ray *ray);
 /* raycast/init_dda.c */
 void	init_dda(t_data *data, t_ray *ray);
 
 /* render.c */
-int	render(t_data *data);
+int		render(t_data *data);
+void	init_ray_from_dir(t_data *data, t_ray *ray);
+//int		render(t_data *data);
+void	render_3d_view(t_data *data);
 
 /* utils.c */
 void	my_mlx_pixel_put(t_img *img, int x, int y, int color);

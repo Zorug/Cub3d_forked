@@ -6,7 +6,7 @@
 /*   By: cgross-s <cgross-s@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/20 22:13:17 by cgross-s          #+#    #+#             */
-/*   Updated: 2026/02/22 21:38:31 by cgross-s         ###   ########.fr       */
+/*   Updated: 2026/02/24 22:27:58 by cgross-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,11 +54,24 @@ void	draw_player_minimap(t_data *data)
 	draw_circle(&data->screen, &player);
 }
 
-void	render_3d_view(t_data *data)
+static int	get_wall_color(t_ray *ray)
+{
+	if (ray->side == 0)
+		return (COLOR_RED);
+	return (COLOR_GREEN);
+	//return (COLOR_RED);
+}
+
+static int	apply_shadow(int color)
+{
+	return (color >> 1) & 0x007F7F7F;
+}
+
+/*void	render_3d_view(t_data *data)
 {
 	int		x;
 	double	camera_x;
-	double	ray_angle;
+//	double	ray_angle;
 	t_ray	ray;
 	int		line_height;
 	int		draw_start;
@@ -69,9 +82,15 @@ void	render_3d_view(t_data *data)
 	while (x < data->screen.width)
 	{
 		camera_x = 2.0 * x / (double)data->screen.width - 1.0;
-		ray_angle = data->angle
-			+ atan(camera_x * tan(data->fov / 2));
+		///////////////////////
+		// ray_angle = data->angle + atan(camera_x * tan(data->fov / 2));
+		//////////////////////
 
+		camera_x = 2.0 * x / (double)data->screen.width - 1.0;
+		ray.ray_dir_x = data->dirX + data->planeX * camera_x;
+		ray.ray_dir_y = data->dirY + data->planeY * camera_x;
+
+		/////////
 		cast_single_ray(data, ray_angle, &ray);
 
 		line_height = (int)(data->screen.height / ray.perp_wall_dist);
@@ -87,7 +106,84 @@ void	render_3d_view(t_data *data)
 		y = draw_start;
 		while (y <= draw_end)
 		{
-			my_mlx_pixel_put(&data->screen, x, y, COLOR_RED);
+			//my_mlx_pixel_put(&data->screen, x, y, COLOR_RED);
+			int	color;
+			color = get_wall_color(&ray);
+			if (ray.side == 1)
+				color = apply_shadow(color);
+			my_mlx_pixel_put(&data->screen, x, y, color);
+			y++;
+		}
+		x++;
+	}
+}*/
+
+/*void	init_ray_from_dir(t_data *data, t_ray *ray)
+{
+	ray->map_x = (int)data->posX;
+	ray->map_y = (int)data->posY;
+	ray->hit = 0;
+}*/
+
+void	init_ray_from_dir(t_data *data, t_ray *ray)
+{
+	ray->map_x = (int)data->posX;
+	ray->map_y = (int)data->posY;
+	ray->hit = 0;
+
+	if (ray->ray_dir_x == 0)
+		ray->delta_dist_x = 1e30;
+	else
+		ray->delta_dist_x = fabs(1 / ray->ray_dir_x);
+
+	if (ray->ray_dir_y == 0)
+		ray->delta_dist_y = 1e30;
+	else
+		ray->delta_dist_y = fabs(1 / ray->ray_dir_y);
+}
+
+void	render_3d_view(t_data *data)
+{
+	int		x;
+	double	camera_x;
+	t_ray	ray;
+	int		line_height;
+	int		draw_start;
+	int		draw_end;
+	int		y;
+	int		color;
+
+	x = 0;
+	while (x < data->screen.width)
+	{
+		camera_x = 2.0 * x / (double)data->screen.width - 1.0;
+
+		ray.ray_dir_x = data->dirX + data->planeX * camera_x;
+		ray.ray_dir_y = data->dirY + data->planeY * camera_x;
+
+		cast_single_ray(data, &ray);
+
+		if (ray.perp_wall_dist < 0.1)
+			ray.perp_wall_dist = 0.1;
+
+		line_height = (int)(data->screen.height / ray.perp_wall_dist);
+
+		draw_start = -line_height / 2 + data->screen.height / 2;
+		draw_end = line_height / 2 + data->screen.height / 2;
+
+		if (draw_start < 0)
+			draw_start = 0;
+		if (draw_end >= data->screen.height)
+			draw_end = data->screen.height - 1;
+
+		color = get_wall_color(&ray);
+		if (ray.side == 1)
+			color = apply_shadow(color);
+
+		y = draw_start;
+		while (y <= draw_end)
+		{
+			my_mlx_pixel_put(&data->screen, x, y, color);
 			y++;
 		}
 		x++;
@@ -96,39 +192,16 @@ void	render_3d_view(t_data *data)
 
 int	render(t_data *data)
 {
-	//double	left_angle;
-	//double	right_angle;
-	//int	left_x;
-	//int	left_y;
-	//int	right_x;
-	//int	right_y;
-
 	clear_screen(&data->screen);
 
 	// 3D
 	render_3d_view(data);
 
 	//desenha o mapa
-	//draw_map(data);
 	draw_minimap(data);
-
-	// Atualiza vetor principal
-	//data->dirX = cos(data->angle);
-	//data->dirY = sin(data->angle);
 
 	// Desenha player
 	draw_player_minimap(data);
-
-	// first ray to cast
-	//int i;
-	//int rays = 60;
-	//double startAngle = data->angle - data->fov / 2;
-	//double angleStep = data->fov / rays;
-
-	//for (i = 0; i < rays; i++)
-	//{
-	//	cast_single_ray(data, startAngle + i * angleStep);
-	//}
 
 	mlx_put_image_to_window(data->mlx, data->win,
 		data->screen.img, 0, 0);

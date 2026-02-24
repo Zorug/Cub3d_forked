@@ -6,7 +6,7 @@
 /*   By: cgross-s <cgross-s@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/22 16:35:11 by cgross-s          #+#    #+#             */
-/*   Updated: 2026/02/22 16:37:21 by cgross-s         ###   ########.fr       */
+/*   Updated: 2026/02/23 23:05:27 by cgross-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,9 @@ void	init_player(t_data *data)
 	data->fov = M_PI / 3;
 	data->move_speed = 0.5;
 	data->rot_speed = 0.4;
+
+	data->planeX = -data->dirY * tan(data->fov / 2);
+	data->planeY =  data->dirX * tan(data->fov / 2);
 }
 
 /* Inicialização do mouse */
