@@ -39,9 +39,34 @@ typedef enum e_color
 	COLOR_GRAY    = 0x00222222
 }	t_color;
 
+// teste
+typedef enum e_wall_side
+{
+	WALL_NORTH,
+	WALL_SOUTH,
+	WALL_WEST,
+	WALL_EAST
+}	t_wall_side;
+
 #define MINIMAP_SCALE 0.25
 #define MINIMAP_OFFSET_X 10
 #define MINIMAP_OFFSET_Y 10
+
+/* ================= WALL DEBUG COLORS ================= */
+# define WALL_NORTH_COLOR  0x00FF5555
+# define WALL_SOUTH_COLOR  0x0055FF55
+# define WALL_WEST_COLOR   0x005555FF
+# define WALL_EAST_COLOR   0x00FFFF55
+
+/* ================= FLOOR & CEILING ================= */
+# define CEILING_COLOR  0x0087CEEB   // azul céu
+# define FLOOR_COLOR    0x00444444   // cinza escuro
+
+/* ================= MAP COLORS ================= */
+# define MAP_WALL_COLOR    0x00222222
+# define MAP_FLOOR_COLOR   0x00000000
+# define MAP_PLAYER_COLOR  0x00FF0000
+# define MAP_RAY_COLOR     0x00FFFF00
 
 /* --- Image Structures (MLX) --- */
 typedef struct s_img {
@@ -191,6 +216,7 @@ typedef struct s_ray
 
 	// Indica qual tipo de parede foi atingida:
 	int		side;        // 0 = vertical, 1 = horizontal
+	t_wall_side	wall_side;  // <-- NOVO
 	// 0 → ainda não bateu
 	// 1 → encontrou parede ('1')
 	int		hit;
@@ -226,10 +252,12 @@ void	init_mouse(t_data *data);
 void	init_hooks(t_data *data);
 
 /* raycast/raycast.c */
-//void	cast_single_ray(t_data *data, double ray_angle, t_ray *ray);
 void	cast_single_ray(t_data *data, t_ray *ray);
 /* raycast/init_dda.c */
 void	init_dda(t_data *data, t_ray *ray);
+/* draw_minimap.c */
+void	draw_ray_minimap(t_data *data, t_ray *ray);
+void	draw_ray_debug(t_data *data, t_ray *ray);
 
 /* render.c */
 int		render(t_data *data);

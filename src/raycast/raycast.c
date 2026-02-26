@@ -6,7 +6,7 @@
 /*   By: cgross-s <cgross-s@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/15 21:31:40 by cgross-s          #+#    #+#             */
-/*   Updated: 2026/02/24 22:48:21 by cgross-s         ###   ########.fr       */
+/*   Updated: 2026/02/26 16:44:53 by cgross-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,52 +74,23 @@ void	compute_hit_position(t_data *data, t_ray *ray)
 	}
 }
 
-void	draw_ray_minimap(t_data *data, t_ray *ray)
+static void	determine_wall_side(t_ray *ray)
 {
-	t_line	line;
-	int		tile;
-
-	tile = TILE_SIZE * MINIMAP_SCALE;
-	line.start.x = MINIMAP_OFFSET_X + data->posX * tile;
-	line.start.y = MINIMAP_OFFSET_Y + data->posY * tile;
-	line.end.x = MINIMAP_OFFSET_X + ray->hit_x * tile;
-	line.end.y = MINIMAP_OFFSET_Y + ray->hit_y * tile;
-	line.color = COLOR_YELLOW;
-	draw_line(&data->screen, &line);
+	if (ray->side == 0)
+	{
+		if (ray->ray_dir_x > 0)
+			ray->wall_side = WALL_EAST;
+		else
+			ray->wall_side = WALL_WEST;
+	}
+	else
+	{
+		if (ray->ray_dir_y > 0)
+			ray->wall_side = WALL_SOUTH;
+		else
+			ray->wall_side = WALL_NORTH;
+	}
 }
-
-/*Somente visualização no minimapa.*/
-/*void	draw_ray_debug(t_data *data, t_ray *ray)
-{
-	// 🔽 Ray no minimapa (ESCALA REDUZIDA)
-	draw_ray_minimap(data, ray);
-}*/
-
-void	draw_ray_debug(t_data *data, t_ray *ray)
-{
-	if (!data->show_rays) // verifica seleção de raios
-		return ;
-	draw_ray_minimap(data, ray);
-}
-
-/*void	cast_single_ray(t_data *data, double ray_angle, t_ray *ray)
-{
-	init_ray_direction(data, ray, ray_angle);
-	init_dda(data, ray);
-	perform_dda(data, ray);
-	compute_perp_distance(data, ray);
-	compute_hit_position(data, ray);
-	draw_ray_debug(data, ray);
-}*/
-
-/*void	cast_single_ray(t_data *data, t_ray *ray)
-{
-	init_ray_from_dir(data, ray); // ou inline
-	init_dda(data, ray);
-	perform_dda(data, ray);
-	compute_perp_distance(data, ray);
-	draw_ray_debug(data, ray);
-}*/
 
 void	cast_single_ray(t_data *data, t_ray *ray)
 {
@@ -127,6 +98,7 @@ void	cast_single_ray(t_data *data, t_ray *ray)
 	init_dda(data, ray);
 	perform_dda(data, ray);
 	compute_perp_distance(data, ray);
-	compute_hit_position(data, ray); // 🔥 ESSENCIAL
+	determine_wall_side(ray);
+	compute_hit_position(data, ray);
 	draw_ray_debug(data, ray);
 }
