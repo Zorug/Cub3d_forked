@@ -6,7 +6,7 @@
 /*   By: cgross-s <cgross-s@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 14:43:00 by cgross-s          #+#    #+#             */
-/*   Updated: 2026/02/26 14:45:13 by cgross-s         ###   ########.fr       */
+/*   Updated: 2026/02/26 16:02:12 by cgross-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,8 @@ void	draw_ray_minimap(t_data *data, t_ray *ray)
 	line.start.y = MINIMAP_OFFSET_Y + data->posY * tile;
 	line.end.x = MINIMAP_OFFSET_X + ray->hit_x * tile;
 	line.end.y = MINIMAP_OFFSET_Y + ray->hit_y * tile;
-	line.color = COLOR_YELLOW;
+	//line.color = COLOR_YELLOW;
+	line.color = MAP_RAY_COLOR;
 	draw_line(&data->screen, &line);
 }
 

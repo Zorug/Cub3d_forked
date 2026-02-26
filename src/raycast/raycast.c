@@ -6,7 +6,7 @@
 /*   By: cgross-s <cgross-s@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/15 21:31:40 by cgross-s          #+#    #+#             */
-/*   Updated: 2026/02/26 14:48:27 by cgross-s         ###   ########.fr       */
+/*   Updated: 2026/02/26 16:44:53 by cgross-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,28 +74,23 @@ void	compute_hit_position(t_data *data, t_ray *ray)
 	}
 }
 
-/*void	draw_ray_minimap(t_data *data, t_ray *ray)
+static void	determine_wall_side(t_ray *ray)
 {
-	t_line	line;
-	int		tile;
-
-	tile = TILE_SIZE * MINIMAP_SCALE;
-	line.start.x = MINIMAP_OFFSET_X + data->posX * tile;
-	line.start.y = MINIMAP_OFFSET_Y + data->posY * tile;
-	line.end.x = MINIMAP_OFFSET_X + ray->hit_x * tile;
-	line.end.y = MINIMAP_OFFSET_Y + ray->hit_y * tile;
-	line.color = COLOR_YELLOW;
-	draw_line(&data->screen, &line);
-}*/
-
-/* Verify if option show_rays is selected, R button,
- than show */
-/*void	draw_ray_debug(t_data *data, t_ray *ray)
-{
-	if (!data->show_rays)
-		return ;
-	draw_ray_minimap(data, ray);
-}*/
+	if (ray->side == 0)
+	{
+		if (ray->ray_dir_x > 0)
+			ray->wall_side = WALL_EAST;
+		else
+			ray->wall_side = WALL_WEST;
+	}
+	else
+	{
+		if (ray->ray_dir_y > 0)
+			ray->wall_side = WALL_SOUTH;
+		else
+			ray->wall_side = WALL_NORTH;
+	}
+}
 
 void	cast_single_ray(t_data *data, t_ray *ray)
 {
@@ -103,6 +98,7 @@ void	cast_single_ray(t_data *data, t_ray *ray)
 	init_dda(data, ray);
 	perform_dda(data, ray);
 	compute_perp_distance(data, ray);
+	determine_wall_side(ray);
 	compute_hit_position(data, ray);
 	draw_ray_debug(data, ray);
 }
