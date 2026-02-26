@@ -6,7 +6,7 @@
 /*   By: cgross-s <cgross-s@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/22 12:34:20 by cgross-s          #+#    #+#             */
-/*   Updated: 2026/02/22 12:56:48 by cgross-s         ###   ########.fr       */
+/*   Updated: 2026/02/26 14:49:56 by cgross-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,10 +87,11 @@ Antes do raio começar a “andar” pelo mapa, precisamos dizer:
 - em que direção ele anda
 - quanto ele anda por tile
 - qual será o primeiro limite que ele vai cruzar*/
+/* ray->hit = 0; // ainda não bateu em parede */
 void	init_dda(t_data *data, t_ray *ray)
 {
 	init_delta_dist(ray);
 	init_step_x(data, ray);
 	init_step_y(data, ray);
-	ray->hit = 0; // ainda não bateu em parede
+	ray->hit = 0;
 }

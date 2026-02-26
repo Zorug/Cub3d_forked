@@ -226,10 +226,12 @@ void	init_mouse(t_data *data);
 void	init_hooks(t_data *data);
 
 /* raycast/raycast.c */
-//void	cast_single_ray(t_data *data, double ray_angle, t_ray *ray);
 void	cast_single_ray(t_data *data, t_ray *ray);
 /* raycast/init_dda.c */
 void	init_dda(t_data *data, t_ray *ray);
+/* draw_minimap.c */
+void	draw_ray_minimap(t_data *data, t_ray *ray);
+void	draw_ray_debug(t_data *data, t_ray *ray);
 
 /* render.c */
 int		render(t_data *data);

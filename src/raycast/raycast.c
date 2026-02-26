@@ -6,7 +6,7 @@
 /*   By: cgross-s <cgross-s@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/15 21:31:40 by cgross-s          #+#    #+#             */
-/*   Updated: 2026/02/24 22:48:21 by cgross-s         ###   ########.fr       */
+/*   Updated: 2026/02/26 14:48:27 by cgross-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ void	compute_hit_position(t_data *data, t_ray *ray)
 	}
 }
 
-void	draw_ray_minimap(t_data *data, t_ray *ray)
+/*void	draw_ray_minimap(t_data *data, t_ray *ray)
 {
 	t_line	line;
 	int		tile;
@@ -86,39 +86,15 @@ void	draw_ray_minimap(t_data *data, t_ray *ray)
 	line.end.y = MINIMAP_OFFSET_Y + ray->hit_y * tile;
 	line.color = COLOR_YELLOW;
 	draw_line(&data->screen, &line);
-}
+}*/
 
-/*Somente visualização no minimapa.*/
+/* Verify if option show_rays is selected, R button,
+ than show */
 /*void	draw_ray_debug(t_data *data, t_ray *ray)
 {
-	// 🔽 Ray no minimapa (ESCALA REDUZIDA)
-	draw_ray_minimap(data, ray);
-}*/
-
-void	draw_ray_debug(t_data *data, t_ray *ray)
-{
-	if (!data->show_rays) // verifica seleção de raios
+	if (!data->show_rays)
 		return ;
 	draw_ray_minimap(data, ray);
-}
-
-/*void	cast_single_ray(t_data *data, double ray_angle, t_ray *ray)
-{
-	init_ray_direction(data, ray, ray_angle);
-	init_dda(data, ray);
-	perform_dda(data, ray);
-	compute_perp_distance(data, ray);
-	compute_hit_position(data, ray);
-	draw_ray_debug(data, ray);
-}*/
-
-/*void	cast_single_ray(t_data *data, t_ray *ray)
-{
-	init_ray_from_dir(data, ray); // ou inline
-	init_dda(data, ray);
-	perform_dda(data, ray);
-	compute_perp_distance(data, ray);
-	draw_ray_debug(data, ray);
 }*/
 
 void	cast_single_ray(t_data *data, t_ray *ray)
@@ -127,6 +103,6 @@ void	cast_single_ray(t_data *data, t_ray *ray)
 	init_dda(data, ray);
 	perform_dda(data, ray);
 	compute_perp_distance(data, ray);
-	compute_hit_position(data, ray); // 🔥 ESSENCIAL
+	compute_hit_position(data, ray);
 	draw_ray_debug(data, ray);
 }

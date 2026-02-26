@@ -6,7 +6,7 @@
 /*   By: cgross-s <cgross-s@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/20 22:13:17 by cgross-s          #+#    #+#             */
-/*   Updated: 2026/02/24 22:27:58 by cgross-s         ###   ########.fr       */
+/*   Updated: 2026/02/24 22:56:57 by cgross-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,64 +66,6 @@ static int	apply_shadow(int color)
 {
 	return (color >> 1) & 0x007F7F7F;
 }
-
-/*void	render_3d_view(t_data *data)
-{
-	int		x;
-	double	camera_x;
-//	double	ray_angle;
-	t_ray	ray;
-	int		line_height;
-	int		draw_start;
-	int		draw_end;
-	int		y;
-
-	x = 0;
-	while (x < data->screen.width)
-	{
-		camera_x = 2.0 * x / (double)data->screen.width - 1.0;
-		///////////////////////
-		// ray_angle = data->angle + atan(camera_x * tan(data->fov / 2));
-		//////////////////////
-
-		camera_x = 2.0 * x / (double)data->screen.width - 1.0;
-		ray.ray_dir_x = data->dirX + data->planeX * camera_x;
-		ray.ray_dir_y = data->dirY + data->planeY * camera_x;
-
-		/////////
-		cast_single_ray(data, ray_angle, &ray);
-
-		line_height = (int)(data->screen.height / ray.perp_wall_dist);
-
-		draw_start = -line_height / 2 + data->screen.height / 2;
-		draw_end = line_height / 2 + data->screen.height / 2;
-
-		if (draw_start < 0)
-			draw_start = 0;
-		if (draw_end >= data->screen.height)
-			draw_end = data->screen.height - 1;
-
-		y = draw_start;
-		while (y <= draw_end)
-		{
-			//my_mlx_pixel_put(&data->screen, x, y, COLOR_RED);
-			int	color;
-			color = get_wall_color(&ray);
-			if (ray.side == 1)
-				color = apply_shadow(color);
-			my_mlx_pixel_put(&data->screen, x, y, color);
-			y++;
-		}
-		x++;
-	}
-}*/
-
-/*void	init_ray_from_dir(t_data *data, t_ray *ray)
-{
-	ray->map_x = (int)data->posX;
-	ray->map_y = (int)data->posY;
-	ray->hit = 0;
-}*/
 
 void	init_ray_from_dir(t_data *data, t_ray *ray)
 {

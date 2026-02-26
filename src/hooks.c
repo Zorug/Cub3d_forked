@@ -6,7 +6,7 @@
 /*   By: cgross-s <cgross-s@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/08 21:32:20 by cgross-s          #+#    #+#             */
-/*   Updated: 2026/02/24 22:46:22 by cgross-s         ###   ########.fr       */
+/*   Updated: 2026/02/24 22:56:27 by cgross-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,31 +74,6 @@ static void	move_player(t_data *data, double move_x, double move_y)
 		data->posY = new_y;
 }
 
-/*static void	handle_movement(int keycode, t_data *data)
-{
-	double	dir_x;
-	double	dir_y;
-
-	dir_x = cos(data->angle);
-	dir_y = sin(data->angle);
-	if (keycode == KEY_W)
-		move_player(data,
-			dir_x * data->move_speed,
-			dir_y * data->move_speed);
-	else if (keycode == KEY_S)
-		move_player(data,
-			-dir_x * data->move_speed,
-			-dir_y * data->move_speed);
-	else if (keycode == KEY_A)
-		move_player(data,
-			dir_y * data->move_speed,
-			-dir_x * data->move_speed);
-	else if (keycode == KEY_D)
-		move_player(data,
-			-dir_y * data->move_speed,
-			dir_x * data->move_speed);
-}*/
-
 static void	handle_movement(int keycode, t_data *data)
 {
 	if (keycode == KEY_W)
@@ -118,34 +93,6 @@ static void	handle_movement(int keycode, t_data *data)
 			data->dirY * data->move_speed,
 			-data->dirX * data->move_speed);
 }
-
-/*static void	handle_movement(int keycode, t_data *data)
-{
-	if (keycode == KEY_W)
-		move_player(data,
-			data->dirX * data->move_speed,
-			data->dirY * data->move_speed);
-	else if (keycode == KEY_S)
-		move_player(data,
-			-data->dirX * data->move_speed,
-			-data->dirY * data->move_speed);
-	else if (keycode == KEY_A) // strafe LEFT
-		move_player(data,
-			-data->dirY * data->move_speed,
-			data->dirX * data->move_speed);
-	else if (keycode == KEY_D) // strafe RIGHT
-		move_player(data,
-			data->dirY * data->move_speed,
-			-data->dirX * data->move_speed);
-}*/
-
-/*static void	handle_rotation(int keycode, t_data *data)
-{
-	if (keycode == KEY_LEFT)
-		data->angle -= data->rot_speed;
-	else if (keycode == KEY_RIGHT)
-		data->angle += data->rot_speed;
-}*/
 
 static void	rotate_view(t_data *data, double rot)
 {
@@ -196,29 +143,6 @@ int	key_hook(int keycode, t_data *data)
 	return (0);
 }
 
-/*int	mouse_move(int x, int y, t_data *data)
-{
-	int	delta_x;
-
-	(void)y;
-
-	if (!data->mouse_enabled)
-		return (0);
-
-	delta_x = x - data->win_center_x;
-	data->angle += delta_x * data->mouse_sensitivity;
-
-	if (data->angle < 0)
-		data->angle += 2 * M_PI;
-	if (data->angle > 2 * M_PI)
-		data->angle -= 2 * M_PI;
-
-	mlx_mouse_move(data->mlx, data->win,
-		data->win_center_x,
-		data->win_center_y);
-
-	return (0);
-}*/
 int	mouse_move(int x, int y, t_data *data)
 {
 	int	delta_x;
