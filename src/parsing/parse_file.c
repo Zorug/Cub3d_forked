@@ -6,7 +6,7 @@
 /*   By: tnuno-mo <tnuno-mo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/01 00:08:35 by tnuno-mo          #+#    #+#             */
-/*   Updated: 2026/03/01 00:21:39 by tnuno-mo         ###   ########.fr       */
+/*   Updated: 2026/03/01 01:17:35 by tnuno-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,27 +31,19 @@ int	validate_file_extension(const char *filename)
 char	**read_file_lines(const char *filename)
 {
 	int		fd;
-	char	*line;
+	char	buffer[10000];
 	char	**lines;
-	int		count;
-	int		i;
+	int		bytes_read;
 
 	fd = open(filename, O_RDONLY);
 	if (fd < 0)
 		return (NULL);
-	lines = malloc(sizeof(char *) * 1000);
-	if (!lines)
-		return (NULL);
-	count = 0;
-	while (1)
-	{
-		line = ft_read_line(fd);
-		if (!line)
-			break ;
-		lines[count++] = line;
-	}
-	lines[count] = NULL;
+	bytes_read = read(fd, buffer, 9999);
 	close(fd);
+	if (bytes_read <= 0)
+		return (NULL);
+	buffer[bytes_read] = '\0';
+	lines = ft_split(buffer, '\n');
 	return (lines);
 }
 

@@ -6,7 +6,7 @@
 /*   By: tnuno-mo <tnuno-mo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/01 00:02:42 by tnuno-mo          #+#    #+#             */
-/*   Updated: 2026/03/01 00:14:47 by tnuno-mo         ###   ########.fr       */
+/*   Updated: 2026/03/01 01:05:35 by tnuno-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	validate_texture_path(const char *path)
 	return (1);
 }
 
-// Set texture path in config for the specified direction (NO/SO/WE/EA)
+// Set texture path in config for the specified direction (N/S/W/E)
 static int	set_texture_path(char *value, t_scene_config *cfg, int flag)
 {
 	char	*path;
@@ -85,7 +85,7 @@ static int	load_single_texture(t_data *data, char *path, int index)
 	return (1);
 }
 
-// Load all four textures (NO, SO, WE, EA) from config paths
+// Load all four textures (N, S, W, E) from config paths
 int	load_all_textures(t_data *data)
 {
 	if (!load_single_texture(data, data->config.no_path, 0))

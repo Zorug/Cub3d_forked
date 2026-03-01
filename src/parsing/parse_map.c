@@ -6,7 +6,7 @@
 /*   By: tnuno-mo <tnuno-mo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/01 00:05:19 by tnuno-mo          #+#    #+#             */
-/*   Updated: 2026/03/01 00:17:31 by tnuno-mo         ###   ########.fr       */
+/*   Updated: 2026/03/01 01:17:35 by tnuno-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,6 @@ char	**copy_map_lines(char **lines, int start, int count)
 // Calculate and store map dimensions (width and height)
 static int	calculate_map_dimensions(char **map, t_data *data)
 {
-	int	i;
 	int	len;
 
 	data->map_height = 0;

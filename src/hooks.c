@@ -6,7 +6,7 @@
 /*   By: tnuno-mo <tnuno-mo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/08 21:32:20 by cgross-s          #+#    #+#             */
-/*   Updated: 2026/03/01 00:36:57 by tnuno-mo         ###   ########.fr       */
+/*   Updated: 2026/03/01 01:00:45 by tnuno-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	close_window(t_data *data)
 	int	i;
 
 	free_map(data);
-	free_scene_config(&data->config);
+//	free_scene_config(&data->config);
 	if (!data)
 		exit(0);
 	i = 0;

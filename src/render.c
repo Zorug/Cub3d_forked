@@ -6,7 +6,7 @@
 /*   By: tnuno-mo <tnuno-mo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/20 22:13:17 by cgross-s          #+#    #+#             */
-/*   Updated: 2026/03/01 00:34:51 by tnuno-mo         ###   ########.fr       */
+/*   Updated: 2026/03/01 01:17:35 by tnuno-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,17 +54,6 @@ void	draw_player_minimap(t_data *data)
 	player.radius = tile / 4;
 	player.color = MAP_PLAYER_COLOR;
 	draw_circle(&data->screen, &player);
-}
-
-static int	get_wall_color(t_ray *ray)
-{
-	if (ray->wall_side == WALL_NORTH)
-		return (WALL_NORTH_COLOR);
-	if (ray->wall_side == WALL_SOUTH)
-		return (WALL_SOUTH_COLOR);
-	if (ray->wall_side == WALL_WEST)
-		return (WALL_WEST_COLOR);
-	return (WALL_EAST_COLOR);
 }
 
 // Get a pixel from texture at given coordinates

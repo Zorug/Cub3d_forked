@@ -6,7 +6,7 @@
 /*   By: tnuno-mo <tnuno-mo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/28 23:54:33 by tnuno-mo          #+#    #+#             */
-/*   Updated: 2026/02/28 23:57:10 by tnuno-mo         ###   ########.fr       */
+/*   Updated: 2026/03/01 01:06:57 by tnuno-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,18 @@ typedef struct s_img {
 	int		height;
 }	t_img;
 
+/* ================= PARSING STRUCTURES ================= */
+typedef struct s_scene_config
+{
+	char	*no_path;      // North texture path
+	char	*so_path;      // South texture path
+	char	*we_path;      // West texture path
+	char	*ea_path;      // East texture path
+	int		floor_color;   // Floor RGB in hex (0x00RRGGBB)
+	int		ceiling_color; // Ceiling RGB in hex (0x00RRGGBB)
+	int		config_flags;  // Bitmask: which elements are set
+}	t_scene_config;
+
 /* --- Main Structure --- */
 typedef struct s_data {
 	// MLX and Window (Person A)
@@ -126,23 +138,11 @@ typedef struct s_data {
 	int		map_height;
 
 	// activate and deactivate raycasting in minimap
-	int	show_rays;
+	int				show_rays;
 
 	t_scene_config	config;		// Scene configuration
 	t_img			tex[4];		// Loaded textures [NO, SO, WE, EA]
 }	t_data;
-
-/* ================= PARSING STRUCTURES ================= */
-typedef struct s_scene_config
-{
-    char	*no_path;      // North texture path
-    char	*so_path;      // South texture path
-    char	*we_path;      // West texture path
-    char	*ea_path;      // East texture path
-    int		floor_color;   // Floor RGB in hex (0x00RRGGBB)
-    int		ceiling_color; // Ceiling RGB in hex (0x00RRGGBB)
-    int		config_flags;  // Bitmask: which elements are set
-}	t_scene_config;
 
 // Config flags bitmask- serve para ver se os elementos estão configurados
 # define FLAG_NO  (1 << 0)  // 0b000001
