@@ -3,35 +3,43 @@
 /*                                                        :::      ::::::::   */
 /*   ft_toupper.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cgross-s <cgross-s@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: tnuno-mo <tnuno-mo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/02 19:55:04 by cgross-s          #+#    #+#             */
-/*   Updated: 2024/11/02 19:55:05 by cgross-s         ###   ########.fr       */
+/*   Created: 2024/10/27 22:56:54 by tnuno-mo          #+#    #+#             */
+/*   Updated: 2024/11/01 01:32:45 by tnuno-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-/*DESCRIPTION
-These functions convert lowercase letters to uppercase,
-and vice versa.
-
-If  c  is a lowercase letter, toupper() returns its
-uppercase equivalent, if an uppercase representation
-exists in the current locale.   Otherwise, it  returns c.
-
-a97-A65 = 32
-z122
-*/
-
-#include "libft.h"
-
 int	ft_toupper(int c)
 {
-	if (c >= 97 && c <= 122)
+	if (c >= 'a' && c <= 'z')
 		return (c - 32);
-	else
-		return (c);
+	return (c);
 }
 
-/*RETURN VALUE
-The value returned is that of the converted letter,
-or c if  the  conversion was not possible.*/
+/*
+#include <stdio.h>
+#include <ctype.h>
+
+int	main(void)
+{
+	char c;
+	
+	c = 'a';
+	printf("Original: %c\n", c);
+	printf("ft_toupper: %c\n", ft_toupper(c));
+	printf("toupper: %c\n\n", toupper(c));
+
+	c = 'A';
+	printf("Original: %c\n", c);
+	printf("ft_toupper: %c\n", ft_toupper(c));
+	printf("toupper: %c\n\n", toupper(c));
+
+	c = '1';
+	printf("Original: %c\n", c);
+	printf("ft_toupper: %c\n", ft_toupper(c));
+	printf("toupper: %c\n", toupper(c));
+
+	return (0);
+}
+*/

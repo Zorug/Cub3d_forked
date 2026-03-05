@@ -3,15 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   ft_isspace.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cgross-s <cgross-s@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: tnuno-mo <tnuno-mo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/12/03 17:16:33 by cgross-s          #+#    #+#             */
-/*   Updated: 2025/12/03 17:22:45 by cgross-s         ###   ########.fr       */
+/*   Created: 2025/06/24 15:08:38 by tnuno-mo          #+#    #+#             */
+/*   Updated: 2025/06/24 15:09:16 by tnuno-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 int	ft_isspace(int c)
 {
-	return (c == ' ' || c == '\t' || c == '\n'
-		|| c == '\v' || c == '\f' || c == '\r');
+	if (c == ' ' || c == '\t' || c == '\n' || c == '\v' || \
+		c == '\f' || c == '\r')
+		return (1);
+	return (0);
 }

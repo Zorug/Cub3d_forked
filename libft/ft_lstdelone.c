@@ -1,19 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putchar.c                                       :+:      :+:    :+:   */
+/*   ft_lstdelone.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cgross-s <cgross-s@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: tnuno-mo <tnuno-mo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/20 17:51:21 by cgross-s          #+#    #+#             */
-/*   Updated: 2024/12/20 17:51:23 by cgross-s         ###   ########.fr       */
+/*   Created: 2024/11/12 20:14:48 by tnuno-mo          #+#    #+#             */
+/*   Updated: 2024/11/12 20:48:35 by tnuno-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-//#include "ft_printf.h"
 #include "libft.h"
 
-int	ft_putchar(int c)
+void	ft_lstdelone(t_list *lst, void (*del)(void*))
 {
-	return (write(1, &c, 1));
+	if (lst == NULL || del == NULL)
+		return ;
+	(*del)(lst -> content);
+	free(lst);
 }

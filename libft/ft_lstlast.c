@@ -1,26 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putstr.c                                        :+:      :+:    :+:   */
+/*   ft_lstlast.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cgross-s <cgross-s@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: tnuno-mo <tnuno-mo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/20 17:51:52 by cgross-s          #+#    #+#             */
-/*   Updated: 2024/12/20 17:51:53 by cgross-s         ###   ########.fr       */
+/*   Created: 2024/11/12 19:51:40 by tnuno-mo          #+#    #+#             */
+/*   Updated: 2024/11/12 20:47:53 by tnuno-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-//#include "ft_printf.h"
 #include "libft.h"
 
-int	ft_putstr(char *str)
+t_list	*ft_lstlast(t_list *lst)
 {
-	int	count;
-
-	count = 0;
-	if (!str)
-		return (ft_putstr("(null)"));
-	while (*str)
-		count += ft_putchar(*str++);
-	return (count);
+	if (lst == NULL )
+		return (NULL);
+	while (lst -> next != NULL)
+		lst = lst->next;
+	return (lst);
 }

@@ -1,26 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putptr.c                                        :+:      :+:    :+:   */
+/*   ft_lstsize.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cgross-s <cgross-s@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: tnuno-mo <tnuno-mo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/20 17:51:42 by cgross-s          #+#    #+#             */
-/*   Updated: 2024/12/20 17:51:43 by cgross-s         ###   ########.fr       */
+/*   Created: 2024/11/12 19:47:40 by tnuno-mo          #+#    #+#             */
+/*   Updated: 2024/11/12 21:23:16 by tnuno-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-//#include "ft_printf.h"
 #include "libft.h"
 
-int	ft_putptr(void *ptr)
+int	ft_lstsize(t_list *lst)
 {
-	int		count;
+	int	i;
 
-	count = 0;
-	if (!ptr)
-		return (ft_putstr("(nil)"));
-	count += ft_putstr("0x");
-	count += ft_putnbr_base((unsigned long)(uintptr_t)ptr, "0123456789abcdef");
-	return (count);
+	i = 0;
+	while (lst)
+	{
+		lst = lst->next;
+		i++;
+	}
+	return (i);
 }

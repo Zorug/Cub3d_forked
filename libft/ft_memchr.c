@@ -3,36 +3,47 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cgross-s <cgross-s@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: tnuno-mo <tnuno-mo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/02 19:56:53 by cgross-s          #+#    #+#             */
-/*   Updated: 2024/11/02 19:56:54 by cgross-s         ###   ########.fr       */
+/*   Created: 2024/11/01 04:30:46 by tnuno-mo          #+#    #+#             */
+/*   Updated: 2024/11/01 22:11:25 by tnuno-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-/* The  memchr()  function  scans the initial n bytes of 
-the memory area pointed to by s for the first instance 
-of c.  Both c and the bytes of the memory area pointed 
-to by s are interpreted as unsigned char.*/
-
 #include "libft.h"
 
+//searches for the first occurrence of the character c
 void	*ft_memchr(const void *s, int c, size_t n)
 {
-	size_t	i;
-	char	*str;
+	unsigned char	conv_c;
+	unsigned char	*conv_s;
 
-	i = 0;
-	str = (char *)s;
-	while (i < n)
+	conv_c = (unsigned char)c;
+	conv_s = (unsigned char *)s;
+	while (n > 0)
 	{
-		if ((unsigned char)str[i] == (unsigned char)c)
-			return ((void *)(s + i));
-		i++;
+		if (*conv_s == conv_c)
+		{
+			return (conv_s);
+		}
+		conv_s++;
+		n--;
 	}
 	return (NULL);
 }
-
-/* The memchr() and memrchr() functions return a pointer to 
-the matching byte or NULL if the character does not  occur  
-in  the  given  memory area.*/
+/*
+int main()
+{
+	char str[] = "Hello World";
+	char *result = ft_memchr(str, 'o', 12);
+	if (result == NULL)
+	{
+		printf("Character not found\n");
+	}
+	else
+	{
+		printf("Character found at %s\n", result);
+	}
+	return (0);
+}
+*/

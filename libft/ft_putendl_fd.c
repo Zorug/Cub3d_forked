@@ -3,15 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_putendl_fd.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cgross-s <cgross-s@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: tnuno-mo <tnuno-mo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/07 13:25:29 by cgross-s          #+#    #+#             */
-/*   Updated: 2024/11/07 13:25:31 by cgross-s         ###   ########.fr       */
+/*   Created: 2024/11/11 00:02:47 by tnuno-mo          #+#    #+#             */
+/*   Updated: 2024/11/11 00:17:18 by tnuno-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
+// Writes a string and '\n' to fd
 void	ft_putendl_fd(char *s, int fd)
 {
 	ft_putstr_fd(s, fd);

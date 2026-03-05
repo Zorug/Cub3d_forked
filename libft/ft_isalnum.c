@@ -3,28 +3,33 @@
 /*                                                        :::      ::::::::   */
 /*   ft_isalnum.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cgross-s <cgross-s@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: tnuno-mo <tnuno-mo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/22 19:35:11 by cgross-s          #+#    #+#             */
-/*   Updated: 2024/10/22 19:35:13 by cgross-s         ###   ########.fr       */
+/*   Created: 2024/10/24 18:57:12 by tnuno-mo          #+#    #+#             */
+/*   Updated: 2024/10/29 23:37:36 by tnuno-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "libft.h"
-/*
-isalnum()
-checks for an alphanumeric character; it is equivalent to 
-(isalpha(c) || isdigit(c)).
-*/
+
 int	ft_isalnum(int c)
 {
-	if (ft_isalpha(c) || ft_isdigit(c))
+	if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z')
+		|| (c >= '0' && c <= '9'))
 		return (1);
 	else
 		return (0);
 }
 
 /*
-RETURN VALUE:
-The  values  returned  are nonzero if the character c 
-falls into the tested class, and zero if not.
+#include <stdio.h>
+
+int	main(void)
+{
+	printf("ft_isalnum('a'): %d (espected: 1)\n", ft_isalnum('a'));
+	printf("ft_isalnum('Z'): %d (espected: 1)\n", ft_isalnum('Z'));
+	printf("ft_isalnum('5'): %d (espected: 1)\n", ft_isalnum('5'));
+	printf("ft_isalnum('?'): %d (espected: 0)\n", ft_isalnum('?'));
+	return (0);
+}
 */

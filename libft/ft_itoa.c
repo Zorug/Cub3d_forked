@@ -3,51 +3,80 @@
 /*                                                        :::      ::::::::   */
 /*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cgross-s <cgross-s@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: tnuno-mo <tnuno-mo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/07 13:25:08 by cgross-s          #+#    #+#             */
-/*   Updated: 2024/11/07 13:25:09 by cgross-s         ###   ########.fr       */
+/*   Created: 2024/11/09 23:34:07 by tnuno-mo          #+#    #+#             */
+/*   Updated: 2024/11/10 19:02:53 by tnuno-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-
-void	update_length(int *len, int n)
+//determine number of digits (counting with '-')
+int	ft_dig_size(int n)
 {
-	*len = 0;
-	if (n < 0)
-		*len += 1;
-	while (n)
-	{
-		n /= 10;
-		*len += 1;
-	}
-}
+	size_t	size;
 
-char	*ft_itoa(int n)
-{
-	char	*str;
-	int		len;
-
-	if (n == 0)
-		return (ft_strdup("0"));
-	if (n == -2147483648)
-		return (ft_strdup("-2147483648"));
-	update_length(&len, n);
-	str = malloc(sizeof(char) * (len + 1));
-	if (!str)
-		return (NULL);
-	if (n < 0)
-	{
-		str[0] = '-';
-		n = -n;
-	}
-	str[len] = '\0';
+	size = 0;
+	if (n <= 0)
+		size++;
 	while (n != 0)
 	{
-		str[len - 1] = (n % 10) + '0';
 		n = n / 10;
-		len--;
+		size++;
 	}
-	return (str);
+	return (size);
 }
+
+// put digits in res
+void	ft_insert_digits(size_t size, int offset, int n, char *res)
+{
+	while ((int)size > offset)
+	{
+		res[size - 1] = n % 10 + '0';
+		n = n / 10;
+		size--;
+	}
+}
+
+// convert i to string
+char	*ft_itoa(int n)
+{
+	int			offset;
+	size_t		size;
+	char		*res;
+
+	offset = 0;
+	size = ft_dig_size(n);
+	res = (char *)malloc(sizeof(char) * size + 1);
+	if (!res)
+		return (NULL);
+	if (n == -2147483648)
+	{
+		res[0] = '-';
+		res[1] = '2';
+		n = 147483648;
+		offset = 2;
+	}
+	if (n < 0)
+	{
+		res[0] = '-';
+		offset = 1;
+		n = -n;
+	}
+	ft_insert_digits(size, offset, n, res);
+	res[size] = '\0';
+	return (res);
+}
+/*
+int main()
+{
+	int	t1 = 125;
+	int	t2 = -814;
+	int	t_min = -2147483648;
+	int	t_max = 2147483647;
+	printf("%s\n", ft_itoa(t1));
+	printf("%s\n", ft_itoa(t2));
+	printf("%s\n", ft_itoa(t_min));
+	printf("%s\n", ft_itoa(t_max));
+}
+*/
