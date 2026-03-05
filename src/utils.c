@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cgross-s <cgross-s@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: tnuno-mo <tnuno-mo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/08 21:33:15 by cgross-s          #+#    #+#             */
-/*   Updated: 2026/02/20 22:00:50 by cgross-s         ###   ########.fr       */
+/*   Updated: 2026/03/05 21:26:35 by tnuno-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,12 +49,14 @@ void	find_player(t_data *data)
 {
 	int	y;
 	int	x;
+	int	line_len;
 
 	y = 0;
 	while (y < data->map_height)
 	{
 		x = 0;
-		while (x < data->map_width)
+		line_len = ft_strlen(data->map[y]);
+		while (x < line_len)
 		{
 			if (ft_strchr("NSEW", data->map[y][x]))
 			{

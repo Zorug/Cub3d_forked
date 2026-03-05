@@ -6,7 +6,7 @@
 /*   By: tnuno-mo <tnuno-mo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/08 21:32:20 by cgross-s          #+#    #+#             */
-/*   Updated: 2026/03/01 01:00:45 by tnuno-mo         ###   ########.fr       */
+/*   Updated: 2026/03/05 21:36:31 by tnuno-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,11 +62,18 @@ int	close_window(t_data *data)
 /* verify if the tile is a wall */
 static int	is_walkable(t_data *data, double x, double y)
 {
+	int	map_x;
+	int	map_y;
+
 	if (x < 0 || y < 0)
 		return (false);
-	if (x >= data->map_width || y >= data->map_height)
+	map_y = (int)y;
+	map_x = (int)x;
+	if (map_y >= data->map_height)
 		return (false);
-	if (data->map[(int)y][(int)x] == '1')
+	if (map_x >= (int)ft_strlen(data->map[map_y]))
+		return (false);
+	if (data->map[map_y][map_x] == '1')
 		return (false);
 	return (true);
 }
