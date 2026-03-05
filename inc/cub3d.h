@@ -6,7 +6,7 @@
 /*   By: tnuno-mo <tnuno-mo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/28 23:54:33 by tnuno-mo          #+#    #+#             */
-/*   Updated: 2026/03/01 01:06:57 by tnuno-mo         ###   ########.fr       */
+/*   Updated: 2026/03/05 23:48:40 by tnuno-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -264,8 +264,8 @@ int		key_hook(int keycode, t_data *data);
 int		mouse_move(int x, int y, t_data *data);
 
 /* initialization.c */
-void	init_mlx(t_data *data);
-void	init_screen(t_data *data);
+int		init_mlx(t_data *data);
+int		init_screen(t_data *data);
 void	init_player(t_data *data);
 void	init_mouse(t_data *data);
 void	init_hooks(t_data *data);

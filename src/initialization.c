@@ -3,21 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   initialization.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cgross-s <cgross-s@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: tnuno-mo <tnuno-mo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/22 16:35:11 by cgross-s          #+#    #+#             */
-/*   Updated: 2026/02/24 22:42:52 by cgross-s         ###   ########.fr       */
+/*   Updated: 2026/03/05 23:48:40 by tnuno-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/cub3d.h"
 
 /* Inicialização da MLX e janela */
-void	init_mlx(t_data *data)
+int	init_mlx(t_data *data)
 {
 	data->mlx = mlx_init();
-	//if (!data->mlx)
-	//	exit_error("mlx_init failed");
+	if (!data->mlx)
+		return (0);
 
 	data->screen.width = 800;
 	data->screen.height = 600;
@@ -28,20 +28,21 @@ void	init_mlx(t_data *data)
 		data->screen.height,
 		"CUB3D"
 	);
-	//if (!data->win)
-	//	exit_error("mlx_new_window failed");
+	if (!data->win)
+		return (0);
+	return (1);
 }
 
 /* Inicialização da imagem (framebuffer) */
-void	init_screen(t_data *data)
+int	init_screen(t_data *data)
 {
 	data->screen.img = mlx_new_image(
 		data->mlx,
 		data->screen.width,
 		data->screen.height
 	);
-	//if (!data->screen.img)
-	//	exit_error("mlx_new_image failed");
+	if (!data->screen.img)
+		return (0);
 
 	data->screen.addr = mlx_get_data_addr(
 		data->screen.img,
@@ -49,6 +50,9 @@ void	init_screen(t_data *data)
 		&data->screen.line_length,
 		&data->screen.endian
 	);
+	if (!data->screen.addr)
+		return (0);
+	return (1);
 }
 
 /* Inicialização do jogador e parâmetros do jogo */
