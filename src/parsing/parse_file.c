@@ -6,11 +6,12 @@
 /*   By: tnuno-mo <tnuno-mo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/01 00:08:35 by tnuno-mo          #+#    #+#             */
-/*   Updated: 2026/03/01 01:17:35 by tnuno-mo         ###   ########.fr       */
+/*   Updated: 2026/03/05 22:13:51 by tnuno-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/cub3d.h"
+#include "../../libft/get_next_line.h"
 
 // Validate that file has .cub extension
 int	validate_file_extension(const char *filename)
@@ -27,23 +28,78 @@ int	validate_file_extension(const char *filename)
 	return (1);
 }
 
-// Read all lines from file into dynamically allocated array
-char	**read_file_lines(const char *filename)
+// Remove newline from end of line
+static void	remove_newline(char *line)
+{
+	int	len;
+
+	if (!line)
+		return ;
+	len = ft_strlen(line);
+	if (len > 0 && line[len - 1] == '\n')
+		line[len - 1] = '\0';
+}
+
+// Count total lines in file using get_next_line
+static int	count_file_lines(const char *filename)
 {
 	int		fd;
-	char	buffer[10000];
-	char	**lines;
-	int		bytes_read;
+	char	*line;
+	int		count;
 
 	fd = open(filename, O_RDONLY);
 	if (fd < 0)
-		return (NULL);
-	bytes_read = read(fd, buffer, 9999);
+		return (0);
+	count = 0;
+	while (1)
+	{
+		line = get_next_line(fd);
+		if (!line)
+			break ;
+		count++;
+		free(line);
+	}
 	close(fd);
-	if (bytes_read <= 0)
+	return (count);
+}
+
+// Read all lines from file using get_next_line (handles files of any size)
+char	**read_file_lines(const char *filename)
+{
+	int		fd;
+	char	*line;
+	char	**lines;
+	int		line_count;
+	int		i;
+
+	line_count = count_file_lines(filename);
+	if (line_count == 0)
 		return (NULL);
-	buffer[bytes_read] = '\0';
-	lines = ft_split(buffer, '\n');
+	lines = malloc(sizeof(char *) * (line_count + 1));
+	if (!lines)
+		return (NULL);
+	fd = open(filename, O_RDONLY);
+	if (fd < 0)
+	{
+		free(lines);
+		return (NULL);
+	}
+	i = 0;
+	while (i < line_count)
+	{
+		line = get_next_line(fd);
+		if (!line)
+		{
+			free_string_array(lines);
+			close(fd);
+			return (NULL);
+		}
+		remove_newline(line);
+		lines[i] = line;
+		i++;
+	}
+	lines[i] = NULL;
+	close(fd);
 	return (lines);
 }
 
@@ -108,5 +164,5 @@ int	parse_scene_file(const char *filename, t_data *data)
 		return (0);
 	}
 	free_string_array(lines);
-    return (1);
+	return (1);
 }
