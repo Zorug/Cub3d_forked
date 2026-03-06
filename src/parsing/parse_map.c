@@ -6,7 +6,7 @@
 /*   By: tnuno-mo <tnuno-mo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/01 00:05:19 by tnuno-mo          #+#    #+#             */
-/*   Updated: 2026/03/01 01:17:35 by tnuno-mo         ###   ########.fr       */
+/*   Updated: 2026/03/06 00:07:43 by tnuno-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,7 @@ static int	calculate_map_dimensions(char **map, t_data *data)
 int	extract_and_validate_map(char **lines, int start_idx, t_data *data)
 {
 	int		map_line_count;
+	int		i;
 
 	map_line_count = count_map_lines(lines, start_idx);
 	if (map_line_count == 0)
@@ -100,5 +101,12 @@ int	extract_and_validate_map(char **lines, int start_idx, t_data *data)
 		return (0);
 	if (!validate_map(data->map))
 		return (error_return("Invalid map structure"));
+	i = start_idx + map_line_count;
+	while (lines[i])
+	{
+		if (!is_empty_line(lines[i]))
+			return (error_return("Configuration elements found after map"));
+		i++;
+	}
 	return (1);
 }
