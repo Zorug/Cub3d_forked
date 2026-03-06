@@ -6,7 +6,7 @@
 /*   By: tnuno-mo <tnuno-mo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/28 23:54:33 by tnuno-mo          #+#    #+#             */
-/*   Updated: 2026/03/05 23:48:40 by tnuno-mo         ###   ########.fr       */
+/*   Updated: 2026/03/06 01:15:12 by tnuno-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -330,6 +330,6 @@ int		str_starts_with(const char *str, const char *prefix);
 
 // errors.c
 void	error_exit(t_data *data, const char *message);
-int		error_return(const char *message);
+int	error_return(const char *message);
 void	free_scene_config(t_scene_config *cfg);
 #endif

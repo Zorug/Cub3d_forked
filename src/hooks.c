@@ -6,11 +6,22 @@
 /*   By: tnuno-mo <tnuno-mo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/08 21:32:20 by cgross-s          #+#    #+#             */
-/*   Updated: 2026/03/06 00:47:06 by tnuno-mo         ###   ########.fr       */
+/*   Updated: 2026/03/06 01:16:19 by tnuno-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/cub3d.h"
+
+static void	set_cursor_visible(t_data *data, int visible)
+{
+	(void)data;
+	(void)visible;
+}
+
+static void	destroy_hidden_cursor(t_data *data)
+{
+	(void)data;
+}
 
 /*clear map leaks*/
 void	free_map(t_data *data)
@@ -48,6 +59,8 @@ int	close_window(t_data *data)
 	}
 	if (data->screen.img)
 		mlx_destroy_image(data->mlx, data->screen.img);
+	set_cursor_visible(data, 1);
+	destroy_hidden_cursor(data);
 	if (data->win)
 		mlx_destroy_window(data->mlx, data->win);
 	if (data->mlx)
@@ -137,9 +150,14 @@ static void	toggle_mouse(t_data *data)
 {
 	data->mouse_enabled = !data->mouse_enabled;
 	if (data->mouse_enabled)
+	{
+		set_cursor_visible(data, 0);
 		mlx_mouse_move(data->mlx, data->win,
 			data->win_center_x,
 			data->win_center_y);
+	}
+	else
+		set_cursor_visible(data, 1);
 }
 
 int	key_hook(int keycode, t_data *data)
