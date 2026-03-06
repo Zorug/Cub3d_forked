@@ -6,7 +6,7 @@
 /*   By: tnuno-mo <tnuno-mo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/22 16:35:11 by cgross-s          #+#    #+#             */
-/*   Updated: 2026/03/06 01:15:12 by tnuno-mo         ###   ########.fr       */
+/*   Updated: 2026/03/06 01:52:57 by tnuno-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,8 @@ void	init_hooks(t_data *data)
 	mlx_key_hook(data->win, key_hook, data);
 	mlx_hook(data->win, 17, 0, close_window, data);
 	mlx_loop_hook(data->mlx, render, data);
+
+	mlx_mouse_hide(data->mlx, data->win);
 
 	// raios visiveis
 	data->show_rays = 1;

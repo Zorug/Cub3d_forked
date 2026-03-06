@@ -12,8 +12,7 @@ CC			= cc
 CFLAGS		= -Wall -Wextra -Werror
 INCLUDES	= -Iinc -Ilibft
 RM			= rm -rf
-VALGRIND	= valgrind --track-fds=yes --leak-check=full --show-leak-kinds=definite,indirect,possible
-VALGRIND_FULL	= valgrind --track-fds=yes --leak-check=full --show-leak-kinds=all
+VALGRIND	= valgrind --track-fds=yes --leak-check=full --suppressions=.valgrind-suppressions
 
 #==============================================================================#
 #                                LIBRARIES                                     #
@@ -86,7 +85,4 @@ re: fclean all
 val: $(NAME)
 	@$(VALGRIND) ./$(NAME) maps/maptest.cub
 
-val-full: $(NAME)
-	@$(VALGRIND_FULL) ./$(NAME) maps/maptest.cub
-
-.PHONY: all clean fclean re val val-full
+.PHONY: all clean fclean re val
