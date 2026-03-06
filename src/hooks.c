@@ -6,7 +6,7 @@
 /*   By: tnuno-mo <tnuno-mo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/08 21:32:20 by cgross-s          #+#    #+#             */
-/*   Updated: 2026/03/05 22:57:13 by tnuno-mo         ###   ########.fr       */
+/*   Updated: 2026/03/06 00:47:06 by tnuno-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,14 +137,9 @@ static void	toggle_mouse(t_data *data)
 {
 	data->mouse_enabled = !data->mouse_enabled;
 	if (data->mouse_enabled)
-	{
-		mlx_mouse_hide(data->mlx, data->win);
 		mlx_mouse_move(data->mlx, data->win,
 			data->win_center_x,
 			data->win_center_y);
-	}
-	else
-		mlx_mouse_show(data->mlx, data->win);
 }
 
 int	key_hook(int keycode, t_data *data)
