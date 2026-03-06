@@ -24,6 +24,23 @@ static int	validate_rgb_value(int value)
 	return (value >= 0 && value <= 255);
 }
 
+// Validate that a string contains only digits (no signs, no invalid chars)
+static int	is_valid_rgb_string(const char *str)
+{
+	int	i;
+
+	if (!str || str[0] == '\0')
+		return (0);
+	i = 0;
+	while (str[i])
+	{
+		if (!ft_isdigit(str[i]))
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
 // Parse comma-separated RGB values from string
 int	parse_rgb_values(const char *str, int *r, int *g, int *b)
 {
@@ -36,6 +53,13 @@ int	parse_rgb_values(const char *str, int *r, int *g, int *b)
 		return (0);
 	}
 	if (components[3])
+	{
+		free_string_array(components);
+		return (0);
+	}
+	if (!is_valid_rgb_string(components[0])
+		|| !is_valid_rgb_string(components[1])
+		|| !is_valid_rgb_string(components[2]))
 	{
 		free_string_array(components);
 		return (0);
