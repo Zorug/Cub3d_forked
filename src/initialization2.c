@@ -1,27 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   draw_minimap.c                                     :+:      :+:    :+:   */
+/*   initialization2.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tnuno-mo <tnuno-mo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/02/26 14:43:00 by cgross-s          #+#    #+#             */
-/*   Updated: 2026/03/07 21:06:08 by tnuno-mo         ###   ########.fr       */
+/*   Created: 2026/03/07 19:10:00 by tnuno-mo          #+#    #+#             */
+/*   Updated: 2026/03/07 20:55:36 by tnuno-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/cub3d.h"
 
-void	draw_ray_minimap(t_data *data, t_ray *ray)
+/* General hooks (keyboard, close, loop) */
+void	init_hooks(t_data *data)
 {
-	t_line	line;
-	int		tile;
-
-	tile = TILE_SIZE * MINIMAP_SCALE;
-	line.start.x = (int)round(MINIMAP_OFFSET_X + data->posX * tile);
-	line.start.y = (int)round(MINIMAP_OFFSET_Y + data->posY * tile);
-	line.end.x = (int)round(MINIMAP_OFFSET_X + ray->hit_x * tile);
-	line.end.y = (int)round(MINIMAP_OFFSET_Y + ray->hit_y * tile);
-	line.color = MAP_RAY_COLOR;
-	draw_line(&data->screen, &line);
+	mlx_key_hook(data->win, key_hook, data);
+	mlx_hook(data->win, 17, 0, close_window, data);
+	mlx_loop_hook(data->mlx, render, data);
+	mlx_mouse_hide(data->mlx, data->win);
+	data->show_rays = 1;
 }

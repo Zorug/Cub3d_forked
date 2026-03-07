@@ -38,9 +38,15 @@ OBJ_DIR		= obj
 SRCS		=	main.c \
 				draw.c \
 				hooks.c \
+				hooks2.c \
+				hooks3.c \
 				utils.c \
 				render.c \
+				render_3d.c \
+				render_minimap.c \
+				render_texture.c \
 				errors.c \
+				initialization2.c \
 				validate_map.c \
 				initialization.c \
 				parsing/parse_map.c \
@@ -49,6 +55,7 @@ SRCS		=	main.c \
 				parsing/parse_colors.c \
 				parsing/parse_textures.c \
 				raycast/raycast.c \
+				raycast/raycast_utils.c \
 				raycast/init_dda.c \
 				raycast/draw_minimap.c \
 

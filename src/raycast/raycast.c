@@ -6,13 +6,25 @@
 /*   By: tnuno-mo <tnuno-mo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/15 21:31:40 by cgross-s          #+#    #+#             */
-/*   Updated: 2026/03/07 18:03:00 by tnuno-mo         ###   ########.fr       */
+/*   Updated: 2026/03/07 21:08:55 by tnuno-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/cub3d.h"
 
-/*Aqui acontece o algoritmo DDA em si.*/
+/* Check if ray hit map boundaries or wall */
+static int	check_hit(t_data *data, t_ray *ray)
+{
+	if (ray->map_x < 0 || ray->map_y < 0 || ray->map_y >= data->map_height)
+		return (1);
+	if (ray->map_x >= (int)ft_strlen(data->map[ray->map_y]))
+		return (1);
+	if (data->map[ray->map_y][ray->map_x] == '1')
+		return (1);
+	return (0);
+}
+
+/* DDA algorithm implementation */
 void	perform_dda(t_data *data, t_ray *ray)
 {
 	while (ray->hit == 0)
@@ -29,22 +41,15 @@ void	perform_dda(t_data *data, t_ray *ray)
 			ray->map_y += ray->step_y;
 			ray->side = 1;
 		}
-		if (ray->map_x < 0 || ray->map_y < 0 || ray->map_y >= data->map_height)
+		if (check_hit(data, ray))
 		{
 			ray->hit = 1;
 			break ;
 		}
-		if (ray->map_x >= (int)ft_strlen(data->map[ray->map_y]))
-		{
-			ray->hit = 1;
-			break ;
-		}
-		if (data->map[ray->map_y][ray->map_x] == '1')
-			ray->hit = 1;
 	}
 }
 
-/*Responsável por corrigir o fish-eye.*/
+/* Fix fish-eye effect by computing perpendicular distance */
 void	compute_perp_distance(t_data *data, t_ray *ray)
 {
 	if (ray->side == 0)
@@ -55,7 +60,7 @@ void	compute_perp_distance(t_data *data, t_ray *ray)
 				+ (1 - ray->step_y) / 2) / ray->ray_dir_y;
 }
 
-/*Aqui calculamos onde exatamente o raio bateu, em coordenadas do mundo.*/
+/* Calculate exact wall hit position in world coordinates */
 void	compute_hit_position(t_data *data, t_ray *ray)
 {
 	if (ray->side == 0)
@@ -72,24 +77,7 @@ void	compute_hit_position(t_data *data, t_ray *ray)
 	}
 }
 
-static void	determine_wall_side(t_ray *ray)
-{
-	if (ray->side == 0)
-	{
-		if (ray->step_x > 0)
-			ray->wall_side = WALL_EAST;
-		else
-			ray->wall_side = WALL_WEST;
-	}
-	else
-	{
-		if (ray->step_y > 0)
-			ray->wall_side = WALL_SOUTH;
-		else
-			ray->wall_side = WALL_NORTH;
-	}
-}
-
+/* Cast a single ray and compute all its properties */
 void	cast_single_ray(t_data *data, t_ray *ray)
 {
 	init_ray_from_dir(data, ray);

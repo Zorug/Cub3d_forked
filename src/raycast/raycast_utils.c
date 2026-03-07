@@ -1,27 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   draw_minimap.c                                     :+:      :+:    :+:   */
+/*   raycast_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tnuno-mo <tnuno-mo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/02/26 14:43:00 by cgross-s          #+#    #+#             */
-/*   Updated: 2026/03/07 21:06:08 by tnuno-mo         ###   ########.fr       */
+/*   Created: 2026/03/07 21:50:00 by tnuno-mo          #+#    #+#             */
+/*   Updated: 2026/03/07 21:08:55 by tnuno-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/cub3d.h"
 
-void	draw_ray_minimap(t_data *data, t_ray *ray)
+/* Determine which wall side was hit */
+void	determine_wall_side(t_ray *ray)
 {
-	t_line	line;
-	int		tile;
-
-	tile = TILE_SIZE * MINIMAP_SCALE;
-	line.start.x = (int)round(MINIMAP_OFFSET_X + data->posX * tile);
-	line.start.y = (int)round(MINIMAP_OFFSET_Y + data->posY * tile);
-	line.end.x = (int)round(MINIMAP_OFFSET_X + ray->hit_x * tile);
-	line.end.y = (int)round(MINIMAP_OFFSET_Y + ray->hit_y * tile);
-	line.color = MAP_RAY_COLOR;
-	draw_line(&data->screen, &line);
+	if (ray->side == 0)
+	{
+		if (ray->step_x > 0)
+			ray->wall_side = WALL_EAST;
+		else
+			ray->wall_side = WALL_WEST;
+	}
+	else
+	{
+		if (ray->step_y > 0)
+			ray->wall_side = WALL_SOUTH;
+		else
+			ray->wall_side = WALL_NORTH;
+	}
 }
