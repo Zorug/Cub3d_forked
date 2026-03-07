@@ -6,7 +6,7 @@
 /*   By: tnuno-mo <tnuno-mo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/28 14:23:20 by tnuno-mo          #+#    #+#             */
-/*   Updated: 2026/03/07 15:38:47 by tnuno-mo         ###   ########.fr       */
+/*   Updated: 2026/03/07 18:03:00 by tnuno-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -228,13 +228,6 @@ typedef struct s_line
 	int		color;
 }	t_line;
 
-typedef struct s_square
-{
-	t_point	pos;
-	int		size;
-	int		color;
-}	t_square;
-
 typedef struct s_rect
 {
 	t_point	pos;
@@ -259,9 +252,7 @@ typedef struct s_dda
 /* draw.c */
 void	draw_circle(t_img *img, t_circle *c);
 void	draw_rect(t_img *img, t_rect *r);
-void	draw_square(t_img *img, t_square *s);
 void	draw_line(t_img *img, t_line *l);
-void	draw_map(t_data *data);
 
 /* hooks.c */
 void	free_map(t_data *data);
@@ -284,7 +275,6 @@ void	cast_single_ray(t_data *data, t_ray *ray);
 void	init_dda(t_data *data, t_ray *ray);
 /* draw_minimap.c */
 void	draw_ray_minimap(t_data *data, t_ray *ray);
-void	draw_ray_debug(t_data *data, t_ray *ray);
 
 /* render.c */
 int		render(t_data *data);
@@ -299,8 +289,6 @@ void	set_player_direction(t_data *data, char c);
 void	find_player(t_data *data);
 
 /* --- Map Validation Prototypes --- */
-int		validate_scene_file(const char *filename);
-int		validate_map_file(const char *filename);
 int		validate_map(char **map);
 int		is_valid_map_char(char c);
 int		is_map_closed(char **map);

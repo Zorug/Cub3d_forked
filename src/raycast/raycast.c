@@ -6,20 +6,11 @@
 /*   By: tnuno-mo <tnuno-mo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/15 21:31:40 by cgross-s          #+#    #+#             */
-/*   Updated: 2026/03/07 16:03:18 by tnuno-mo         ###   ########.fr       */
+/*   Updated: 2026/03/07 18:03:00 by tnuno-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/cub3d.h"
-
-/*set initial directions and position in the map (in map pos [0, 1])*/
-void	init_ray_direction(t_data *data, t_ray *ray, double ray_angle)
-{
-	ray->ray_dir_x = cos(ray_angle);
-	ray->ray_dir_y = sin(ray_angle);
-	ray->map_x = (int)data->posX;
-	ray->map_y = (int)data->posY;
-}
 
 /*Aqui acontece o algoritmo DDA em si.*/
 void	perform_dda(t_data *data, t_ray *ray)
