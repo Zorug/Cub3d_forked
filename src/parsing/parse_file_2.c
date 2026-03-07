@@ -1,19 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_file.c                                       :+:      :+:    :+:   */
+/*   parse_file_2.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tnuno-mo <tnuno-mo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cgross-s <cgross-s@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/03/01 00:08:35 by tnuno-mo          #+#    #+#             */
-/*   Updated: 2026/03/07 15:49:08 by tnuno-mo         ###   ########.fr       */
+/*   Created: 2026/03/07 21:26:47 by cgross-s          #+#    #+#             */
+/*   Updated: 2026/03/07 21:33:27 by cgross-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/cub3d.h"
 #include "../../libft/get_next_line.h"
 
-// Validate that file has .cub extension
 int	validate_file_extension(const char *filename)
 {
 	int	len;
@@ -26,88 +25,6 @@ int	validate_file_extension(const char *filename)
 	if (ft_strcmp(filename + len - 4, ".cub") != 0)
 		return (error_return("File must have .cub extension"));
 	return (1);
-}
-
-// Remove newline from end of line
-static void	remove_newline(char *line)
-{
-	int	len;
-
-	if (!line)
-		return ;
-	len = ft_strlen(line);
-	if (len > 0 && line[len - 1] == '\n')
-		line[len - 1] = '\0';
-}
-
-static char	**grow_lines_array(char **lines, int capacity)
-{
-	char	**new_lines;
-	int		i;
-
-	new_lines = ft_calloc(capacity * 2 + 1, sizeof(char *));
-	if (!new_lines)
-		return (NULL);
-	i = 0;
-	while (i < capacity)
-	{
-		new_lines[i] = lines[i];
-		i++;
-	}
-	free(lines);
-	return (new_lines);
-}
-
-// Read all lines from file using get_next_line (handles files of any size)
-char	**read_file_lines(const char *filename)
-{
-	int		fd;
-	char	*line;
-	char	**lines;
-	int		i;
-	int		capacity;
-	char	**new_lines;
-
-	fd = open(filename, O_RDONLY);
-	if (fd < 0)
-		return (NULL);
-	capacity = 16;
-	lines = ft_calloc(capacity + 1, sizeof(char *));
-	if (!lines)
-	{
-		close(fd);
-		return (NULL);
-	}
-	i = 0;
-	line = get_next_line(fd);
-	while (line)
-	{
-		if (i == capacity)
-		{
-			new_lines = grow_lines_array(lines, capacity);
-			if (!new_lines)
-			{
-				free(line);
-				free_string_array(lines);
-				close(fd);
-				return (NULL);
-			}
-			lines = new_lines;
-			capacity *= 2;
-		}
-		remove_newline(line);
-		lines[i] = line;
-		i++;
-		line = get_next_line(fd);
-	}
-	close(fd);
-	if (i == 0)
-	{
-		free(lines);
-		return (NULL);
-	}
-	lines[i] = NULL;
-	return (lines);
 }
 
 // Parse a single config line (texture, color, or map)
