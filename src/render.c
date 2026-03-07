@@ -89,7 +89,8 @@ static int	get_texture_x(t_ray *ray, int tex_width)
 }
 
 // Get wall pixel color from texture
-static int	render_wall_pixel(t_data *data, t_ray *ray, int y, int line_height, int draw_start)
+static int	render_wall_pixel(t_data *data, t_ray *ray, int y,
+		int line_height, int wall_start)
 {
 	t_img	*tex;
 	int		tex_x;
@@ -98,8 +99,12 @@ static int	render_wall_pixel(t_data *data, t_ray *ray, int y, int line_height, i
 
 	tex = &data->tex[ray->wall_side];
 	tex_x = get_texture_x(ray, tex->width);
-	d = y - draw_start;
+	d = y - wall_start;
 	tex_y = d * tex->height / line_height;
+	if (tex_y < 0)
+		tex_y = 0;
+	if (tex_y >= tex->height)
+		tex_y = tex->height - 1;
 	return (get_texture_pixel(tex, tex_x, tex_y));
 }
 
@@ -130,6 +135,7 @@ void	render_3d_view(t_data *data)
 	int		line_height;
 	int		draw_start;
 	int		draw_end;
+	int		wall_start;
 	int		y;
 	int		color;
 
@@ -140,10 +146,13 @@ void	render_3d_view(t_data *data)
 		ray.ray_dir_x = data->dirX + data->planeX * camera_x;
 		ray.ray_dir_y = data->dirY + data->planeY * camera_x;
 		cast_single_ray(data, &ray);
-		if (ray.perp_wall_dist < 0.1)
-			ray.perp_wall_dist = 0.1;
+		if (ray.perp_wall_dist < 0.01)
+			ray.perp_wall_dist = 0.01;
 		line_height = (int)(data->screen.height / ray.perp_wall_dist);
-		draw_start = -line_height / 2 + data->screen.height / 2;
+		if (line_height > data->screen.height * 10)
+			line_height = data->screen.height * 10;
+		wall_start = -line_height / 2 + data->screen.height / 2;
+		draw_start = wall_start;
 		draw_end = line_height / 2 + data->screen.height / 2;
 		if (draw_start < 0)
 			draw_start = 0;
@@ -158,7 +167,7 @@ void	render_3d_view(t_data *data)
 		y = draw_start;
 		while (y <= draw_end)
 		{
-			color = render_wall_pixel(data, &ray, y, line_height, draw_start);
+			color = render_wall_pixel(data, &ray, y, line_height, wall_start);
 			if (ray.side == 1)
 				color = (color >> 1) & 0x007F7F7F;
 			my_mlx_pixel_put(&data->screen, x, y, color);
