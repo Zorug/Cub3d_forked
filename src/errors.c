@@ -6,7 +6,7 @@
 /*   By: tnuno-mo <tnuno-mo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/28 23:14:12 by tnuno-mo          #+#    #+#             */
-/*   Updated: 2026/03/01 00:03:24 by tnuno-mo         ###   ########.fr       */
+/*   Updated: 2026/03/07 12:18:18 by tnuno-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,6 @@ void	error_exit(t_data *data, const char *message)
 	ft_putstr_fd("Error\n", 2);
 	ft_putendl_fd((char *)message, 2);
 	if (data)
-	{
-		free_scene_config(&data->config);
-		free_map(data);
-	}
+		close_window(data);
 	exit(1);
 }

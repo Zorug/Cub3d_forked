@@ -16,4 +16,4 @@
 - **Ficheiro:** `src/errors.c`
 - **Problema:** `error_exit()` liberta config e mapa, mas não liberta texturas MLX, screen image, window, nem display. Se chamada depois de `load_all_textures()`, haverá leaks.
 - **Correção:** Unificar lógica com `close_window()` ou adicionar cleanup completo a `error_exit`.
-- [ ] Corrigido
+- [x] Corrigido
