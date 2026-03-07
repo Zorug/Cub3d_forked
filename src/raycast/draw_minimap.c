@@ -18,10 +18,10 @@ void	draw_ray_minimap(t_data *data, t_ray *ray)
 	int		tile;
 
 	tile = TILE_SIZE * MINIMAP_SCALE;
-	line.start.x = MINIMAP_OFFSET_X + data->posX * tile;
-	line.start.y = MINIMAP_OFFSET_Y + data->posY * tile;
-	line.end.x = MINIMAP_OFFSET_X + ray->hit_x * tile;
-	line.end.y = MINIMAP_OFFSET_Y + ray->hit_y * tile;
+	line.start.x = (int)round(MINIMAP_OFFSET_X + data->posX * tile);
+	line.start.y = (int)round(MINIMAP_OFFSET_Y + data->posY * tile);
+	line.end.x = (int)round(MINIMAP_OFFSET_X + ray->hit_x * tile);
+	line.end.y = (int)round(MINIMAP_OFFSET_Y + ray->hit_y * tile);
 	//line.color = COLOR_YELLOW;
 	line.color = MAP_RAY_COLOR;
 	draw_line(&data->screen, &line);

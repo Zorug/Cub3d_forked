@@ -142,7 +142,7 @@ void	render_3d_view(t_data *data)
 	x = 0;
 	while (x < data->screen.width)
 	{
-		camera_x = 2.0 * x / (double)data->screen.width - 1.0;
+		camera_x = (2.0 * x + 1.0) / (double)data->screen.width - 1.0;
 		ray.ray_dir_x = data->dirX + data->planeX * camera_x;
 		ray.ray_dir_y = data->dirY + data->planeY * camera_x;
 		cast_single_ray(data, &ray);
@@ -183,12 +183,49 @@ void	render_3d_view(t_data *data)
 	}
 }
 
+static void	draw_minimap_rays(t_data *data)
+{
+	int		x;
+	int		center_x;
+	int		offset;
+	double	camera_x;
+	t_ray	ray;
+
+	if (!data->show_rays)
+		return ;
+	center_x = data->screen.width / 2;
+	offset = 0;
+	while (center_x - offset >= 0 || center_x + offset < data->screen.width)
+	{
+		x = center_x - offset;
+		if (x >= 0)
+		{
+			camera_x = (2.0 * x + 1.0) / (double)data->screen.width - 1.0;
+			ray.ray_dir_x = data->dirX + data->planeX * camera_x;
+			ray.ray_dir_y = data->dirY + data->planeY * camera_x;
+			cast_single_ray(data, &ray);
+			draw_ray_minimap(data, &ray);
+		}
+		x = center_x + offset;
+		if (offset != 0 && x < data->screen.width)
+		{
+			camera_x = (2.0 * x + 1.0) / (double)data->screen.width - 1.0;
+			ray.ray_dir_x = data->dirX + data->planeX * camera_x;
+			ray.ray_dir_y = data->dirY + data->planeY * camera_x;
+			cast_single_ray(data, &ray);
+			draw_ray_minimap(data, &ray);
+		}
+		offset++;
+	}
+}
+
 // Main render loop: clear screen, draw 3D view, minimap and player
 int	render(t_data *data)
 {
 	clear_screen(&data->screen);
 	render_3d_view(data);
 	draw_minimap(data);
+	draw_minimap_rays(data);
 	draw_player_minimap(data);
 	mlx_put_image_to_window(data->mlx, data->win,
 		data->screen.img, 0, 0);

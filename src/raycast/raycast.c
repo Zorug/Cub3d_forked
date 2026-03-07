@@ -101,5 +101,4 @@ void	cast_single_ray(t_data *data, t_ray *ray)
 	compute_perp_distance(data, ray);
 	determine_wall_side(ray);
 	compute_hit_position(data, ray);
-	draw_ray_debug(data, ray);
 }
