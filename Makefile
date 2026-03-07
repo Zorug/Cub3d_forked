@@ -12,7 +12,8 @@ CC			= cc
 CFLAGS		= -Wall -Wextra -Werror
 INCLUDES	= -Iinc -Ilibft
 RM			= rm -rf
-VALGRIND	= valgrind --track-fds=yes --leak-check=full --suppressions=.valgrind-suppressions
+VALGRIND	= valgrind --track-fds=yes --leak-check=full --show-leak-kinds=all --suppressions=.valgrind-suppressions
+
 
 #==============================================================================#
 #                                LIBRARIES                                     #
