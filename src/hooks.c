@@ -6,7 +6,7 @@
 /*   By: tnuno-mo <tnuno-mo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/08 21:32:20 by cgross-s          #+#    #+#             */
-/*   Updated: 2026/03/07 14:22:48 by tnuno-mo         ###   ########.fr       */
+/*   Updated: 2026/03/07 15:02:39 by tnuno-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,8 @@ int	close_window(t_data *data)
 	}
 	if (data->screen.img)
 		mlx_destroy_image(data->mlx, data->screen.img);
+	if (data->rays)
+		free(data->rays);
 	if (data->win)
 		mlx_destroy_window(data->mlx, data->win);
 	if (data->mlx)

@@ -6,7 +6,7 @@
 /*   By: tnuno-mo <tnuno-mo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/20 22:13:17 by cgross-s          #+#    #+#             */
-/*   Updated: 2026/03/07 14:22:48 by tnuno-mo         ###   ########.fr       */
+/*   Updated: 2026/03/07 15:02:39 by tnuno-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,7 +131,7 @@ void	render_3d_view(t_data *data)
 {
 	int		x;
 	double	camera_x;
-	t_ray	ray;
+	t_ray	*ray;
 	int		line_height;
 	int		draw_start;
 	int		draw_end;
@@ -142,13 +142,14 @@ void	render_3d_view(t_data *data)
 	x = 0;
 	while (x < data->screen.width)
 	{
+		ray = &data->rays[x];
 		camera_x = (2.0 * x + 1.0) / (double)data->screen.width - 1.0;
-		ray.ray_dir_x = data->dirX + data->planeX * camera_x;
-		ray.ray_dir_y = data->dirY + data->planeY * camera_x;
-		cast_single_ray(data, &ray);
-		if (ray.perp_wall_dist < 0.01)
-			ray.perp_wall_dist = 0.01;
-		line_height = (int)(data->screen.height / ray.perp_wall_dist);
+		ray->ray_dir_x = data->dirX + data->planeX * camera_x;
+		ray->ray_dir_y = data->dirY + data->planeY * camera_x;
+		cast_single_ray(data, ray);
+		if (ray->perp_wall_dist < 0.01)
+			ray->perp_wall_dist = 0.01;
+		line_height = (int)(data->screen.height / ray->perp_wall_dist);
 		if (line_height > data->screen.height * 10)
 			line_height = data->screen.height * 10;
 		wall_start = -line_height / 2 + data->screen.height / 2;
@@ -167,8 +168,8 @@ void	render_3d_view(t_data *data)
 		y = draw_start;
 		while (y <= draw_end)
 		{
-			color = render_wall_pixel(data, &ray, y, line_height, wall_start);
-			if (ray.side == 1)
+			color = render_wall_pixel(data, ray, y, line_height, wall_start);
+			if (ray->side == 1)
 				color = (color >> 1) & 0x007F7F7F;
 			my_mlx_pixel_put(&data->screen, x, y, color);
 			y++;
@@ -185,37 +186,15 @@ void	render_3d_view(t_data *data)
 
 static void	draw_minimap_rays(t_data *data)
 {
-	int		x;
-	int		center_x;
-	int		offset;
-	double	camera_x;
-	t_ray	ray;
+	int	x;
 
 	if (!data->show_rays)
 		return ;
-	center_x = data->screen.width / 2;
-	offset = 0;
-	while (center_x - offset >= 0 || center_x + offset < data->screen.width)
+	x = 0;
+	while (x < data->screen.width)
 	{
-		x = center_x - offset;
-		if (x >= 0)
-		{
-			camera_x = (2.0 * x + 1.0) / (double)data->screen.width - 1.0;
-			ray.ray_dir_x = data->dirX + data->planeX * camera_x;
-			ray.ray_dir_y = data->dirY + data->planeY * camera_x;
-			cast_single_ray(data, &ray);
-			draw_ray_minimap(data, &ray);
-		}
-		x = center_x + offset;
-		if (offset != 0 && x < data->screen.width)
-		{
-			camera_x = (2.0 * x + 1.0) / (double)data->screen.width - 1.0;
-			ray.ray_dir_x = data->dirX + data->planeX * camera_x;
-			ray.ray_dir_y = data->dirY + data->planeY * camera_x;
-			cast_single_ray(data, &ray);
-			draw_ray_minimap(data, &ray);
-		}
-		offset++;
+		draw_ray_minimap(data, &data->rays[x]);
+		x++;
 	}
 }
 

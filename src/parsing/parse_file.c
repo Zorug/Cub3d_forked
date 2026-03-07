@@ -6,7 +6,7 @@
 /*   By: tnuno-mo <tnuno-mo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/01 00:08:35 by tnuno-mo          #+#    #+#             */
-/*   Updated: 2026/03/07 14:22:49 by tnuno-mo         ###   ########.fr       */
+/*   Updated: 2026/03/07 15:11:21 by tnuno-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ char	**read_file_lines(const char *filename)
 	lines = malloc(sizeof(char *) * (line_count + 1));
 	if (!lines)
 		return (NULL);
+	ft_bzero(lines, sizeof(char *) * (line_count + 1));
 	fd = open(filename, O_RDONLY);
 	if (fd < 0)
 	{

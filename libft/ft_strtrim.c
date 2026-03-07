@@ -6,7 +6,7 @@
 /*   By: tnuno-mo <tnuno-mo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 21:04:53 by tnuno-mo          #+#    #+#             */
-/*   Updated: 2026/03/07 14:41:13 by tnuno-mo         ###   ########.fr       */
+/*   Updated: 2026/03/07 15:13:21 by tnuno-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,22 @@ char	*ft_strtrim(char const *s1, char const *set)
 {
 	size_t	i;
 	size_t	j;
+	size_t	len;
 
+	if (!s1 || !set)
+		return (NULL);
+	len = ft_strlen(s1);
+	if (len == 0)
+		return (ft_strdup(""));
 	i = 0;
-	while (ft_strchr(set, s1[i]) != NULL)
+	while (i < len && ft_strchr(set, s1[i]) != NULL)
 		i++;
-	j = ft_strlen(s1) - 1;
-	while (ft_strchr(set, s1[j]) != NULL)
+	j = len;
+	while (j > i && ft_strchr(set, s1[j - 1]) != NULL)
 		j--;
-	return (ft_substr(s1, i, j - i + 1));
+	if (i >= j)
+		return (ft_strdup(""));
+	return (ft_substr(s1, i, j - i));
 }
 /*
 int main(void)

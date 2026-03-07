@@ -6,7 +6,7 @@
 /*   By: tnuno-mo <tnuno-mo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/01 17:42:29 by cgross-s          #+#    #+#             */
-/*   Updated: 2026/03/07 14:22:49 by tnuno-mo         ###   ########.fr       */
+/*   Updated: 2026/03/07 15:02:39 by tnuno-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@ int	main(int argc, char **argv)
 		error_exit(&data, "Failed to load textures");
 	if (!init_screen(&data))
 		error_exit(&data, "Failed to initialize screen");
+	if (!init_rays_cache(&data))
+		error_exit(&data, "Failed to initialize rays cache");
 	init_player(&data);
 	init_mouse(&data);
 	init_hooks(&data);

@@ -6,7 +6,7 @@
 /*   By: tnuno-mo <tnuno-mo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/22 16:35:11 by cgross-s          #+#    #+#             */
-/*   Updated: 2026/03/07 14:42:27 by tnuno-mo         ###   ########.fr       */
+/*   Updated: 2026/03/07 15:02:39 by tnuno-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,16 @@ int	init_screen(t_data *data)
 	);
 	if (!data->screen.addr)
 		return (0);
+	return (1);
+}
+
+/* Allocate ray cache for minimap rendering */
+int	init_rays_cache(t_data *data)
+{
+	data->rays = (t_ray *)ft_calloc(data->screen.width, sizeof(t_ray));
+	if (!data->rays)
+		return (0);
+	data->rays_count = data->screen.width;
 	return (1);
 }
 

@@ -6,7 +6,7 @@
 /*   By: tnuno-mo <tnuno-mo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/28 14:23:20 by tnuno-mo          #+#    #+#             */
-/*   Updated: 2026/03/07 14:49:05 by tnuno-mo         ###   ########.fr       */
+/*   Updated: 2026/03/07 15:04:35 by tnuno-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,15 +55,6 @@ typedef enum e_color
 	COLOR_GRAY	= 0x00222222
 }	t_color;
 
-// teste
-typedef enum e_wall_side
-{
-	WALL_NORTH,
-	WALL_SOUTH,
-	WALL_WEST,
-	WALL_EAST
-}	t_wall_side;
-
 #define MINIMAP_SCALE 0.25
 #define MINIMAP_OFFSET_X 10
 #define MINIMAP_OFFSET_Y 10
@@ -94,6 +85,62 @@ typedef struct s_img {
 	int		width;
 	int		height;
 }	t_img;
+
+/* --- Wall and Ray Structures --- */
+typedef enum e_wall_side
+{
+	WALL_NORTH,
+	WALL_SOUTH,
+	WALL_WEST,
+	WALL_EAST
+}	t_wall_side;
+
+typedef struct s_ray
+{
+	// Direção do raio (normalizado)
+	// São as componentes do vetor direção do raio.
+	double	ray_dir_x;
+	double	ray_dir_y;
+
+	// Posição atual do raio no mapa (em tiles)
+	// A célula do mapa (data->map[y][x]) onde o raio está agora.
+	int		map_x;
+	int		map_y;
+
+	// Distância para atravessar 1 tile (deltaDist)
+	// Quanto o raio precisa andar (em distância real) para cruzar 1 
+	// linha vertical ou 1 linha horizontal do grid.
+	double	delta_dist_x;
+	double	delta_dist_y;
+
+	// Distância até a próxima borda do tile
+	// Distância desde a posição atual do jogador até:
+	double	side_dist_x; // a próxima linha vertical
+	double	side_dist_y; // a próxima linha horizontal
+
+	// Direção do passo no mapa
+	// Dizem para qual lado o raio anda no grid.
+	// +1 → direita / baixo
+	// -1 → esquerda / cima
+	int		step_x;
+	int		step_y;
+
+	// Indica qual tipo de parede foi atingida:
+	int		side;		// 0 = vertical, 1 = horizontal
+	t_wall_side	wall_side;  // <-- NOVO
+	// 0 → ainda não bateu
+	// 1 → encontrou parede ('1')
+	int		hit;
+
+	// Distância perpendicular à parede
+	// A distância real e corrigida do jogador até a parede.
+	double	perp_wall_dist;
+
+	// Ponto exato de impacto (em coordenadas do mundo)
+	// O ponto exato onde o raio bateu na parede, em coordenadas do mundo (tiles).
+	double	hit_x;
+	double	hit_y;
+}	t_ray;
 
 /* ================= PARSING STRUCTURES ================= */
 typedef struct s_scene_config
@@ -142,6 +189,10 @@ typedef struct s_data {
 
 	// activate and deactivate raycasting in minimap
 	int				show_rays;
+
+	// Ray cache for minimap rendering (to avoid re-casting)
+	t_ray			*rays;			// Array of rays (one per screen column)
+	int				rays_count;		// Number of rays in array
 
 	t_scene_config	config;		// Scene configuration
 	t_img			tex[4];		// Loaded textures [NO, SO, WE, EA]
@@ -205,54 +256,6 @@ typedef struct s_dda
 	int		i;		// contador do loop
 }	t_dda;
 
-/*Essa struct guarda tudo o que o raio precisa saber para andar, raycast.c*/
-typedef struct s_ray
-{
-	// Direção do raio (normalizado)
-	// São as componentes do vetor direção do raio.
-	double	ray_dir_x;
-	double	ray_dir_y;
-
-	// Posição atual do raio no mapa (em tiles)
-	// A célula do mapa (data->map[y][x]) onde o raio está agora.
-	int		map_x;
-	int		map_y;
-
-	// Distância para atravessar 1 tile (deltaDist)
-	// Quanto o raio precisa andar (em distância real) para cruzar 1 
-	// linha vertical ou 1 linha horizontal do grid.
-	double	delta_dist_x;
-	double	delta_dist_y;
-
-	// Distância até a próxima borda do tile
-	// Distância desde a posição atual do jogador até:
-	double	side_dist_x; // a próxima linha vertical
-	double	side_dist_y; // a próxima linha horizontal
-
-	// Direção do passo no mapa
-	// Dizem para qual lado o raio anda no grid.
-	// +1 → direita / baixo
-	// -1 → esquerda / cima
-	int		step_x;
-	int		step_y;
-
-	// Indica qual tipo de parede foi atingida:
-	int		side;		// 0 = vertical, 1 = horizontal
-	t_wall_side	wall_side;  // <-- NOVO
-	// 0 → ainda não bateu
-	// 1 → encontrou parede ('1')
-	int		hit;
-
-	// Distância perpendicular à parede
-	// A distância real e corrigida do jogador até a parede.
-	double	perp_wall_dist;
-
-	// Ponto exato de impacto (em coordenadas do mundo)
-	// O ponto exato onde o raio bateu na parede, em coordenadas do mundo (tiles).
-	double	hit_x;
-	double	hit_y;
-}	t_ray;
-
 /* draw.c */
 void	draw_circle(t_img *img, t_circle *c);
 void	draw_rect(t_img *img, t_rect *r);
@@ -269,6 +272,7 @@ int		mouse_move(int x, int y, t_data *data);
 /* initialization.c */
 int		init_mlx(t_data *data);
 int		init_screen(t_data *data);
+int		init_rays_cache(t_data *data);
 void	init_player(t_data *data);
 void	init_mouse(t_data *data);
 void	init_hooks(t_data *data);
