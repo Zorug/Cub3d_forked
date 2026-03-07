@@ -6,7 +6,7 @@
 /*   By: tnuno-mo <tnuno-mo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 14:43:00 by cgross-s          #+#    #+#             */
-/*   Updated: 2026/03/07 14:22:48 by tnuno-mo         ###   ########.fr       */
+/*   Updated: 2026/03/07 18:03:00 by tnuno-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,4 @@ void	draw_ray_minimap(t_data *data, t_ray *ray)
 	//line.color = COLOR_YELLOW;
 	line.color = MAP_RAY_COLOR;
 	draw_line(&data->screen, &line);
-}
-
-/* Verify if option show_rays is selected, R button,
- than show */
-void	draw_ray_debug(t_data *data, t_ray *ray)
-{
-	if (!data->show_rays)
-		return ;
-	draw_ray_minimap(data, ray);
 }

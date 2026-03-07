@@ -6,7 +6,7 @@
 /*   By: tnuno-mo <tnuno-mo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/15 17:46:13 by cgross-s          #+#    #+#             */
-/*   Updated: 2026/03/07 14:22:48 by tnuno-mo         ###   ########.fr       */
+/*   Updated: 2026/03/07 18:03:00 by tnuno-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,17 +64,6 @@ void	draw_rect(t_img *img, t_rect *r)
 		}
 		y++;
 	}
-}
-
-void	draw_square(t_img *img, t_square *s)
-{
-	t_rect	r;
-
-	r.pos = s->pos;
-	r.width = s->size;
-	r.height = s->size;
-	r.color = s->color;
-	draw_rect(img, &r);
 }
 
 // Draw a line using DDA algorithm https://www.youtube.com/watch?v=Oyp3eq580jA
