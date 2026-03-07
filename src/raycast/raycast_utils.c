@@ -1,19 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isspace.c                                       :+:      :+:    :+:   */
+/*   raycast_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tnuno-mo <tnuno-mo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/24 15:08:38 by tnuno-mo          #+#    #+#             */
-/*   Updated: 2026/03/07 20:35:37 by tnuno-mo         ###   ########.fr       */
+/*   Created: 2026/03/07 21:50:00 by tnuno-mo          #+#    #+#             */
+/*   Updated: 2026/03/07 21:08:55 by tnuno-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	ft_isspace(int c)
+#include "../inc/cub3d.h"
+
+/* Determine which wall side was hit */
+void	determine_wall_side(t_ray *ray)
 {
-	if (c == ' ' || c == '\t' || c == '\n' || c == '\v' || \
-c == '\f' || c == '\r')
-		return (1);
-	return (0);
+	if (ray->side == 0)
+	{
+		if (ray->step_x > 0)
+			ray->wall_side = WALL_EAST;
+		else
+			ray->wall_side = WALL_WEST;
+	}
+	else
+	{
+		if (ray->step_y > 0)
+			ray->wall_side = WALL_SOUTH;
+		else
+			ray->wall_side = WALL_NORTH;
+	}
 }

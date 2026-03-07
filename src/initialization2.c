@@ -1,19 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isspace.c                                       :+:      :+:    :+:   */
+/*   initialization2.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tnuno-mo <tnuno-mo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/24 15:08:38 by tnuno-mo          #+#    #+#             */
-/*   Updated: 2026/03/07 20:35:37 by tnuno-mo         ###   ########.fr       */
+/*   Created: 2026/03/07 19:10:00 by tnuno-mo          #+#    #+#             */
+/*   Updated: 2026/03/07 20:55:36 by tnuno-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	ft_isspace(int c)
+#include "../inc/cub3d.h"
+
+/* General hooks (keyboard, close, loop) */
+void	init_hooks(t_data *data)
 {
-	if (c == ' ' || c == '\t' || c == '\n' || c == '\v' || \
-c == '\f' || c == '\r')
-		return (1);
-	return (0);
+	mlx_key_hook(data->win, key_hook, data);
+	mlx_hook(data->win, 17, 0, close_window, data);
+	mlx_loop_hook(data->mlx, render, data);
+	mlx_mouse_hide(data->mlx, data->win);
+	data->show_rays = 1;
 }
