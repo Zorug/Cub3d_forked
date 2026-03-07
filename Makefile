@@ -23,7 +23,7 @@ LIBFT_DIR	= libft
 LIBFT		= $(LIBFT_DIR)/libft.a
 
 MLX_DIR		= minilibx-linux
-MLX			= $(MLX_DIR)/libmlx.a
+#MLX			= $(MLX_DIR)/libmlx.a
 
 LDFLAGS		= -L$(MLX_DIR)
 LDLIBS		= -lmlx -lXext -lX11 -lm
@@ -62,15 +62,16 @@ OBJS		:= $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 
 all: $(NAME)
 
-$(NAME): $(LIBFT) $(MLX) $(OBJS)
+$(NAME): $(LIBFT) $(OBJS)
+#$(NAME): $(LIBFT) $(MLX) $(OBJS)
 	@$(CC) $(OBJS) $(LIBFT) $(LDFLAGS) $(LDLIBS) -o $(NAME)
 	@echo "\033[0;32mcub3D compiled successfully!\033[0m"
 
 $(LIBFT):
 	@make -C $(LIBFT_DIR)
 
-$(MLX):
-	@make -C $(MLX_DIR)
+#$(MLX):
+#	@make -C $(MLX_DIR)
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c inc/cub3d.h
 	@mkdir -p $(dir $@)
@@ -79,7 +80,7 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c inc/cub3d.h
 clean:
 	@$(RM) $(OBJ_DIR)
 	@make -C $(LIBFT_DIR) clean
-	@make -C $(MLX_DIR) clean
+#	@make -C $(MLX_DIR) clean
 	@echo "Objects removed."
 
 fclean: clean

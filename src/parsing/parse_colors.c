@@ -3,28 +3,28 @@
 /*                                                        :::      ::::::::   */
 /*   parse_colors.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tnuno-mo <tnuno-mo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cgross-s <cgross-s@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/01 00:01:47 by tnuno-mo          #+#    #+#             */
-/*   Updated: 2026/03/07 14:22:49 by tnuno-mo         ###   ########.fr       */
+/*   Updated: 2026/03/07 20:50:51 by cgross-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/cub3d.h"
 
-// Convert RGB values to hexadecimal color format
+/* Convert RGB values to hexadecimal color format */
 int	rgb_to_hex(int r, int g, int b)
 {
 	return ((r << 16) | (g << 8) | b);
 }
 
-// Check if RGB value is valid (0-255)
+/* Check if RGB value is valid (0-255) */
 static int	validate_rgb_value(int value)
 {
 	return (value >= 0 && value <= 255);
 }
 
-// Validate that a string contains only digits (no signs, no invalid chars)
+/* Validate that a string contains only digits (no signs, no invalid chars) */
 static int	is_valid_rgb_string(const char *str)
 {
 	int	i;
@@ -41,8 +41,8 @@ static int	is_valid_rgb_string(const char *str)
 	return (1);
 }
 
-// Parse comma-separated RGB values from string
-int	parse_rgb_values(const char *str, int *r, int *g, int *b)
+/* Parse comma-separated RGB values from string */
+/*int	parse_rgb_values(const char *str, int *r, int *g, int *b)
 {
 	char	**components;
 	char	*trimmed;
@@ -90,9 +90,47 @@ int	parse_rgb_values(const char *str, int *r, int *g, int *b)
 		|| !validate_rgb_value(*b))
 		return (0);
 	return (1);
+}*/
+static int	parse_component(char *str, int *value)
+{
+	char	*trimmed;
+
+	trimmed = ft_strtrim(str, " \t");
+	if (!trimmed)
+		return (0);
+	if (!is_valid_rgb_string(trimmed))
+	{
+		free(trimmed);
+		return (0);
+	}
+	*value = ft_atoi(trimmed);
+	free(trimmed);
+	if (!validate_rgb_value(*value))
+		return (0);
+	return (1);
 }
 
-// Parse and set floor color from RGB string
+int	parse_rgb_values(const char *str, int *r, int *g, int *b)
+{
+	char	**components;
+	int		result;
+
+	components = ft_split(str, ',');
+	if (!components || !components[0] || !components[1]
+		|| !components[2] || components[3])
+	{
+		free_string_array(components);
+		return (0);
+	}
+	result = parse_component(components[0], r)
+		&& parse_component(components[1], g)
+		&& parse_component(components[2], b);
+	free_string_array(components);
+	return (result);
+}
+//////////////////////////////////////////////
+
+/* Parse and set floor color from RGB string */
 static int	set_floor_color(char *value_str, t_scene_config *cfg)
 {
 	int	r;
@@ -108,7 +146,7 @@ static int	set_floor_color(char *value_str, t_scene_config *cfg)
 	return (1);
 }
 
-// Parse and set ceiling color from RGB string
+/* Parse and set ceiling color from RGB string */
 static int	set_ceiling_color(char *value_str, t_scene_config *cfg)
 {
 	int	r;
@@ -124,7 +162,7 @@ static int	set_ceiling_color(char *value_str, t_scene_config *cfg)
 	return (1);
 }
 
-// Parse a color line and update scene config (F for floor, C for ceiling)
+/* Parse a color line and update scene config (F for floor, C for ceiling) */
 int	parse_color_line(char *line, t_scene_config *cfg)
 {
 	char	*ptr;
