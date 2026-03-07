@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   hooks.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tnuno-mo <tnuno-mo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cgross-s <cgross-s@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/08 21:32:20 by cgross-s          #+#    #+#             */
-/*   Updated: 2026/03/01 01:00:45 by tnuno-mo         ###   ########.fr       */
+/*   Updated: 2026/02/24 22:56:27 by cgross-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,19 +33,9 @@ void	free_map(t_data *data)
 /* close and clear leaks */
 int	close_window(t_data *data)
 {
-	int	i;
-
 	free_map(data);
-//	free_scene_config(&data->config);
 	if (!data)
 		exit(0);
-	i = 0;
-	while (i < 4)
-	{
-		if (data->tex[i].img)
-			mlx_destroy_image(data->mlx, data->tex[i].img);
-		i++;
-	}
 	if (data->screen.img)
 		mlx_destroy_image(data->mlx, data->screen.img);
 	if (data->win)

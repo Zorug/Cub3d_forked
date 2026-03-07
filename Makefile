@@ -32,22 +32,15 @@ SRC_DIR		= src
 OBJ_DIR		= obj
 
 SRCS		=	main.c \
-				draw.c \
+				leaks.c \
 				hooks.c \
 				utils.c \
+				draw.c \
 				render.c \
-				errors.c \
-				validate_map.c \
 				initialization.c \
-				parsing/parse_map.c \
-				parsing/parse_file.c \
-				parsing/parse_utils.c \
-				parsing/parse_colors.c \
-				parsing/parse_textures.c \
 				raycast/raycast.c \
 				raycast/init_dda.c \
-				raycast/draw_minimap.c \
-
+				raycast/draw_minimap.c
 
 SRCS		:= $(addprefix $(SRC_DIR)/, $(SRCS))
 OBJS		:= $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)

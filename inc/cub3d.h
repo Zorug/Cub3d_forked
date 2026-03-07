@@ -1,16 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   cub3d.h                                            :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: tnuno-mo <tnuno-mo@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/02/28 23:54:33 by tnuno-mo          #+#    #+#             */
-/*   Updated: 2026/03/01 01:06:57 by tnuno-mo         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
-
 #ifndef CUB3D_H
 # define CUB3D_H
 
@@ -92,18 +79,6 @@ typedef struct s_img {
 	int		height;
 }	t_img;
 
-/* ================= PARSING STRUCTURES ================= */
-typedef struct s_scene_config
-{
-	char	*no_path;      // North texture path
-	char	*so_path;      // South texture path
-	char	*we_path;      // West texture path
-	char	*ea_path;      // East texture path
-	int		floor_color;   // Floor RGB in hex (0x00RRGGBB)
-	int		ceiling_color; // Ceiling RGB in hex (0x00RRGGBB)
-	int		config_flags;  // Bitmask: which elements are set
-}	t_scene_config;
-
 /* --- Main Structure --- */
 typedef struct s_data {
 	// MLX and Window (Person A)
@@ -138,20 +113,26 @@ typedef struct s_data {
 	int		map_height;
 
 	// activate and deactivate raycasting in minimap
-	int				show_rays;
-
-	t_scene_config	config;		// Scene configuration
-	t_img			tex[4];		// Loaded textures [NO, SO, WE, EA]
+	int	show_rays;
+	/*
+	// Parsing Data (Person B)
+	char	*tex_path[4];		// Paths NO, SO, WE, EA [cite: 141]
+	t_img	tex[4];				// Loaded textures
+	int		floor_color;		// Floor color in Hexadecimal [cite: 161]
+	int		ceiling_color;		// Ceiling color in Hexadecimal [cite: 168]*/
 }	t_data;
 
-// Config flags bitmask- serve para ver se os elementos estão configurados
-# define FLAG_NO  (1 << 0)  // 0b000001
-# define FLAG_SO  (1 << 1)  // 0b000010
-# define FLAG_WE  (1 << 2)  // 0b000100
-# define FLAG_EA  (1 << 3)  // 0b001000
-# define FLAG_F   (1 << 4)  // 0b010000
-# define FLAG_C   (1 << 5)  // 0b100000
-# define FLAG_ALL (FLAG_NO | FLAG_SO | FLAG_WE | FLAG_EA | FLAG_F | FLAG_C)
+/*
+// --- Prototypes: Parsing (Person B) --- 
+int		init_parser(t_data *data, char *file_path);
+int		validate_map(t_data *data);
+void	parse_error(char *message);	// Must print "Error\n" [cite: 190]
+
+// --- Prototypes: Graphics Engine (Person A) --- 
+int		init_window(t_data *data);
+void	start_raycasting(t_data *data);
+int		handle_keys(int keycode, t_data *data);
+int		close_game(t_data *data);*/
 
 /* Estruturas geométricas */
 typedef struct s_point
@@ -301,35 +282,4 @@ int		is_player_char(char c);
 int		is_line_map(const char *line);
 //void	free_map(char **map);
 
-// ================= PARSING FUNCTIONS =================
-// parse_file.c
-int		parse_scene_file(const char *filename, t_data *data);
-int		validate_file_extension(const char *filename);
-char	**read_file_lines(const char *filename);
-
-// parse_textures.c
-int		parse_texture_line(char *line, t_scene_config *cfg);
-int		validate_texture_path(const char *path);
-int		load_all_textures(t_data *data);
-
-// parse_colors.c
-int		parse_color_line(char *line, t_scene_config *cfg);
-int		parse_rgb_values(const char *str, int *r, int *g, int *b);
-int		rgb_to_hex(int r, int g, int b);
-
-// parse_map.c
-int		extract_and_validate_map(char **lines, int start_idx, t_data *data);
-int		is_map_line(const char *line);
-char	**copy_map_lines(char **lines, int start, int count);
-
-// parse_utils.c
-char	*skip_whitespace(char *str);
-int		is_empty_line(const char *line);
-void	free_string_array(char **arr);
-int		str_starts_with(const char *str, const char *prefix);
-
-// errors.c
-void	error_exit(t_data *data, const char *message);
-int		error_return(const char *message);
-void	free_scene_config(t_scene_config *cfg);
 #endif

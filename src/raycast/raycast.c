@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycast.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tnuno-mo <tnuno-mo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cgross-s <cgross-s@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/15 21:31:40 by cgross-s          #+#    #+#             */
-/*   Updated: 2026/03/01 04:40:09 by tnuno-mo         ###   ########.fr       */
+/*   Updated: 2026/02/26 16:44:53 by cgross-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,14 +78,14 @@ static void	determine_wall_side(t_ray *ray)
 {
 	if (ray->side == 0)
 	{
-		if (ray->step_x > 0)
+		if (ray->ray_dir_x > 0)
 			ray->wall_side = WALL_EAST;
 		else
 			ray->wall_side = WALL_WEST;
 	}
 	else
 	{
-		if (ray->step_y > 0)
+		if (ray->ray_dir_y > 0)
 			ray->wall_side = WALL_SOUTH;
 		else
 			ray->wall_side = WALL_NORTH;

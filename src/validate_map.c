@@ -6,7 +6,7 @@
 /*   By: tnuno-mo <tnuno-mo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/15 18:34:00 by tnuno-mo          #+#    #+#             */
-/*   Updated: 2026/03/01 01:17:35 by tnuno-mo         ###   ########.fr       */
+/*   Updated: 2026/02/15 18:35:05 by tnuno-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,22 @@ int	is_line_map(const char *line)
        return (1);
 }
 
+
+// Frees a dynamically allocated map (array of strings).
+void	free_map(char **map)
+{
+       int i;
+
+       i = 0;
+       while (map && map[i])
+       {
+	       free(map[i]);
+	       i++;
+       }
+       free(map);
+}
+
+
 // Checks if the map is closed (surrounded by walls).
 // Returns 1 if the map is closed, 0 otherwise.
 // Spaces are treated as outside the map and must not touch '0' or player positions.
@@ -126,4 +142,18 @@ int	validate_map(char **map)
 	if (!is_map_closed(map))
 		return (0);
 	return (1);
+}
+
+
+// Validates the entire .cub map file:
+// - Checks file extension
+// - Checks for unique and valid texture/color definitions
+// - Extracts and validates the map block
+// - Ensures map is the last element
+// Returns 1 if valid, 0 otherwise.
+int	validate_map_file(const char *filename)
+{
+	// ...existing code...
+	// (Implementation to be added: open file, parse lines, check elements, call validate_map)
+	return (1); // Placeholder
 }
