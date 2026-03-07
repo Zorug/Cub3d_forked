@@ -3,38 +3,39 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strrchr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cgross-s <cgross-s@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: tnuno-mo <tnuno-mo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/02 19:56:00 by cgross-s          #+#    #+#             */
-/*   Updated: 2024/11/02 19:56:01 by cgross-s         ###   ########.fr       */
+/*   Created: 2024/11/01 02:26:05 by tnuno-mo          #+#    #+#             */
+/*   Updated: 2026/03/07 15:32:54 by tnuno-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-/* The strrchr() function returns a pointer to the LAST 
-occurrence  of the character c in the string s.
-Here  "character" means "byte"; these functions do not 
-work with wide or multibyte characters.*/
 #include "libft.h"
+
+// find the last occurrence of "c" in "s" string and return a pointer to it
 
 char	*ft_strrchr(const char *s, int c)
 {
-	char	*ptr;
+	int	i;
 
-	ptr = NULL;
-	c = (unsigned char)c;
-	while (*s)
+	i = ft_strlen(s);
+	while (i >= 0)
 	{
-		if (*s == c)
-			ptr = (char *)s;
-		s++;
+		if ((unsigned char)s[i] == (unsigned char)c)
+			return ((char *)&s[i]);
+		i--;
 	}
-	if (*s == c)
-		ptr = (char *)s;
-	return (ptr);
+	return (NULL);
 }
 
-/* The strchr() and strrchr() functions return a pointer 
-to the  matched character  or  NULL  if  the character is 
-not found.  The terminating null byte is considered part 
-of the string, so that if c is specified as '\0', these 
-functions return a pointer to the terminator. */
+/*
+int main(void)
+{
+	char test[] = "Hello! How are You?";
+
+	printf ("res:%s\n", ft_strrchr(test, 'e'));
+	printf ("res:%s\n", strrchr(test, 'e'));
+
+	return (0);
+}
+*/

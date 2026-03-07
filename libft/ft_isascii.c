@@ -3,18 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   ft_isascii.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cgross-s <cgross-s@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: tnuno-mo <tnuno-mo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/22 22:08:30 by cgross-s          #+#    #+#             */
-/*   Updated: 2024/10/22 22:08:32 by cgross-s         ###   ########.fr       */
+/*   Created: 2024/10/24 20:24:51 by tnuno-mo          #+#    #+#             */
+/*   Updated: 2026/03/07 14:41:12 by tnuno-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-/*
-isascii(): checks whether c is a 7-bit unsigned 
-char value that fits into the ASCII character set.
-0 - 127
-*/
 int	ft_isascii(int c)
 {
 	if (c >= 0 && c <= 127)
@@ -22,7 +17,23 @@ int	ft_isascii(int c)
 	else
 		return (0);
 }
+/*
+#include <stdio.h>
+#include <ctype.h>
 
-/*RETURN VALUE
-The  values  returned  are nonzero if the character c 
-falls into the tested class, and zero if not.*/
+int	main(void)
+{
+	char c1 = 'A';
+	char c2 = 200;
+	char c3 = '\n';
+	
+	printf("'%c' is ASCII: %d\n", c1, ft_isascii(c1));
+	printf("'%c' is ASCII: %d\n", c1, isascii(c1));
+	printf("'%c' is ASCII: %d\n", c2, ft_isascii(c2));
+	printf("'%c' is ASCII: %d\n", c2, isascii(c2));
+	printf("'%c' is ASCII: %d\n", c3, ft_isascii(c3));
+	printf("'%c' is ASCII: %d\n", c3, isascii(c3));
+
+	return (0);
+}
+*/

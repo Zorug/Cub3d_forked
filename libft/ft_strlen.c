@@ -3,30 +3,35 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strlen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cgross-s <cgross-s@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: tnuno-mo <tnuno-mo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/02 19:50:58 by cgross-s          #+#    #+#             */
-/*   Updated: 2024/11/02 19:50:59 by cgross-s         ###   ########.fr       */
+/*   Created: 2024/10/24 22:16:19 by tnuno-mo          #+#    #+#             */
+/*   Updated: 2026/03/07 14:41:13 by tnuno-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-/*DESCRIPTION
-	   The  strlen() function calculates the length of the string pointed to
-	   by s, excluding the terminating null byte ('\0').*/
-#include "libft.h"
+#include <stddef.h>
 
+//return the size of a string without '\0' character.
 size_t	ft_strlen(const char *s)
 {
 	size_t	i;
 
-	if (!s)
-		return (0);
 	i = 0;
-	while (s[i])
+	while (*s)
+	{
 		i++;
+		s++;
+	}
 	return (i);
 }
+/*
+#include <stdio.h>
 
-/*RETURN VALUE
-	   The strlen() function returns the  number  of  bytes  in  the  string
-	   pointed to by s.*/
+int	main(int ac, char **av)
+{
+	if (ac == 2)
+		printf("strlen is: %zu", ft_strlen(av[1]));
+	return (0);
+}
+*/

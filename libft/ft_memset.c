@@ -3,36 +3,53 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memset.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cgross-s <cgross-s@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: tnuno-mo <tnuno-mo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/02 19:51:53 by cgross-s          #+#    #+#             */
-/*   Updated: 2024/11/02 19:51:54 by cgross-s         ###   ########.fr       */
+/*   Created: 2024/10/24 22:34:35 by tnuno-mo          #+#    #+#             */
+/*   Updated: 2026/03/07 14:41:13 by tnuno-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-/*DESCRIPTION
-    The  memset()  function  fills  the  first  n  bytes 
-    of the memory area
-    pointed to by s with the constant byte c.*/
 
 #include "libft.h"
 
 void	*ft_memset(void *s, int c, size_t n)
 {
-	size_t			i;
-	unsigned char	*us;
+	size_t	i;
 
 	i = 0;
-	us = (unsigned char *)s;
 	while (i < n)
 	{
-		us[i] = c;
+		((char *)s)[i] = c;
 		i++;
 	}
-	s = us;
 	return (s);
 }
+/*
+#include <stdio.h>
 
-/*RETURN VALUE
-The memset() function returns a pointer to the memory area s.
+int main(void)
+{
+	int arr_int[5];
+	char str[50] = "Howdy people! What's up?";
+	int num = 4259;
+
+	// Fill the array of ints with zeros
+	ft_memset(arr_int, 0, sizeof(arr_int));
+
+	// Print the array of ints
+	printf("Int array: ");
+	for (int i = 0; i < 5; i++)
+	printf("%d ", arr_int[i]);
+	printf("\n");
+
+	// Fill the 1st 10 characters with '-'
+	ft_memset(str, '-', 10);
+	printf("Modified string: %s\n", str);
+
+	// Changes int to 0
+	ft_memset(&num, 0, sizeof(num));
+	printf("Int value modified: %d\n", num);
+
+	return (0);
+}
 */

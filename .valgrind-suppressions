@@ -1,0 +1,73 @@
+{
+   <X11_initialization>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   ...
+   obj:*/libX11.so*
+}
+
+{
+   <Xcursor_initialization>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   ...
+   obj:*/libXcursor.so*
+}
+
+{
+   <Xext_initialization>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   ...
+   obj:*/libXext.so*
+}
+
+{
+   <fontconfig_initialization>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   ...
+   obj:*/libfontconfig.so*
+}
+
+{
+   <glibc_loader>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   ...
+   obj:*/ld-*.so*
+}
+
+{
+   <glibc_dynamic_linking>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   fun:_dl_new_object
+}
+
+{
+   <glibc_dynamic_linking_calloc>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:calloc
+   fun:_dl_new_object
+}
+
+{
+   <glibc_calloc_dl_check_map_versions>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:calloc
+   fun:_dl_check_map_versions
+   ...
+}
+
+{
+   <glibc_dlopen_doit>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   ...
+   fun:dlopen_doit
+   ...
+}

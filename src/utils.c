@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cgross-s <cgross-s@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: tnuno-mo <tnuno-mo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/08 21:33:15 by cgross-s          #+#    #+#             */
-/*   Updated: 2026/02/20 22:00:50 by cgross-s         ###   ########.fr       */
+/*   Updated: 2026/03/07 14:22:48 by tnuno-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,19 +16,21 @@ void	my_mlx_pixel_put(t_img *img, int x, int y, int color)
 {
 	char	*dst;
 
+	if (x < 0 || x >= img->width || y < 0 || y >= img->height)
+		return ;
 	dst = img->addr
 		+ (y * img->line_length)
 		+ (x * (img->bits_per_pixel / 8));
 	*(unsigned int *)dst = color;
 }
 
-/* clear last frame, than we can redraw */
+// clear last frame, than we can redraw
 void	clear_screen(t_img *img)
 {
 	ft_bzero(img->addr, img->line_length * img->height);
 }
 
-/* direction of the player */
+// direction of the player
 void	set_player_direction(t_data *data, char c)
 {
 	if (c == 'N')
@@ -44,17 +46,19 @@ void	set_player_direction(t_data *data, char c)
 	data->dirY = sin(data->angle);
 }
 
-/* Player start position */
+// Player start position
 void	find_player(t_data *data)
 {
 	int	y;
 	int	x;
+	int	line_len;
 
 	y = 0;
 	while (y < data->map_height)
 	{
 		x = 0;
-		while (x < data->map_width)
+		line_len = ft_strlen(data->map[y]);
+		while (x < line_len)
 		{
 			if (ft_strchr("NSEW", data->map[y][x]))
 			{

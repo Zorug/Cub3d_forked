@@ -3,24 +3,43 @@
 /*                                                        :::      ::::::::   */
 /*   ft_bzero.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cgross-s <cgross-s@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: tnuno-mo <tnuno-mo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/02 19:52:01 by cgross-s          #+#    #+#             */
-/*   Updated: 2024/11/02 19:52:02 by cgross-s         ###   ########.fr       */
+/*   Created: 2024/10/27 09:13:37 by tnuno-mo          #+#    #+#             */
+/*   Updated: 2026/03/07 14:41:12 by tnuno-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-/*The  bzero() function erases the data in 
-the n bytes of the memory starting at the 
-location pointed to by s, by writing zeros  
-(bytes  containing '\0') to that area.*/
 
 #include "libft.h"
 
 void	ft_bzero(void *s, size_t n)
 {
-	ft_memset(s, 0, n);
-}
+	size_t			i;
+	unsigned char	*p;
 
-/*RETURN VALUE
-       None.*/
+	i = 0;
+	p = s;
+	while (i < n)
+	{
+		*p = 0;
+		i++;
+		p++;
+	}
+}
+/*
+
+int main (void)
+{
+	char test1[20] = "Gooood Morning!";
+	char test2[20] = "Gooood Morning!";
+
+	printf("Before(orig_f): %s\n", test1);
+	printf("Before(myfunc): %s\n", test2);
+
+	bzero(test1, 5);
+	ft_bzero(test2, 5);
+
+	printf("After(orig_f): %s\n", test1);
+	printf("After(myfunc): %s\n", test2);
+}
+*/

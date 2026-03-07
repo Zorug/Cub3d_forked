@@ -3,27 +3,43 @@
 /*                                                        :::      ::::::::   */
 /*   ft_tolower.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cgross-s <cgross-s@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: tnuno-mo <tnuno-mo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/02 19:54:59 by cgross-s          #+#    #+#             */
-/*   Updated: 2024/11/02 19:55:00 by cgross-s         ###   ########.fr       */
+/*   Created: 2024/10/27 23:04:50 by tnuno-mo          #+#    #+#             */
+/*   Updated: 2026/03/07 14:41:13 by tnuno-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-/*If c is an uppercase letter, tolower() returns its 
-lowercase  equivalent,  if  a  lowercase  representation 
-exists in the current locale. Otherwise, it returns c. 
-A65 Z90*/
-
-#include "libft.h"
-
 int	ft_tolower(int c)
 {
-	if (c >= 65 && c <= 90)
+	if (c >= 'A' && c <= 'Z')
 		return (c + 32);
-	else
-		return (c);
+	return (c);
 }
 
-/*The value returned is that of the converted letter, 
-or c if the  conversion was not possible.*/
+/*
+#include <stdio.h>
+#include <ctype.h>
+
+int	main(void)
+{
+	char c;
+	
+	c = 'a';
+	printf("Original: %c\n", c);
+	printf("ft_tolower: %c\n", ft_tolower(c));
+	printf("tolower: %c\n\n", tolower(c));
+
+	c = 'A';
+	printf("Original: %c\n", c);
+	printf("ft_tolower: %c\n", ft_tolower(c));
+	printf("tolower: %c\n\n", tolower(c));
+
+	c = '1';
+	printf("Original: %c\n", c);
+	printf("ft_tolower: %c\n", ft_tolower(c));
+	printf("tolower: %c\n", tolower(c));
+
+	return (0);
+}
+*/

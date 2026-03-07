@@ -3,36 +3,44 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cgross-s <cgross-s@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: tnuno-mo <tnuno-mo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/02 19:58:28 by cgross-s          #+#    #+#             */
-/*   Updated: 2024/11/02 19:58:29 by cgross-s         ###   ########.fr       */
+/*   Created: 2024/11/05 19:15:59 by tnuno-mo          #+#    #+#             */
+/*   Updated: 2026/03/07 15:45:35 by tnuno-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-/*Allocates (with malloc(3)) and returns a new
-string, which is the result of the concatenation
-of ’s1’ and ’s2’.
-*/
 #include "libft.h"
 
+//concatenate two strings
 char	*ft_strjoin(char const *s1, char const *s2)
 {
-	size_t	len;
-	char	*ss;
+	char	*res;
+	size_t	len_s1;
+	size_t	len_s2;
 
 	if (!s1 || !s2)
 		return (NULL);
-	len = ft_strlen(s1) + ft_strlen(s2);
-	ss = (char *)malloc((len + 1) * sizeof(char));
-	if (!ss)
+	len_s1 = ft_strlen(s1);
+	len_s2 = ft_strlen(s2);
+	res = malloc(len_s1 + len_s2 + 1);
+	if (res == NULL)
 		return (NULL);
-	ft_strlcpy(ss, s1, ft_strlen(s1) + 1);
-	ft_strlcat(ss, s2, len + 1);
-	return (ss);
+	ft_strlcpy(res, s1, (len_s1 + 1));
+	ft_strlcat(res, s2, (len_s1 + len_s2 + 1));
+	res[len_s1 + len_s2] = '\0';
+	return (res);
 }
 
 /*
-The new string.
-NULL if the allocation fails.
+int	main(void)
+{
+	char	*t1 = "Uma rã salta na lagoa... ";
+	char	*t2 = "Splash! Silêncio de novo.";
+	char	*res = ft_strjoin(t1, t2);
+
+	printf("%s\n", res);
+	free(res);
+	return (0);
+}
 */

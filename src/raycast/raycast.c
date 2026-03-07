@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycast.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cgross-s <cgross-s@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: tnuno-mo <tnuno-mo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/15 21:31:40 by cgross-s          #+#    #+#             */
-/*   Updated: 2026/02/26 16:44:53 by cgross-s         ###   ########.fr       */
+/*   Updated: 2026/03/07 16:03:18 by tnuno-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,16 @@ void	perform_dda(t_data *data, t_ray *ray)
 			ray->map_y += ray->step_y;
 			ray->side = 1;
 		}
-		if (ray->map_x < 0 || ray->map_x >= data->map_width
-			|| ray->map_y < 0 || ray->map_y >= data->map_height)
+		if (ray->map_x < 0 || ray->map_y < 0 || ray->map_y >= data->map_height)
+		{
+			ray->hit = 1;
 			break ;
+		}
+		if (ray->map_x >= (int)ft_strlen(data->map[ray->map_y]))
+		{
+			ray->hit = 1;
+			break ;
+		}
 		if (data->map[ray->map_y][ray->map_x] == '1')
 			ray->hit = 1;
 	}
@@ -78,14 +85,14 @@ static void	determine_wall_side(t_ray *ray)
 {
 	if (ray->side == 0)
 	{
-		if (ray->ray_dir_x > 0)
+		if (ray->step_x > 0)
 			ray->wall_side = WALL_EAST;
 		else
 			ray->wall_side = WALL_WEST;
 	}
 	else
 	{
-		if (ray->ray_dir_y > 0)
+		if (ray->step_y > 0)
 			ray->wall_side = WALL_SOUTH;
 		else
 			ray->wall_side = WALL_NORTH;
@@ -100,5 +107,4 @@ void	cast_single_ray(t_data *data, t_ray *ray)
 	compute_perp_distance(data, ray);
 	determine_wall_side(ray);
 	compute_hit_position(data, ray);
-	draw_ray_debug(data, ray);
 }

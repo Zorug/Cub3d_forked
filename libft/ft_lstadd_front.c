@@ -1,26 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putstr.c                                        :+:      :+:    :+:   */
+/*   ft_lstadd_front.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cgross-s <cgross-s@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: tnuno-mo <tnuno-mo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/20 17:51:52 by cgross-s          #+#    #+#             */
-/*   Updated: 2024/12/20 17:51:53 by cgross-s         ###   ########.fr       */
+/*   Created: 2024/11/12 19:17:54 by tnuno-mo          #+#    #+#             */
+/*   Updated: 2026/03/07 14:41:12 by tnuno-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-//#include "ft_printf.h"
 #include "libft.h"
 
-int	ft_putstr(char *str)
+// Creates and add "*new" to the begiining of the list
+void	ft_lstadd_front(t_list **lst, t_list *new)
 {
-	int	count;
-
-	count = 0;
-	if (!str)
-		return (ft_putstr("(null)"));
-	while (*str)
-		count += ft_putchar(*str++);
-	return (count);
+	if (!new || !lst)
+		return ;
+	new -> next = *lst;
+	*lst = new;
 }

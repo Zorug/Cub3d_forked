@@ -3,59 +3,55 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strtrim.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cgross-s <cgross-s@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: tnuno-mo <tnuno-mo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/02 19:58:45 by cgross-s          #+#    #+#             */
-/*   Updated: 2024/11/02 19:58:46 by cgross-s         ###   ########.fr       */
+/*   Created: 2024/11/05 21:04:53 by tnuno-mo          #+#    #+#             */
+/*   Updated: 2026/03/07 15:13:21 by tnuno-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-/*Allocates (with malloc(3)) and returns a copy of
-’s1’ with the characters specified in ’set’ removed
-from the beginning and the end of the string.*/
 #include "libft.h"
 
-int	find_in_set(char needle, char const *haystack)
-{
-	int	i;
-
-	i = 0;
-	while (haystack[i])
-	{
-		if (needle == haystack[i])
-			return (1);
-		i++;
-	}
-	return (0);
-}
-
+// remove the characters in "set" from the beginning and the end of "s1"
 char	*ft_strtrim(char const *s1, char const *set)
 {
-	char	*ptr;
-	size_t	pos_start;
-	size_t	pos_end;
 	size_t	i;
-	int		j;
+	size_t	j;
+	size_t	len;
 
 	if (!s1 || !set)
 		return (NULL);
-	pos_start = 0;
-	pos_end = ft_strlen(s1);
-	while (s1[pos_start] && find_in_set(s1[pos_start], set) != 0)
-		pos_start++;
-	while (pos_end > pos_start && find_in_set(s1[pos_end - 1], set) != 0)
-		pos_end--;
-	ptr = malloc((pos_end - pos_start + 1) * sizeof(char));
-	if (!ptr)
-		return (NULL);
-	i = -1;
-	j = -1;
-	while (s1[++i] && i < pos_end)
-		if (i >= pos_start)
-			ptr[++j] = s1[i];
-	ptr[++j] = '\0';
-	return (ptr);
+	len = ft_strlen(s1);
+	if (len == 0)
+		return (ft_strdup(""));
+	i = 0;
+	while (i < len && ft_strchr(set, s1[i]) != NULL)
+		i++;
+	j = len;
+	while (j > i && ft_strchr(set, s1[j - 1]) != NULL)
+		j--;
+	if (i >= j)
+		return (ft_strdup(""));
+	return (ft_substr(s1, i, j - i));
 }
+/*
+int main(void)
+{
+	char *s;
+	char *set;
+	char *trim;
 
-/*The trimmed string.
-NULL if the allocation fails.*/
+	s = "This is the test string, this is not any other string!";
+	set = "This is wrong!";
+	trim = ft_strtrim(s, set);
+	printf("%s\n", trim);
+	free(trim);
+
+	s = "This is the test string, this is not any other string!";
+	set = "T";
+	trim = ft_strtrim(s, set);
+	printf("%s\n", trim);
+	free(trim);
+	return (0);
+}
+*/

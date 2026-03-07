@@ -1,31 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strndup.c                                       :+:      :+:    :+:   */
+/*   ft_lstclear.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cgross-s <cgross-s@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: tnuno-mo <tnuno-mo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/27 19:46:08 by cgross-s          #+#    #+#             */
-/*   Updated: 2025/08/27 19:46:31 by cgross-s         ###   ########.fr       */
+/*   Created: 2024/11/12 20:19:46 by tnuno-mo          #+#    #+#             */
+/*   Updated: 2026/03/07 14:41:12 by tnuno-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strndup(const char *s, size_t len)
+// Clears the list and frees all the nodes
+void	ft_lstclear(t_list **lst, void (*del)(void*))
 {
-	char	*dup;
-	size_t	i;
+	t_list	*curr_node;
 
-	i = 0;
-	dup = malloc(sizeof(char) * (len + 1));
-	if (dup == NULL)
-		return (NULL);
-	while (i < len)
+	if (!lst || !del)
+		return ;
+	while (*lst)
 	{
-		dup[i] = s[i];
-		i++;
+		curr_node = *lst;
+		*lst = (*lst)->next;
+		ft_lstdelone(curr_node, del);
 	}
-	dup[i] = '\0';
-	return (dup);
 }

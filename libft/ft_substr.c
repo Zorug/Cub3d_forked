@@ -3,48 +3,56 @@
 /*                                                        :::      ::::::::   */
 /*   ft_substr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cgross-s <cgross-s@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: tnuno-mo <tnuno-mo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/02 19:58:12 by cgross-s          #+#    #+#             */
-/*   Updated: 2024/11/02 19:58:13 by cgross-s         ###   ########.fr       */
+/*   Created: 2024/11/03 21:51:52 by tnuno-mo          #+#    #+#             */
+/*   Updated: 2026/03/07 15:29:43 by tnuno-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-/*
-Allocates (with malloc(3)) and returns a substring
-from the string ’s’.
-The substring begins at index ’start’ and is of
-maximum size ’len’
-*/
 #include "libft.h"
 
-char	*ft_substr(char const *str, unsigned int start, size_t len)
+//create a substring starting in "start" with "len" lenght
+//the substring content is part of the original
+char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
+	size_t	s_len;
 	char	*substr;
-	size_t	str_len;
-	size_t	actual_len;
 
-	if (!str)
+	if (!s)
 		return (NULL);
-	str_len = ft_strlen(str);
-	if (start >= str_len)
+	s_len = ft_strlen(s);
+	if (start >= s_len)
 		return (ft_strdup(""));
-	actual_len = str_len - start;
-	if (actual_len > len)
-		actual_len = len;
-	substr = malloc((actual_len + 1) * sizeof(char));
+	if (len > (s_len - start))
+		len = s_len - start;
+	substr = malloc(len + 1);
 	if (!substr)
 		return (NULL);
-	ft_strlcpy(substr, str + start, actual_len + 1);
+	ft_strlcpy(substr, s + start, len +1);
+	substr[len] = '\0';
 	return (substr);
 }
 
 /*
-The substring.
-NULL if the allocation fails.
-*/
-/*
-s: The string from which to create the substring.
-start: The start index of the substring in the string ’s’.
-len: The maximum length of the substring.
+int main(void)
+{
+	char *s = "Hello World!";
+	char *substr = ft_substr(s, 6, 5);
+	printf("%s\n", substr);
+	free(substr);
+
+	substr = ft_substr(s, 6, 100);
+	printf("%s\n", substr);
+	free(substr);
+
+	substr = ft_substr(s, 100, 5);
+	printf("%s\n", substr);
+	free(substr);
+
+	substr = ft_substr(s, 3, 0);
+	printf("%s\n", substr);
+	free(substr);
+	return (0);
+}
 */

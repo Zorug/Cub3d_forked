@@ -3,16 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   hooks.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cgross-s <cgross-s@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: tnuno-mo <tnuno-mo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/08 21:32:20 by cgross-s          #+#    #+#             */
-/*   Updated: 2026/02/24 22:56:27 by cgross-s         ###   ########.fr       */
+/*   Updated: 2026/03/07 15:38:47 by tnuno-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/cub3d.h"
 
-/*clear map leaks*/
 void	free_map(t_data *data)
 {
 	int	i;
@@ -31,13 +30,25 @@ void	free_map(t_data *data)
 
 
 /* close and clear leaks */
-int	close_window(t_data *data)
+int	cleanup_and_exit(t_data *data, int exit_code)
 {
-	free_map(data);
+	int	i;
+
 	if (!data)
-		exit(0);
+		exit(exit_code);
+	free_scene_config(&data->config);
+	free_map(data);
+	i = 0;
+	while (i < 4)
+	{
+		if (data->tex[i].img)
+			mlx_destroy_image(data->mlx, data->tex[i].img);
+		i++;
+	}
 	if (data->screen.img)
 		mlx_destroy_image(data->mlx, data->screen.img);
+	if (data->rays)
+		free(data->rays);
 	if (data->win)
 		mlx_destroy_window(data->mlx, data->win);
 	if (data->mlx)
@@ -45,18 +56,30 @@ int	close_window(t_data *data)
 		mlx_destroy_display(data->mlx);
 		free(data->mlx);
 	}
-	exit(0);
+	exit(exit_code);
 	return (0);
+}
+
+int	close_window(t_data *data)
+{
+	return (cleanup_and_exit(data, 0));
 }
 
 /* verify if the tile is a wall */
 static int	is_walkable(t_data *data, double x, double y)
 {
+	int	map_y;
+	int	line_len;
+
 	if (x < 0 || y < 0)
 		return (false);
-	if (x >= data->map_width || y >= data->map_height)
+	map_y = (int)y;
+	if (map_y >= data->map_height)
 		return (false);
-	if (data->map[(int)y][(int)x] == '1')
+	line_len = ft_strlen(data->map[map_y]);
+	if (x >= line_len)
+		return (false);
+	if (data->map[map_y][(int)x] == '1')
 		return (false);
 	return (true);
 }

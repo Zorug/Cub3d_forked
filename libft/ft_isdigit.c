@@ -3,25 +3,32 @@
 /*                                                        :::      ::::::::   */
 /*   ft_isdigit.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cgross-s <cgross-s@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: tnuno-mo <tnuno-mo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/22 18:01:53 by cgross-s          #+#    #+#             */
-/*   Updated: 2024/10/22 18:01:54 by cgross-s         ###   ########.fr       */
+/*   Created: 2024/10/22 02:21:54 by tnuno-mo          #+#    #+#             */
+/*   Updated: 2026/03/07 14:41:12 by tnuno-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-/*
-isdigit(): checks for a digit (0(48) through 9(57)).
-*/
+
+#include "libft.h"
+
 int	ft_isdigit(int c)
 {
-	if (c >= 48 && c <= 57)
+	if (c >= '0' && c <= '9')
 		return (1);
 	else
 		return (0);
 }
-
 /*
-RETURN VALUE
-    The  values  returned  are nonzero if the character 
-    c falls into the tested class, and zero ifnot.
+#include <stdio.h>
+
+int	main(void)
+{
+	printf("ft_isdigit('0'): %d (espected: 1)\n", ft_isdigit('0'));
+	printf("ft_isdigit('9'): %d (expected: 1)\n", ft_isdigit('9'));
+	printf("ft_isdigit('a'): %d (expected: 0)\n", ft_isdigit('a'));
+	printf("ft_isdigit(' '): %d (expected: 0)\n", ft_isdigit(' '));
+	printf("ft_isdigit('!'): %d (expected: 0)\n", ft_isdigit('!'));
+	return (0);
+}
 */

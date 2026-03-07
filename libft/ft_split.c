@@ -3,106 +3,100 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cgross-s <cgross-s@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: tnuno-mo <tnuno-mo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/02 19:58:54 by cgross-s          #+#    #+#             */
-/*   Updated: 2024/11/02 19:59:32 by cgross-s         ###   ########.fr       */
+/*   Created: 2024/11/10 02:22:58 by tnuno-mo          #+#    #+#             */
+/*   Updated: 2026/03/07 14:41:13 by tnuno-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-#include <stdlib.h>
 
-int	count_words(char const *str, char c)
+// 1. Determine the length of the segment up to lim
+static size_t	ft_seg_len(char const *str, char lim)
 {
 	int	i;
-	int	words;
 
 	i = 0;
-	words = 0;
-	while (str[i])
-	{
-		if (str[i] != c)
-		{
-			words++;
-			while (str[i] != c && str[i])
-				i++;
-			if (str[i] == '\0')
-				return (words);
-		}
+	while (str[i] && str[i] != lim)
 		i++;
-	}
-	return (words);
+	return (i);
 }
 
-int	word_length(char const *str, char c, int i)
+// Count how man words are in the string
+static int	ft_count_words(char const *s, char lim)
 {
-	int	len;
+	size_t	i;
+	size_t	len;
+	int		res;
 
-	len = 0;
-	while (str[i] && str[i] != c)
+	i = 0;
+	res = 0;
+	while (s[i])
 	{
-		len++;
-		i++;
+		while (s[i] == lim)
+			i++;
+		len = ft_seg_len(s + i, lim);
+		i += len;
+		if (len > 0)
+			res++;
 	}
-	return (len);
+	return (res);
 }
 
-char	*allocate_word(char const *str, char c, int *pos)
+// free the array of strings iteraively one by one
+static void	*ft_free_arrays(char **arr)
 {
-	char	*word;
-	int		len;
+	int	i;
+
+	i = 0;
+	while (arr[i])
+		free(arr[i++]);
+	free(arr);
+	return (NULL);
+}
+
+// Split the string into words
+char	**ft_split(char const *s, char c)
+{
+	size_t	i;
 	int		j;
+	int		num_words;
+	char	**res_str;
 
-	while (str[*pos] && str[*pos] == c)
-		(*pos)++;
-	len = word_length(str, c, *pos);
-	word = (char *)malloc(sizeof(char) * (len + 1));
-	if (!word)
+	if (!s)
 		return (NULL);
+	i = 0;
 	j = 0;
-	while (j < len)
+	num_words = ft_count_words(s, c);
+	res_str = (char **)malloc((num_words + 1) * sizeof(char *));
+	if (!res_str)
+		return (NULL);
+	while (j < num_words)
 	{
-		word[j] = str[(*pos)++];
+		while (s[i] == c)
+			i++;
+		res_str[j] = ft_substr(s, i, ft_seg_len(s + i, c));
+		if (!res_str[j])
+			return (ft_free_arrays(res_str));
+		i += ft_seg_len(s + i, c);
 		j++;
 	}
-	word[len] = '\0';
-	return (word);
+	res_str[num_words] = NULL;
+	return (res_str);
 }
 
-void	freeit(int i, char **splitted)
+/* int	main(void)
 {
-	while (i > 0)
-		free(splitted[--i]);
-	free(splitted);
-}
-
-char	**ft_split(char const *str, char c)
-{
-	char	**splitted;
-	int		i;
-	int		n_words;
-	int		pos;
-
-	if (!str)
-		return (NULL);
-	i = -1;
-	pos = 0;
-	n_words = count_words(str, c);
-	splitted = (char **)malloc(sizeof(char *) * (n_words + 1));
-	if (!splitted)
-		return (NULL);
-	while (++i < n_words)
+	char	str[] = "";
+	char	c = ' ';
+	char	**spt = ft_split(str, c);
+	int	i = 0;
+	while (spt[i] != 0)
 	{
-		splitted[i] = allocate_word(str, c, &pos);
-		if (!splitted[i])
-		{
-			freeit (i, splitted);
-			return (NULL);
-		}
+		printf("%s", spt[i]);
+		i++;
 	}
-	splitted[i] = NULL;
-	return (splitted);
+	printf("%c", '\n');
 }
-
-// Free previously allocated strings on failure
+ */

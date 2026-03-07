@@ -3,18 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   ft_isprint.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cgross-s <cgross-s@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: tnuno-mo <tnuno-mo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/22 22:17:52 by cgross-s          #+#    #+#             */
-/*   Updated: 2024/10/22 22:17:54 by cgross-s         ###   ########.fr       */
+/*   Created: 2024/10/24 21:01:25 by tnuno-mo          #+#    #+#             */
+/*   Updated: 2026/03/07 14:41:12 by tnuno-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-/*
-isprint()
-checks for any printable character including space.
-32-126
-*/
 int	ft_isprint(int c)
 {
 	if (c >= 32 && c <= 126)
@@ -22,8 +17,19 @@ int	ft_isprint(int c)
 	else
 		return (0);
 }
+
 /*
-RETURN VALUE
-    The  values  returned  are nonzero if the character 
-c falls into the tested class, and zero if not.
+#include <stdio.h>
+
+int	main(void)
+{
+	char	c1 = 'A';
+	char	c2 = ' ';
+	char	c3 = '\n';
+	
+	printf("'%c' is printable: %d\n", c1, ft_isprint(c1));
+	printf("'%c' is printable: %d\n", c2, ft_isprint(c2));
+	printf("'%c' is printable: %d\n", c3, ft_isprint(c3));
+	return (0);
+}
 */
