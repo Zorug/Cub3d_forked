@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_textures.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cgross-s <cgross-s@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: tnuno-mo <tnuno-mo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/01 00:02:42 by tnuno-mo          #+#    #+#             */
-/*   Updated: 2026/03/07 20:58:02 by cgross-s         ###   ########.fr       */
+/*   Updated: 2026/03/07 21:54:32 by tnuno-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	validate_texture_path(const char *path)
 }
 
 // Set texture path in config for the specified direction (N/S/W/E)
-static int	set_texture_path(char *value, t_scene_config *cfg, int flag)
+static int	set_texture_path(char *value, t_cfg *cfg, int flag)
 {
 	char	*path;
 
@@ -53,7 +53,7 @@ static int	set_texture_path(char *value, t_scene_config *cfg, int flag)
 }
 
 // Parse a texture line and set the corresponding path in config
-int	parse_texture_line(char *line, t_scene_config *cfg)
+int	parse_texture_line(char *line, t_cfg *cfg)
 {
 	char	*ptr;
 

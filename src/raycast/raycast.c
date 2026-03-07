@@ -6,7 +6,7 @@
 /*   By: tnuno-mo <tnuno-mo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/15 21:31:40 by cgross-s          #+#    #+#             */
-/*   Updated: 2026/03/07 21:08:55 by tnuno-mo         ###   ########.fr       */
+/*   Updated: 2026/03/07 21:54:32 by tnuno-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,10 +53,10 @@ void	perform_dda(t_data *data, t_ray *ray)
 void	compute_perp_distance(t_data *data, t_ray *ray)
 {
 	if (ray->side == 0)
-		ray->perp_wall_dist = (ray->map_x - data->posX
+		ray->perp_wall_dist = (ray->map_x - data->pos_x
 				+ (1 - ray->step_x) / 2) / ray->ray_dir_x;
 	else
-		ray->perp_wall_dist = (ray->map_y - data->posY
+		ray->perp_wall_dist = (ray->map_y - data->pos_y
 				+ (1 - ray->step_y) / 2) / ray->ray_dir_y;
 }
 
@@ -66,13 +66,13 @@ void	compute_hit_position(t_data *data, t_ray *ray)
 	if (ray->side == 0)
 	{
 		ray->hit_x = ray->map_x + (ray->step_x == -1);
-		ray->hit_y = data->posY
+		ray->hit_y = data->pos_y
 			+ ray->perp_wall_dist * ray->ray_dir_y;
 	}
 	else
 	{
 		ray->hit_y = ray->map_y + (ray->step_y == -1);
-		ray->hit_x = data->posX
+		ray->hit_x = data->pos_x
 			+ ray->perp_wall_dist * ray->ray_dir_x;
 	}
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_file_2.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cgross-s <cgross-s@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: tnuno-mo <tnuno-mo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/07 21:26:47 by cgross-s          #+#    #+#             */
-/*   Updated: 2026/03/07 21:33:27 by cgross-s         ###   ########.fr       */
+/*   Updated: 2026/03/07 21:54:32 by tnuno-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	validate_file_extension(const char *filename)
 }
 
 // Parse a single config line (texture, color, or map)
-static int	parse_config_line(char *line, t_scene_config *cfg)
+static int	parse_config_line(char *line, t_cfg *cfg)
 {
 	if (is_empty_line(line))
 		return (1);
@@ -42,7 +42,7 @@ static int	parse_config_line(char *line, t_scene_config *cfg)
 }
 
 // Parse all configuration lines and find where map starts
-static int	parse_configuration(char **lines, t_scene_config *cfg, int *idx)
+static int	parse_configuration(char **lines, t_cfg *cfg, int *idx)
 {
 	int	result;
 	int	i;
@@ -76,7 +76,7 @@ int	parse_scene_file(const char *filename, t_data *data)
 	lines = read_file_lines(filename);
 	if (!lines)
 		return (error_return("Cannot open file"));
-	ft_bzero(&data->config, sizeof(t_scene_config));
+	ft_bzero(&data->config, sizeof(t_cfg));
 	if (!parse_configuration(lines, &data->config, &map_start_idx))
 	{
 		free_string_array(lines);

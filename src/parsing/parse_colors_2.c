@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   parse_colors_2.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cgross-s <cgross-s@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: tnuno-mo <tnuno-mo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/07 21:26:29 by cgross-s          #+#    #+#             */
-/*   Updated: 2026/03/07 21:32:55 by cgross-s         ###   ########.fr       */
+/*   Updated: 2026/03/07 21:54:32 by tnuno-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/cub3d.h"
 
 /* Parse and set floor color from RGB string */
-static int	set_floor_color(char *value_str, t_scene_config *cfg)
+static int	set_floor_color(char *value_str, t_cfg *cfg)
 {
 	int	r;
 	int	g;
@@ -29,7 +29,7 @@ static int	set_floor_color(char *value_str, t_scene_config *cfg)
 }
 
 /* Parse and set ceiling color from RGB string */
-static int	set_ceiling_color(char *value_str, t_scene_config *cfg)
+static int	set_ceiling_color(char *value_str, t_cfg *cfg)
 {
 	int	r;
 	int	g;
@@ -45,7 +45,7 @@ static int	set_ceiling_color(char *value_str, t_scene_config *cfg)
 }
 
 /* Parse a color line and update scene config (F for floor, C for ceiling) */
-int	parse_color_line(char *line, t_scene_config *cfg)
+int	parse_color_line(char *line, t_cfg *cfg)
 {
 	char	*ptr;
 

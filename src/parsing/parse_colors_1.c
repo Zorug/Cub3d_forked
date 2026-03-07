@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_colors_1.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cgross-s <cgross-s@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: tnuno-mo <tnuno-mo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/01 00:01:47 by tnuno-mo          #+#    #+#             */
-/*   Updated: 2026/03/07 21:34:21 by cgross-s         ###   ########.fr       */
+/*   Updated: 2026/03/07 21:40:18 by tnuno-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,4 +79,3 @@ int	parse_rgb_values(const char *str, int *r, int *g, int *b)
 	free_string_array(components);
 	return (result);
 }
-

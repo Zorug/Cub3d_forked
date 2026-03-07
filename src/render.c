@@ -6,7 +6,7 @@
 /*   By: tnuno-mo <tnuno-mo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/20 22:13:17 by cgross-s          #+#    #+#             */
-/*   Updated: 2026/03/07 21:04:31 by tnuno-mo         ###   ########.fr       */
+/*   Updated: 2026/03/07 21:54:32 by tnuno-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 /* Initialize ray direction and delta distances for DDA algorithm */
 void	init_ray_from_dir(t_data *data, t_ray *ray)
 {
-	ray->map_x = (int)data->posX;
-	ray->map_y = (int)data->posY;
+	ray->map_x = (int)data->pos_x;
+	ray->map_y = (int)data->pos_y;
 	ray->hit = 0;
 	if (ray->ray_dir_x == 0)
 		ray->delta_dist_x = 1e30;
@@ -37,8 +37,8 @@ static void	render_column(t_data *data, int x)
 
 	ray = &data->rays[x];
 	camera_x = (2.0 * x + 1.0) / (double)data->screen.width - 1.0;
-	ray->ray_dir_x = data->dirX + data->planeX * camera_x;
-	ray->ray_dir_y = data->dirY + data->planeY * camera_x;
+	ray->ray_dir_x = data->dir_x + data->plane_x * camera_x;
+	ray->ray_dir_y = data->dir_y + data->plane_y * camera_x;
 	cast_single_ray(data, ray);
 	init_wall_render(&wr, ray, data);
 	draw_ceiling(data, x, &wr);

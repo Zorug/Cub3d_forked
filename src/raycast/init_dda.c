@@ -6,7 +6,7 @@
 /*   By: tnuno-mo <tnuno-mo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/22 12:34:20 by cgross-s          #+#    #+#             */
-/*   Updated: 2026/03/07 14:22:49 by tnuno-mo         ###   ########.fr       */
+/*   Updated: 2026/03/07 21:54:32 by tnuno-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,13 +53,13 @@ static void	init_step_x(t_data *data, t_ray *ray)
 	if (ray->ray_dir_x < 0)
 	{
 		ray->step_x = -1;
-		ray->side_dist_x = (data->posX - ray->map_x)
+		ray->side_dist_x = (data->pos_x - ray->map_x)
 			* ray->delta_dist_x;
 	}
 	else
 	{
 		ray->step_x = 1;
-		ray->side_dist_x = (ray->map_x + 1.0 - data->posX)
+		ray->side_dist_x = (ray->map_x + 1.0 - data->pos_x)
 			* ray->delta_dist_x;
 	}
 }
@@ -69,13 +69,13 @@ static void	init_step_y(t_data *data, t_ray *ray)
 	if (ray->ray_dir_y < 0)
 	{
 		ray->step_y = -1;
-		ray->side_dist_y = (data->posY - ray->map_y)
+		ray->side_dist_y = (data->pos_y - ray->map_y)
 			* ray->delta_dist_y;
 	}
 	else
 	{
 		ray->step_y = 1;
-		ray->side_dist_y = (ray->map_y + 1.0 - data->posY)
+		ray->side_dist_y = (ray->map_y + 1.0 - data->pos_y)
 			* ray->delta_dist_y;
 	}
 }

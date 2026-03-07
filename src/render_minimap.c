@@ -6,7 +6,7 @@
 /*   By: tnuno-mo <tnuno-mo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/07 21:30:00 by tnuno-mo          #+#    #+#             */
-/*   Updated: 2026/03/07 21:04:31 by tnuno-mo         ###   ########.fr       */
+/*   Updated: 2026/03/07 21:54:32 by tnuno-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,8 @@ void	draw_player_minimap(t_data *data)
 	int			tile;
 
 	tile = TILE_SIZE * MINIMAP_SCALE;
-	player.center.x = MINIMAP_OFFSET_X + data->posX * tile;
-	player.center.y = MINIMAP_OFFSET_Y + data->posY * tile;
+	player.center.x = MINIMAP_OFFSET_X + data->pos_x * tile;
+	player.center.y = MINIMAP_OFFSET_Y + data->pos_y * tile;
 	player.radius = tile / 4;
 	player.color = MAP_PLAYER_COLOR;
 	draw_circle(&data->screen, &player);

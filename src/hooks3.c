@@ -6,7 +6,7 @@
 /*   By: tnuno-mo <tnuno-mo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/07 21:20:00 by tnuno-mo          #+#    #+#             */
-/*   Updated: 2026/03/07 20:59:36 by tnuno-mo         ###   ########.fr       */
+/*   Updated: 2026/03/07 21:54:32 by tnuno-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,12 @@ void	rotate_view(t_data *data, double rot)
 	double	old_dir_x;
 	double	old_plane_x;
 
-	old_dir_x = data->dirX;
-	data->dirX = data->dirX * cos(rot) - data->dirY * sin(rot);
-	data->dirY = old_dir_x * sin(rot) + data->dirY * cos(rot);
-	old_plane_x = data->planeX;
-	data->planeX = data->planeX * cos(rot) - data->planeY * sin(rot);
-	data->planeY = old_plane_x * sin(rot) + data->planeY * cos(rot);
+	old_dir_x = data->dir_x;
+	data->dir_x = data->dir_x * cos(rot) - data->dir_y * sin(rot);
+	data->dir_y = old_dir_x * sin(rot) + data->dir_y * cos(rot);
+	old_plane_x = data->plane_x;
+	data->plane_x = data->plane_x * cos(rot) - data->plane_y * sin(rot);
+	data->plane_y = old_plane_x * sin(rot) + data->plane_y * cos(rot);
 }
 
 /* Handle arrow key rotation */

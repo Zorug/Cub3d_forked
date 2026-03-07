@@ -6,7 +6,7 @@
 /*   By: tnuno-mo <tnuno-mo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/08 21:33:15 by cgross-s          #+#    #+#             */
-/*   Updated: 2026/03/07 20:46:37 by tnuno-mo         ###   ########.fr       */
+/*   Updated: 2026/03/07 21:54:32 by tnuno-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,8 @@ void	set_player_direction(t_data *data, char c)
 		data->angle = 0;
 	else if (c == 'W')
 		data->angle = M_PI;
-	data->dirX = cos(data->angle);
-	data->dirY = sin(data->angle);
+	data->dir_x = cos(data->angle);
+	data->dir_y = sin(data->angle);
 }
 
 // Player start position
@@ -61,8 +61,8 @@ void	find_player(t_data *data)
 		{
 			if (ft_strchr("NSEW", data->map[y][x]))
 			{
-				data->posX = x + 0.5;
-				data->posY = y + 0.5;
+				data->pos_x = x + 0.5;
+				data->pos_y = y + 0.5;
 				set_player_direction(data, data->map[y][x]);
 				data->map[y][x] = '0';
 				return ;

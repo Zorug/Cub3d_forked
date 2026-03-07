@@ -6,13 +6,13 @@
 /*   By: tnuno-mo <tnuno-mo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/28 23:14:12 by tnuno-mo          #+#    #+#             */
-/*   Updated: 2026/03/07 21:01:19 by tnuno-mo         ###   ########.fr       */
+/*   Updated: 2026/03/07 21:54:32 by tnuno-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/cub3d.h"
 
-void	free_scene_config(t_scene_config *cfg)
+void	free_scene_config(t_cfg *cfg)
 {
 	if (cfg->no_path)
 		free(cfg->no_path);

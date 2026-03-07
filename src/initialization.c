@@ -6,7 +6,7 @@
 /*   By: tnuno-mo <tnuno-mo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/22 16:35:11 by cgross-s          #+#    #+#             */
-/*   Updated: 2026/03/07 20:55:36 by tnuno-mo         ###   ########.fr       */
+/*   Updated: 2026/03/07 21:54:32 by tnuno-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,13 +56,13 @@ int	init_rays_cache(t_data *data)
 void	init_player(t_data *data)
 {
 	find_player(data);
-	data->dirX = cos(data->angle);
-	data->dirY = sin(data->angle);
+	data->dir_x = cos(data->angle);
+	data->dir_y = sin(data->angle);
 	data->fov = M_PI / 3;
 	data->move_speed = 0.5;
 	data->rot_speed = 0.4;
-	data->planeX = -data->dirY * tan(data->fov / 2);
-	data->planeY = data->dirX * tan(data->fov / 2);
+	data->plane_x = -data->dir_y * tan(data->fov / 2);
+	data->plane_y = data->dir_x * tan(data->fov / 2);
 }
 
 /* Initialize mouse */
