@@ -6,7 +6,7 @@
 /*   By: tnuno-mo <tnuno-mo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/15 18:34:00 by tnuno-mo          #+#    #+#             */
-/*   Updated: 2026/03/05 21:18:41 by tnuno-mo         ###   ########.fr       */
+/*   Updated: 2026/03/01 01:17:35 by tnuno-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,66 +71,37 @@ int	is_line_map(const char *line)
        return (1);
 }
 
-// Helper to get char at position, returns ' ' if out of bounds
-static char	get_map_char(char **map, int i, int j)
-{
-	if (!map[i])
-		return (' ');
-	if (j < 0 || j >= (int)ft_strlen(map[i]))
-		return (' ');
-	return (map[i][j]);
-}
-
-// Check if position is surrounded by walls (flood fill concept)
-static int	is_position_valid(char **map, int i, int j)
-{
-	char	c;
-	char	up;
-	char	down;
-	char	left;
-	char	right;
-
-	c = get_map_char(map, i, j);
-	if (c != '0' && !is_player_char(c))
-		return (1);
-	if (i == 0 || j == 0)
-		return (0);
-	up = get_map_char(map, i - 1, j);
-	down = get_map_char(map, i + 1, j);
-	left = get_map_char(map, i, j - 1);
-	right = get_map_char(map, i, j + 1);
-	if (up != '0' && up != '1' && !is_player_char(up))
-		return (0);
-	if (down != '0' && down != '1' && !is_player_char(down))
-		return (0);
-	if (left != '0' && left != '1' && !is_player_char(left))
-		return (0);
-	if (right != '0' && right != '1' && !is_player_char(right))
-		return (0);
-	return (1);
-}
-
 // Checks if the map is closed (surrounded by walls).
 // Returns 1 if the map is closed, 0 otherwise.
-// Spaces inside the map are treated as void - walkable areas cannot touch them.
+// Spaces are treated as outside the map and must not touch '0' or player positions.
 int	is_map_closed(char **map)
 {
-	int	i;
-	int	j;
+       int i;
+       int j;
+       int len;
 
-	i = 0;
-	while (map[i])
-	{
-		j = 0;
-		while (map[i][j])
-		{
-			if (!is_position_valid(map, i, j))
-				return (0);
-			j++;
-		}
-		i++;
-	}
-	return (1);
+       i = 0;
+       while (map[i])
+       {
+	       len = (int)ft_strlen(map[i]);
+	       j = 0;
+	       while (j < len)
+	       {
+		       if (map[i][j] == '0' || is_player_char(map[i][j]))
+		       {
+			       if (i == 0 || j == 0 || !map[i + 1] || j + 1 >= (int)ft_strlen(map[i]))
+				       return (0);
+			       if ((j - 1 < 0 || map[i][j - 1] == ' ') ||
+				       (map[i][j + 1] == ' ') ||
+				       (i - 1 < 0 || (int)ft_strlen(map[i - 1]) <= j || map[i - 1][j] == ' ') ||
+				       (!map[i + 1] || (int)ft_strlen(map[i + 1]) <= j || map[i + 1][j] == ' '))
+				       return (0);
+		       }
+		       j++;
+	       }
+	       i++;
+       }
+       return (1);
 }
 
 

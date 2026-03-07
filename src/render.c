@@ -6,7 +6,7 @@
 /*   By: tnuno-mo <tnuno-mo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/20 22:13:17 by cgross-s          #+#    #+#             */
-/*   Updated: 2026/03/05 21:36:31 by tnuno-mo         ###   ########.fr       */
+/*   Updated: 2026/03/01 01:17:35 by tnuno-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ void	draw_minimap(t_data *data)
 	int		x;
 	int		y;
 	int		tile;
-	int		line_len;
 	t_rect	r;
 
 	tile = TILE_SIZE * MINIMAP_SCALE;
@@ -26,8 +25,7 @@ void	draw_minimap(t_data *data)
 	while (y < data->map_height)
 	{
 		x = 0;
-		line_len = ft_strlen(data->map[y]);
-		while (x < line_len)
+		while (x < data->map_width)
 		{
 			if (data->map[y][x] == '1')
 			{
