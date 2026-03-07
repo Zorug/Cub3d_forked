@@ -6,7 +6,7 @@
 /*   By: tnuno-mo <tnuno-mo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/15 21:31:40 by cgross-s          #+#    #+#             */
-/*   Updated: 2026/03/07 14:22:48 by tnuno-mo         ###   ########.fr       */
+/*   Updated: 2026/03/07 16:03:18 by tnuno-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,15 @@ void	perform_dda(t_data *data, t_ray *ray)
 			ray->side = 1;
 		}
 		if (ray->map_x < 0 || ray->map_y < 0 || ray->map_y >= data->map_height)
+		{
+			ray->hit = 1;
 			break ;
+		}
 		if (ray->map_x >= (int)ft_strlen(data->map[ray->map_y]))
+		{
+			ray->hit = 1;
 			break ;
+		}
 		if (data->map[ray->map_y][ray->map_x] == '1')
 			ray->hit = 1;
 	}
