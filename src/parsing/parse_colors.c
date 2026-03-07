@@ -6,7 +6,7 @@
 /*   By: tnuno-mo <tnuno-mo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/01 00:01:47 by tnuno-mo          #+#    #+#             */
-/*   Updated: 2026/03/06 00:05:54 by tnuno-mo         ###   ########.fr       */
+/*   Updated: 2026/03/07 11:22:12 by tnuno-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ static int	is_valid_rgb_string(const char *str)
 int	parse_rgb_values(const char *str, int *r, int *g, int *b)
 {
 	char	**components;
+	char	*trimmed;
 
 	components = ft_split(str, ',');
 	if (!components || !components[0] || !components[1] || !components[2])
@@ -57,16 +58,33 @@ int	parse_rgb_values(const char *str, int *r, int *g, int *b)
 		free_string_array(components);
 		return (0);
 	}
-	if (!is_valid_rgb_string(components[0])
-		|| !is_valid_rgb_string(components[1])
-		|| !is_valid_rgb_string(components[2]))
+	trimmed = ft_strtrim(components[0], " \t");
+	if (!is_valid_rgb_string(trimmed))
 	{
+		free(trimmed);
 		free_string_array(components);
 		return (0);
 	}
-	*r = ft_atoi(components[0]);
-	*g = ft_atoi(components[1]);
-	*b = ft_atoi(components[2]);
+	*r = ft_atoi(trimmed);
+	free(trimmed);
+	trimmed = ft_strtrim(components[1], " \t");
+	if (!is_valid_rgb_string(trimmed))
+	{
+		free(trimmed);
+		free_string_array(components);
+		return (0);
+	}
+	*g = ft_atoi(trimmed);
+	free(trimmed);
+	trimmed = ft_strtrim(components[2], " \t");
+	if (!is_valid_rgb_string(trimmed))
+	{
+		free(trimmed);
+		free_string_array(components);
+		return (0);
+	}
+	*b = ft_atoi(trimmed);
+	free(trimmed);
 	free_string_array(components);
 	if (!validate_rgb_value(*r) || !validate_rgb_value(*g)
 		|| !validate_rgb_value(*b))
