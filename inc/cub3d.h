@@ -6,7 +6,7 @@
 /*   By: tnuno-mo <tnuno-mo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/28 14:23:20 by tnuno-mo          #+#    #+#             */
-/*   Updated: 2026/03/07 14:23:38 by tnuno-mo         ###   ########.fr       */
+/*   Updated: 2026/03/07 14:49:05 by tnuno-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,10 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include <stdbool.h>	// true and false
+
+# ifndef M_PI
+#  define M_PI 3.14159265358979323846
+# endif
 
 # define TILE_SIZE 40 // size of a square
 
