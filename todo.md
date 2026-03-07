@@ -10,7 +10,7 @@
 - **Ficheiro:** `src/main.c` (linhas 28-29)
 - **Problema:** Se `parse_scene_file` falha **depois** de alocar `data->map` (ex: na validação do mapa), o `main` faz `return(1)` sem libertar a config nem o mapa.
 - **Correção:** Adicionar cleanup (`free_scene_config` + `free_map`) antes do `return(1)`, ou chamar `error_exit`.
-- [ ] Corrigido
+- [x] Corrigido
 
 ## 3. 🟡 `error_exit` não liberta texturas nem MLX
 - **Ficheiro:** `src/errors.c`

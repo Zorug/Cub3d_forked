@@ -6,7 +6,7 @@
 /*   By: tnuno-mo <tnuno-mo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/01 17:42:29 by cgross-s          #+#    #+#             */
-/*   Updated: 2026/03/05 23:48:40 by tnuno-mo         ###   ########.fr       */
+/*   Updated: 2026/03/07 12:12:13 by tnuno-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,11 @@ int	main(int argc, char **argv)
 	}
 	ft_bzero(&data, sizeof(t_data));
 	if (!parse_scene_file(argv[1], &data))
+	{
+		free_scene_config(&data.config);
+		free_map(&data);
 		return (1);
+	}
 	if (!init_mlx(&data))
 		error_exit(&data, "Failed to initialize MLX");
 	if (!load_all_textures(&data))
