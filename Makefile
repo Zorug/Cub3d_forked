@@ -39,7 +39,14 @@ SRCS		=	main.c \
 				utils.c \
 				draw.c \
 				render.c \
+				errors.c \
+				validate_map.c \
 				initialization.c \
+				parsing/parse_map.c \
+				parsing/parse_file.c \
+				parsing/parse_utils.c \
+				parsing/parse_colors.c \
+				parsing/parse_textures.c \
 				raycast/raycast.c \
 				raycast/init_dda.c \
 				raycast/draw_minimap.c
