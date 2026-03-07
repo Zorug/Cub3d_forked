@@ -6,7 +6,7 @@
 /*   By: tnuno-mo <tnuno-mo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/01 00:08:35 by tnuno-mo          #+#    #+#             */
-/*   Updated: 2026/03/05 22:13:51 by tnuno-mo         ###   ########.fr       */
+/*   Updated: 2026/03/07 11:24:49 by tnuno-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,9 @@ int	validate_file_extension(const char *filename)
 		return (0);
 	len = ft_strlen(filename);
 	if (len < 4)
-		return (error_return("Blahhhh!! Invalid file name"));
+		return (error_return("Invalid filename"));
 	if (ft_strcmp(filename + len - 4, ".cub") != 0)
-		return (error_return("The freakin' file must have .cub extension!"));
+		return (error_return("File must have .cub extension"));
 	return (1);
 }
 
@@ -137,7 +137,7 @@ static int	parse_configuration(char **lines, t_scene_config *cfg, int *idx)
 		i++;
 	}
 	if ((cfg->config_flags & FLAG_ALL) != FLAG_ALL)
-		return (error_return("Oops! Missing configuration elements"));
+		return (error_return("Missing configuration elements"));
 	return (1);
 }
 

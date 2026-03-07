@@ -6,7 +6,7 @@
 /*   By: tnuno-mo <tnuno-mo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/01 00:02:42 by tnuno-mo          #+#    #+#             */
-/*   Updated: 2026/03/01 01:05:35 by tnuno-mo         ###   ########.fr       */
+/*   Updated: 2026/03/07 11:24:49 by tnuno-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,10 @@ int	validate_texture_path(const char *path)
 		return (0);
 	len = ft_strlen(path);
 	if (len < 4 || ft_strcmp(path + len - 4, ".xpm") != 0)
-		return (error_return("WTF! Texture must be .xpm file"));
+		return (error_return("Texture must be .xpm file"));
 	fd = open(path, O_RDONLY);
 	if (fd < 0)
-		return (error_return("WTF! Cannot open texture file"));
+		return (error_return("Cannot open texture file"));
 	close(fd);
 	return (1);
 }
