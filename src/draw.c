@@ -1,13 +1,13 @@
 /* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   draw.c                                             :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: cgross-s <cgross-s@student.42porto.com>    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/02/15 17:46:13 by cgross-s          #+#    #+#             */
-/*   Updated: 2026/02/23 22:31:38 by cgross-s         ###   ########.fr       */
-/*                                                                            */
+/*																			*/
+/*														:::	  ::::::::   */
+/*   draw.c											 :+:	  :+:	:+:   */
+/*													+:+ +:+		 +:+	 */
+/*   By: tnuno-mo <tnuno-mo@student.42.fr>		  +#+  +:+	   +#+		*/
+/*												+#+#+#+#+#+   +#+		   */
+/*   Created: 2026/02/15 17:46:13 by cgross-s		  #+#	#+#			 */
+/*   Updated: 2026/03/07 12:37:21 by tnuno-mo		 ###   ########.fr	   */
+/*																			*/
 /* ************************************************************************** */
 
 #include "../inc/cub3d.h"
@@ -77,23 +77,22 @@ void	draw_square(t_img *img, t_square *s)
 	draw_rect(img, &r);
 }
 
-/* Draw a line using DDA algorithm 
-https://www.youtube.com/watch?v=Oyp3eq580jA */
+// Draw a line using DDA algorithm https://www.youtube.com/watch?v=Oyp3eq580jA
 void	draw_line(t_img *img, t_line *l)
 {
 	t_dda	d;
 
 	d.dx = l->end.x - l->start.x;
 	d.dy = l->end.y - l->start.y;
-	if (abs(d.dx) > abs(d.dy)) // the size of the step is based on the bigger value
+	if (abs(d.dx) > abs(d.dy))
 		d.steps = abs(d.dx);
 	else
 		d.steps = abs(d.dy);
-	d.x_inc = d.dx / (float)d.steps; // incremento em x
-	d.y_inc = d.dy / (float)d.steps; // incremento em y
-	d.x = l->start.x; // x inicial
-	d.y = l->start.y; // y inicial
-	d.i = 0; // counter
+	d.x_inc = d.dx / (float)d.steps;
+	d.y_inc = d.dy / (float)d.steps;
+	d.x = l->start.x;
+	d.y = l->start.y;
+	d.i = 0;
 	while (d.i <= d.steps)
 	{
 		if (d.x >= 0 && d.x < img->width

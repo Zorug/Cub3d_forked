@@ -1,13 +1,13 @@
 /* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   render.c                                           :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: tnuno-mo <tnuno-mo@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/02/20 22:13:17 by cgross-s          #+#    #+#             */
-/*   Updated: 2026/03/06 01:52:57 by tnuno-mo         ###   ########.fr       */
-/*                                                                            */
+/*																			*/
+/*														:::	  ::::::::   */
+/*   render.c										   :+:	  :+:	:+:   */
+/*													+:+ +:+		 +:+	 */
+/*   By: tnuno-mo <tnuno-mo@student.42.fr>		  +#+  +:+	   +#+		*/
+/*												+#+#+#+#+#+   +#+		   */
+/*   Created: 2026/02/20 22:13:17 by cgross-s		  #+#	#+#			 */
+/*   Updated: 2026/03/07 12:35:53 by tnuno-mo		 ###   ########.fr	   */
+/*																			*/
 /* ************************************************************************** */
 
 #include "../inc/cub3d.h"
@@ -102,11 +102,6 @@ static int	render_wall_pixel(t_data *data, t_ray *ray, int y, int line_height, i
 	tex_y = d * tex->height / line_height;
 	return (get_texture_pixel(tex, tex_x, tex_y));
 }
-
-/*static int	apply_shadow(int color)
-{
-	return (color >> 1) & 0x007F7F7F;
-}*/
 
 // Initialize ray direction and delta distances for DDA algorithm
 void	init_ray_from_dir(t_data *data, t_ray *ray)

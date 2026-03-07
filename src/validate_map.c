@@ -1,13 +1,13 @@
 /* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   validate_map.c                                     :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: tnuno-mo <tnuno-mo@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/02/15 18:34:00 by tnuno-mo          #+#    #+#             */
-/*   Updated: 2026/03/01 01:17:35 by tnuno-mo         ###   ########.fr       */
-/*                                                                            */
+/*																			*/
+/*														:::	  ::::::::   */
+/*   validate_map.c									 :+:	  :+:	:+:   */
+/*													+:+ +:+		 +:+	 */
+/*   By: tnuno-mo <tnuno-mo@student.42.fr>		  +#+  +:+	   +#+		*/
+/*												+#+#+#+#+#+   +#+		   */
+/*   Created: 2026/02/15 18:34:00 by tnuno-mo		  #+#	#+#			 */
+/*   Updated: 2026/03/01 01:17:35 by tnuno-mo		 ###   ########.fr	   */
+/*																			*/
 /* ************************************************************************** */
 
 
@@ -34,24 +34,24 @@ int	is_player_char(char c)
 // Returns the count of 'N', 'S', 'E', or 'W' found.
 int	count_player_positions(char **map)
 {
-       int i;
-       int j;
-       int count;
+	   int i;
+	   int j;
+	   int count;
 
-       count = 0;
-       i = 0;
-       while (map[i])
-       {
-	       j = 0;
-	       while (map[i][j])
-	       {
-		       if (is_player_char(map[i][j]))
-			       count++;
-		       j++;
-	       }
-	       i++;
-       }
-       return (count);
+	   count = 0;
+	   i = 0;
+	   while (map[i])
+	   {
+		   j = 0;
+		   while (map[i][j])
+		   {
+			   if (is_player_char(map[i][j]))
+				   count++;
+			   j++;
+		   }
+		   i++;
+	   }
+	   return (count);
 }
 
 
@@ -59,16 +59,16 @@ int	count_player_positions(char **map)
 // Returns 1 if valid, 0 otherwise.
 int	is_line_map(const char *line)
 {
-       int i;
+	   int i;
 
-       i = 0;
-       while (line[i])
-       {
-	       if (!is_valid_map_char(line[i]))
-		       return (0);
-	       i++;
-       }
-       return (1);
+	   i = 0;
+	   while (line[i])
+	   {
+		   if (!is_valid_map_char(line[i]))
+			   return (0);
+		   i++;
+	   }
+	   return (1);
 }
 
 // Checks if the map is closed (surrounded by walls).
@@ -76,32 +76,32 @@ int	is_line_map(const char *line)
 // Spaces are treated as outside the map and must not touch '0' or player positions.
 int	is_map_closed(char **map)
 {
-       int i;
-       int j;
-       int len;
+	   int i;
+	   int j;
+	   int len;
 
-       i = 0;
-       while (map[i])
-       {
-	       len = (int)ft_strlen(map[i]);
-	       j = 0;
-	       while (j < len)
-	       {
-		       if (map[i][j] == '0' || is_player_char(map[i][j]))
-		       {
-			       if (i == 0 || j == 0 || !map[i + 1] || j + 1 >= (int)ft_strlen(map[i]))
-				       return (0);
-			       if ((j - 1 < 0 || map[i][j - 1] == ' ') ||
-				       (map[i][j + 1] == ' ') ||
-				       (i - 1 < 0 || (int)ft_strlen(map[i - 1]) <= j || map[i - 1][j] == ' ') ||
-				       (!map[i + 1] || (int)ft_strlen(map[i + 1]) <= j || map[i + 1][j] == ' '))
-				       return (0);
-		       }
-		       j++;
-	       }
-	       i++;
-       }
-       return (1);
+	   i = 0;
+	   while (map[i])
+	   {
+		   len = (int)ft_strlen(map[i]);
+		   j = 0;
+		   while (j < len)
+		   {
+			   if (map[i][j] == '0' || is_player_char(map[i][j]))
+			   {
+				   if (i == 0 || j == 0 || !map[i + 1] || j + 1 >= (int)ft_strlen(map[i]))
+					   return (0);
+				   if ((j - 1 < 0 || map[i][j - 1] == ' ') ||
+					   (map[i][j + 1] == ' ') ||
+					   (i - 1 < 0 || (int)ft_strlen(map[i - 1]) <= j || map[i - 1][j] == ' ') ||
+					   (!map[i + 1] || (int)ft_strlen(map[i + 1]) <= j || map[i + 1][j] == ' '))
+					   return (0);
+			   }
+			   j++;
+		   }
+		   i++;
+	   }
+	   return (1);
 }
 
 

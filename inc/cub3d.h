@@ -1,13 +1,13 @@
 /* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   cub3d.h                                            :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: tnuno-mo <tnuno-mo@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/02/28 23:54:33 by tnuno-mo          #+#    #+#             */
-/*   Updated: 2026/03/06 01:50:51 by tnuno-mo         ###   ########.fr       */
-/*                                                                            */
+/*																			*/
+/*														:::	  ::::::::   */
+/*   cub3d.h											:+:	  :+:	:+:   */
+/*													+:+ +:+		 +:+	 */
+/*   By: tnuno-mo <tnuno-mo@student.42.fr>		  +#+  +:+	   +#+		*/
+/*												+#+#+#+#+#+   +#+		   */
+/*   Created: 2026/02/28 23:54:33 by tnuno-mo		  #+#	#+#			 */
+/*   Updated: 2026/03/06 01:50:51 by tnuno-mo		 ###   ########.fr	   */
+/*																			*/
 /* ************************************************************************** */
 
 
@@ -28,14 +28,14 @@
 /* --- Key Definitions (Linux) --- */
 typedef enum e_key
 {
-	KEY_W     = 119,
-	KEY_A     = 97,
-	KEY_S     = 115,
-	KEY_D     = 100,
+	KEY_W	 = 119,
+	KEY_A	 = 97,
+	KEY_S	 = 115,
+	KEY_D	 = 100,
 	KEY_LEFT  = 65361,
 	KEY_RIGHT = 65363,
 	KEY_ESC   = 65307,
-	KEY_M     = 109,	// mouse activation
+	KEY_M	 = 109,	// mouse activation
 	KEY_R	  = 114		// show rays
 }	t_key;
 
@@ -43,13 +43,13 @@ typedef enum e_color
 {
 	COLOR_BLACK   = 0x00000000,
 	COLOR_WHITE   = 0x00FFFFFF,
-	COLOR_RED     = 0x00FF0000,
+	COLOR_RED	 = 0x00FF0000,
 	COLOR_GREEN   = 0x0000FF00,
-	COLOR_BLUE    = 0x000000FF,
+	COLOR_BLUE	= 0x000000FF,
 	COLOR_YELLOW  = 0x00FFFF00,
-	COLOR_CYAN    = 0x0000FFFF,
+	COLOR_CYAN	= 0x0000FFFF,
 	COLOR_MAGENTA = 0x00FF00FF,
-	COLOR_GRAY    = 0x00222222
+	COLOR_GRAY	= 0x00222222
 }	t_color;
 
 // teste
@@ -73,13 +73,13 @@ typedef enum e_wall_side
 
 /* ================= FLOOR & CEILING ================= */
 # define CEILING_COLOR  0x0087CEEB   // azul céu
-# define FLOOR_COLOR    0x00444444   // cinza escuro
+# define FLOOR_COLOR	0x00444444   // cinza escuro
 
 /* ================= MAP COLORS ================= */
-# define MAP_WALL_COLOR    0x00222222
+# define MAP_WALL_COLOR	0x00222222
 # define MAP_FLOOR_COLOR   0x00000000
 # define MAP_PLAYER_COLOR  0x00FF0000
-# define MAP_RAY_COLOR     0x00FFFF00
+# define MAP_RAY_COLOR	 0x00FFFF00
 
 /* --- Image Structures (MLX) --- */
 typedef struct s_img {
@@ -95,10 +95,10 @@ typedef struct s_img {
 /* ================= PARSING STRUCTURES ================= */
 typedef struct s_scene_config
 {
-	char	*no_path;      // North texture path
-	char	*so_path;      // South texture path
-	char	*we_path;      // West texture path
-	char	*ea_path;      // East texture path
+	char	*no_path;	  // North texture path
+	char	*so_path;	  // South texture path
+	char	*we_path;	  // West texture path
+	char	*ea_path;	  // East texture path
 	int		floor_color;   // Floor RGB in hex (0x00RRGGBB)
 	int		ceiling_color; // Ceiling RGB in hex (0x00RRGGBB)
 	int		config_flags;  // Bitmask: which elements are set
@@ -234,7 +234,7 @@ typedef struct s_ray
 	int		step_y;
 
 	// Indica qual tipo de parede foi atingida:
-	int		side;        // 0 = vertical, 1 = horizontal
+	int		side;		// 0 = vertical, 1 = horizontal
 	t_wall_side	wall_side;  // <-- NOVO
 	// 0 → ainda não bateu
 	// 1 → encontrou parede ('1')
