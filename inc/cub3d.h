@@ -6,7 +6,7 @@
 /*   By: tnuno-mo <tnuno-mo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/28 14:23:20 by tnuno-mo          #+#    #+#             */
-/*   Updated: 2026/03/07 15:04:35 by tnuno-mo         ###   ########.fr       */
+/*   Updated: 2026/03/07 15:38:47 by tnuno-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -275,6 +275,7 @@ int		init_screen(t_data *data);
 int		init_rays_cache(t_data *data);
 void	init_player(t_data *data);
 void	init_mouse(t_data *data);
+int			cleanup_and_exit(t_data *data, int exit_code);
 void	init_hooks(t_data *data);
 
 /* raycast/raycast.c */

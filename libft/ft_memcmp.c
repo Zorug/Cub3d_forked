@@ -6,7 +6,7 @@
 /*   By: tnuno-mo <tnuno-mo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 17:20:15 by tnuno-mo          #+#    #+#             */
-/*   Updated: 2026/03/07 14:41:13 by tnuno-mo         ###   ########.fr       */
+/*   Updated: 2026/03/07 15:41:37 by tnuno-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,7 @@ int	ft_memcmp(const void *s1, const void *s2, size_t n)
 			return (conv_s1[i] - conv_s2[i]);
 		i++;
 	}
-	i--;
-	return (conv_s1[i] - conv_s2[i]);
+	return (0);
 }
 /*
 int main(void)

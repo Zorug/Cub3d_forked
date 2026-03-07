@@ -6,7 +6,7 @@
 /*   By: tnuno-mo <tnuno-mo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/27 13:29:02 by tnuno-mo          #+#    #+#             */
-/*   Updated: 2026/03/07 14:41:13 by tnuno-mo         ###   ########.fr       */
+/*   Updated: 2026/03/07 15:26:37 by tnuno-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,15 @@
 
 void	*ft_memcpy(void *dest, const void *src, size_t n)
 {
+	size_t	i;
+
 	if (dest == NULL && src == NULL)
 		return (NULL);
-	while (n > 0)
+	i = 0;
+	while (i < n)
 	{
-		n--;
-		((unsigned char *)dest)[n] = ((unsigned char *)src)[n];
+		((unsigned char *)dest)[i] = ((unsigned char *)src)[i];
+		i++;
 	}
 	return (dest);
 }

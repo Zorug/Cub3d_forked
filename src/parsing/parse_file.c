@@ -6,7 +6,7 @@
 /*   By: tnuno-mo <tnuno-mo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/01 00:08:35 by tnuno-mo          #+#    #+#             */
-/*   Updated: 2026/03/07 15:11:21 by tnuno-mo         ###   ########.fr       */
+/*   Updated: 2026/03/07 15:49:08 by tnuno-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,27 +40,22 @@ static void	remove_newline(char *line)
 		line[len - 1] = '\0';
 }
 
-// Count total lines in file using get_next_line
-static int	count_file_lines(const char *filename)
+static char	**grow_lines_array(char **lines, int capacity)
 {
-	int		fd;
-	char	*line;
-	int		count;
+	char	**new_lines;
+	int		i;
 
-	fd = open(filename, O_RDONLY);
-	if (fd < 0)
-		return (0);
-	count = 0;
-	while (1)
+	new_lines = ft_calloc(capacity * 2 + 1, sizeof(char *));
+	if (!new_lines)
+		return (NULL);
+	i = 0;
+	while (i < capacity)
 	{
-		line = get_next_line(fd);
-		if (!line)
-			break ;
-		count++;
-		free(line);
+		new_lines[i] = lines[i];
+		i++;
 	}
-	close(fd);
-	return (count);
+	free(lines);
+	return (new_lines);
 }
 
 // Read all lines from file using get_next_line (handles files of any size)
@@ -69,38 +64,49 @@ char	**read_file_lines(const char *filename)
 	int		fd;
 	char	*line;
 	char	**lines;
-	int		line_count;
 	int		i;
+	int		capacity;
+	char	**new_lines;
 
-	line_count = count_file_lines(filename);
-	if (line_count == 0)
-		return (NULL);
-	lines = malloc(sizeof(char *) * (line_count + 1));
-	if (!lines)
-		return (NULL);
-	ft_bzero(lines, sizeof(char *) * (line_count + 1));
 	fd = open(filename, O_RDONLY);
 	if (fd < 0)
+		return (NULL);
+	capacity = 16;
+	lines = ft_calloc(capacity + 1, sizeof(char *));
+	if (!lines)
 	{
-		free(lines);
+		close(fd);
 		return (NULL);
 	}
 	i = 0;
-	while (i < line_count)
+	line = get_next_line(fd);
+	while (line)
 	{
-		line = get_next_line(fd);
-		if (!line)
+		if (i == capacity)
 		{
-			free_string_array(lines);
-			close(fd);
-			return (NULL);
+			new_lines = grow_lines_array(lines, capacity);
+			if (!new_lines)
+			{
+				free(line);
+				free_string_array(lines);
+				close(fd);
+				return (NULL);
+			}
+			lines = new_lines;
+			capacity *= 2;
 		}
 		remove_newline(line);
 		lines[i] = line;
 		i++;
+		line = get_next_line(fd);
+	}
+	close(fd);
+	if (i == 0)
+	{
+		free(lines);
+		return (NULL);
 	}
 	lines[i] = NULL;
-	close(fd);
 	return (lines);
 }
 

@@ -6,7 +6,7 @@
 /*   By: tnuno-mo <tnuno-mo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/28 23:14:12 by tnuno-mo          #+#    #+#             */
-/*   Updated: 2026/03/07 14:22:48 by tnuno-mo         ###   ########.fr       */
+/*   Updated: 2026/03/07 15:38:47 by tnuno-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,6 @@ void	error_exit(t_data *data, const char *message)
 	ft_putstr_fd("Error\n", 2);
 	ft_putendl_fd((char *)message, 2);
 	if (data)
-		close_window(data);
+		cleanup_and_exit(data, 1);
 	exit(1);
 }

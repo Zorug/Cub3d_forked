@@ -6,7 +6,7 @@
 /*   By: tnuno-mo <tnuno-mo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 20:08:02 by tnuno-mo          #+#    #+#             */
-/*   Updated: 2026/03/07 14:41:13 by tnuno-mo         ###   ########.fr       */
+/*   Updated: 2026/03/07 15:33:47 by tnuno-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,11 @@ char	*ft_strchr(const char *s, int c)
 	i = 0;
 	while (s[i] != '\0')
 	{
-		if (s[i] == ((char)c))
+		if ((unsigned char)s[i] == (unsigned char)c)
 			return ((char *)&s[i]);
 		i++;
 	}
-	if ((char)c == '\0')
+	if ((unsigned char)c == '\0')
 		return ((char *)&s[i]);
 	return (NULL);
 }

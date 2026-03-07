@@ -6,7 +6,7 @@
 /*   By: tnuno-mo <tnuno-mo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/03 21:51:52 by tnuno-mo          #+#    #+#             */
-/*   Updated: 2026/03/07 14:41:13 by tnuno-mo         ###   ########.fr       */
+/*   Updated: 2026/03/07 15:29:43 by tnuno-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	size_t	s_len;
 	char	*substr;
 
+	if (!s)
+		return (NULL);
 	s_len = ft_strlen(s);
 	if (start >= s_len)
 		return (ft_strdup(""));

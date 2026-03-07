@@ -6,7 +6,7 @@
 /*   By: tnuno-mo <tnuno-mo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/27 16:52:30 by tnuno-mo          #+#    #+#             */
-/*   Updated: 2026/03/07 14:41:13 by tnuno-mo         ###   ########.fr       */
+/*   Updated: 2026/03/07 15:44:13 by tnuno-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,14 @@
 //Copy src to dest up to "size". Return:size of string copied without '\0'
 size_t	ft_strlcpy(char *dest, const char *src, size_t size)
 {
-	unsigned int	i;
-	unsigned int	l;
+	size_t	i;
+	size_t	l;
 
 	i = 0;
 	l = 0;
 	while (src[l] != '\0')
 		l++;
-	if (size != '\0')
+	if (size > 0)
 	{
 		while (src[i] != '\0' && i < (size - 1))
 		{

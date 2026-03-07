@@ -6,11 +6,11 @@
 /*   By: tnuno-mo <tnuno-mo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/10 23:54:14 by tnuno-mo          #+#    #+#             */
-/*   Updated: 2026/03/07 14:41:13 by tnuno-mo         ###   ########.fr       */
+/*   Updated: 2026/03/07 15:35:56 by tnuno-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "libft.h"
 
 // Writes a string & returns the number of characters written
 int	ft_printstr(char *s)
@@ -60,17 +60,4 @@ int	ft_print_pointer(void *ptr)
 int	ft_printchar(int c)
 {
 	return (write (1, &c, 1));
-}
-
-//return the size of a string without '\0' character.
-size_t	ft_strlen(const char *s)
-{
-	size_t	i;
-
-	i = 0;
-	while (s[i])
-	{
-		i++;
-	}
-	return (i);
 }

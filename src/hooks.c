@@ -6,7 +6,7 @@
 /*   By: tnuno-mo <tnuno-mo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/08 21:32:20 by cgross-s          #+#    #+#             */
-/*   Updated: 2026/03/07 15:02:39 by tnuno-mo         ###   ########.fr       */
+/*   Updated: 2026/03/07 15:38:47 by tnuno-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,12 @@ void	free_map(t_data *data)
 
 
 /* close and clear leaks */
-int	close_window(t_data *data)
+int	cleanup_and_exit(t_data *data, int exit_code)
 {
 	int	i;
 
 	if (!data)
-		exit(0);
+		exit(exit_code);
 	free_scene_config(&data->config);
 	free_map(data);
 	i = 0;
@@ -56,8 +56,13 @@ int	close_window(t_data *data)
 		mlx_destroy_display(data->mlx);
 		free(data->mlx);
 	}
-	exit(0);
+	exit(exit_code);
 	return (0);
+}
+
+int	close_window(t_data *data)
+{
+	return (cleanup_and_exit(data, 0));
 }
 
 /* verify if the tile is a wall */
