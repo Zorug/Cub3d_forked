@@ -33,7 +33,7 @@ The goal of this project is to create an immersive first-person maze exploration
 
 ### Requirements
 
-- GCC compiler with `-Wall -Wextra -Werror` flags
+- CC compiler with `-Wall -Wextra -Werror` flags
 - MinilibX graphics library (included in the project)
 - Linux operating system
 - POSIX-compliant system
@@ -139,13 +139,10 @@ Maps must be `.cub` files containing:
 
 AI tools were used to assist with:
 
-- **Code documentation and comments** - Generating clear, comprehensive function documentation
-- **Error message generation** - Creating helpful and descriptive error messages for edge cases
-- **Optimization suggestions** - Identifying potential performance improvements in ray-casting calculations
-- **Debugging assistance** - Helping trace through complex ray-casting logic and edge cases
 - **README structure** - Planning and organizing project documentation
-
-All AI-generated content was reviewed, tested, and integrated only after verification of correctness and adherence to project requirements.
+- **Optimization suggestions** - Identifying potential performance improvements in ray-casting calculations
+- **Debugging assistance** - He before iun
+All AI-generated content was and tested.
 
 ## Project Structure
 
@@ -169,11 +166,10 @@ Cub3D/
 ## Notes
 
 - Memory must be properly freed on exit to avoid leaks
-- The program handles window resizing and focus changes gracefully
 - Invalid map files produce descriptive error messages
 - Textures must be in XPM format
 - Color values must be in range [0, 255]
 
 ---
 
-**Last Updated:** March 2026
+**Last Updated:** 7th March 2026

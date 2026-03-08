@@ -6,11 +6,13 @@
 /*   By: tnuno-mo <tnuno-mo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/07 21:10:00 by tnuno-mo          #+#    #+#             */
-/*   Updated: 2026/03/07 21:54:32 by tnuno-mo         ###   ########.fr       */
+/*   Updated: 2026/03/07 22:12:23 by tnuno-mo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/cub3d.h"
+
+#define COLLISION_BUFFER 0.15
 
 /* Verify if the tile is walkable (not a wall) */
 int	is_walkable(t_data *data, double x, double y)
@@ -31,6 +33,22 @@ int	is_walkable(t_data *data, double x, double y)
 	return (true);
 }
 
+/* Check collision with buffer zone around player */
+static int	check_collision_buffer(t_data *data, double x, double y)
+{
+	if (!is_walkable(data, x, y))
+		return (0);
+	if (!is_walkable(data, x + COLLISION_BUFFER, y))
+		return (0);
+	if (!is_walkable(data, x - COLLISION_BUFFER, y))
+		return (0);
+	if (!is_walkable(data, x, y + COLLISION_BUFFER))
+		return (0);
+	if (!is_walkable(data, x, y - COLLISION_BUFFER))
+		return (0);
+	return (1);
+}
+
 /* Move player by checking collision */
 void	move_player(t_data *data, double move_x, double move_y)
 {
@@ -39,9 +57,9 @@ void	move_player(t_data *data, double move_x, double move_y)
 
 	new_x = data->pos_x + move_x;
 	new_y = data->pos_y + move_y;
-	if (is_walkable(data, new_x, data->pos_y))
+	if (check_collision_buffer(data, new_x, data->pos_y))
 		data->pos_x = new_x;
-	if (is_walkable(data, data->pos_x, new_y))
+	if (check_collision_buffer(data, data->pos_x, new_y))
 		data->pos_y = new_y;
 }
 
