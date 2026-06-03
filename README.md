@@ -1,175 +1,118 @@
-*This project has been created as part of the 42 curriculum by cgross-s, tnuno-mo*
-
 # Cub3D - A RayCaster Maze Engine
 
-## Description
+A dynamic 3D graphical maze engine built from scratch using ray-casting principles. Inspired by the legendary Wolfenstein 3D, this project demonstrates core computer graphics concepts including rendering pipelines, texture mapping, and collision detection.
 
-Cub3D is a 42 school project that implements a dynamic 3D graphical representation of a maze from a first-person perspective using ray-casting principles. Inspired by the legendary Wolfenstein 3D (1992), this project demonstrates core graphics programming concepts including ray-casting algorithms, texture mapping, and real-time rendering.
+**Language:** C | **Status:** Complete with Bonus Features ✅
 
-### Objective
+## 🎮 Overview
 
-The goal of this project is to create an immersive first-person maze exploration experience using ray-casting. Players navigate through a textured 3D maze while learning fundamental computer graphics concepts and optimization techniques.
+Cub3D is a 42 school project that implements a first-person maze exploration experience using ray-casting algorithm. Navigate through textured 3D mazes, interact with doors, view a minimap, and experience smooth, responsive gameplay with collision detection.
 
 ### Key Features
 
-**Mandatory Features:**
-- Full 3D maze rendering using ray-casting algorithm
-- Textured walls with directional variations (North, South, East, West)
-- Customizable floor and ceiling colors
-- Smooth keyboard navigation (WASD movement + arrow key rotation)
-- ESC key to exit cleanly
-- `.cub` scene file format for map and configuration loading
-- Proper error handling and memory management
-- Compliance with 42 school C norm
+**Mandatory:**
+- ✅ Full 3D maze rendering using DDA ray-casting algorithm
+- ✅ Directional textured walls (North, South, East, West)
+- ✅ Customizable floor and ceiling colors
+- ✅ Smooth WASD keyboard navigation + arrow key rotation
+- ✅ `.cub` scene file format for dynamic map loading
+- ✅ Proper memory management and error handling
 
-**Bonus Features:**
-- Minimap system with ray visualization
-- Wall collision detection
-- Mouse-controlled camera rotation
-- Interactive door system
-- Animated sprites
+**Bonus:**
+- 🎯 Minimap system with ray visualization
+- 💥 Wall collision detection
+- 🖱️ Mouse-controlled camera rotation
+- 🚪 Interactive door system
+- 🎬 Animated sprite rendering
 
-## Instructions
+## 🏗️ Technical Highlights
+
+**What I Learned:**
+- Ray-casting fundamentals and DDA algorithm optimization
+- X11 graphics programming with MinilibX
+- Memory-safe C with 42 Norm compliance
+- Complex data structures for spatial mapping
+- Real-time rendering optimization techniques
+
+## 🚀 Quick Start
 
 ### Requirements
+- GCC compiler with `-Wall -Wextra -Werror`
+- MinilibX (included)
+- Linux/POSIX system
 
-- CC compiler with `-Wall -Wextra -Werror` flags
-- MinilibX graphics library (included in the project)
-- Linux operating system
-- POSIX-compliant system
-
-### Compilation
-
+### Build & Run
 ```bash
+# Compile
 make
-```
 
-To compile with bonus features:
+# Run with a map file
+./cub3D maps/maptest.cub
 
-```bash
+# Compile with bonus features
 make bonus
 ```
 
-To clean up object files:
-
-```bash
-make clean
-```
-
-To remove all generated files:
-
-```bash
-make fclean
-```
-
-To recompile everything:
-
-```bash
-make re
-```
-
-### Execution
-
-Run the program with a `.cub` map file as argument:
-
-```bash
-./cub3D maps/maptest.cub
-```
-
-### Map Format
-
-Maps must be `.cub` files containing:
-
-1. **Textures** - Path to wall textures for each direction:
-   ```
-   NO ./path/to/north_texture.xpm
-   SO ./path/to/south_texture.xpm
-   WE ./path/to/west_texture.xpm
-   EA ./path/to/east_texture.xpm
-   ```
-
-2. **Colors** - RGB values for floor and ceiling:
-   ```
-   F 220,100,0
-   C 225,30,0
-   ```
-
-3. **Map** - Must be surrounded by walls (1), contain empty spaces (0), and exactly one player spawn point (N/S/E/W):
-   ```
-   111111
-   100101
-   101001
-   1100N1
-   111111
-   ```
-
 ### Controls
-
 | Key | Action |
 |-----|--------|
-| `W` | Move forward |
-| `A` | Strafe left |
-| `S` | Move backward |
-| `D` | Strafe right |
-| `←` `→` | Look left/right |
-| `ESC` | Exit program |
-| `M` | Toggle mouse cursor (bonus) |
-| `R` | Toggle ray visualization on minimap (bonus) |
+| `W/A/S/D` | Move forward/left/backward/right |
+| `←` `→` | Rotate view |
+| `ESC` | Exit |
+| `M` | Toggle mouse (bonus) |
+| `R` | Show rays on minimap (bonus) |
 | Mouse | Rotate camera (bonus) |
 
-## Resources
+## 📂 Map Format
 
-### Ray-Casting Theory
+Maps are `.cub` files containing three sections:
 
-- [Ray Casting Algorithm Overview](https://en.wikipedia.org/wiki/Ray_casting) - Wikipedia article explaining the fundamentals
-- [Lodev.org Ray-Casting Tutorial](https://lodev.org/cgtutor/raycasting.html) - Comprehensive ray-casting implementation guide
-- [Wolfenstein 3D Postmortem](https://www.youtube.com/watch?v=A-5eVs8B6T0) - John Carmack's presentation on Wolfenstein 3D architecture
-
-### Graphics Programming
-
-- [MinilibX Documentation](https://github.com/42Paris/minilibx-linux) - Official MinilibX documentation
-- [Computer Graphics: Principles and Practice](https://www.elsevier.com/books/computer-graphics/foley/978-0-321-39952-2) - Classic graphics textbook
-
-### 42 School Resources
-
-- [42 Norm Documentation](https://github.com/42School/42cursus/blob/master/00_Libft/en.norm.md) - C coding standards
-- [Libft Project](https://github.com/42Paris/libft) - 42's C utility library
-
-## AI Usage
-
-AI tools were used to assist with:
-
-- **README structure** - Planning and organizing project documentation
-- **Optimization suggestions** - Identifying potential performance improvements in ray-casting calculations
-- **Debugging assistance** - He before iun
-All AI-generated content was and tested.
-
-## Project Structure
-
+**1. Textures** - Path to wall images:
 ```
-Cub3D/
-├── inc/                 # Header files
-├── src/                 # Source code
-│   ├── main.c          # Entry point
-│   ├── parsing/        # Map parsing
-│   ├── raycast/        # Ray-casting engine
-│   ├── render.c        # Rendering pipeline
-│   └── hooks.c         # Event handlers
-├── libft/              # 42 utility library
-├── minilibx-linux/     # Graphics library
-├── maps/               # Example map files
-├── textures/           # Texture assets
-├── Makefile            # Build configuration
-└── README.md           # This file
+NO ./textures/north.xpm
+SO ./textures/south.xpm
+WE ./textures/west.xpm
+EA ./textures/east.xpm
 ```
 
-## Notes
+**2. Colors** - RGB values (0-255):
+```
+F 220,100,0      # Floor
+C 225,30,0       # Ceiling
+```
 
-- Memory must be properly freed on exit to avoid leaks
-- Invalid map files produce descriptive error messages
-- Textures must be in XPM format
-- Color values must be in range [0, 255]
+**3. Map** - Player spawn must be N/S/E/W, surrounded by walls (1), spaces (0):
+```
+111111
+100101
+101001
+1100N1
+111111
+```
+
+## 📚 Resources Used
+
+- [Ray Casting Algorithm](https://lodev.org/cgtutor/raycasting.html) - Core implementation guide
+- [MinilibX Documentation](https://github.com/42Paris/minilibx-linux)
+- [42 Norm Standards](https://github.com/42School/42cursus)
+
+## 📁 Project Structure
+
+```
+cub3D/
+├── inc/              # Header files
+├── src/
+│   ├── main.c        # Entry point
+│   ├── parsing/      # .cub file parsing
+│   ├── raycast/      # Ray-casting engine
+│   ├── render.c      # Pixel rendering
+│   └── hooks.c       # Input handling
+├── maps/             # Example maps
+├── textures/         # XPM texture files
+└── Makefile
+```
 
 ---
 
-**Last Updated:** 7th March 2026
+**Authors:** cgross-s, tnuno-mo  
+**Created:** March 2026 | **Last Updated:** June 2026
