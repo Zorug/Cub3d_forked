@@ -114,5 +114,7 @@ cub3D/
 
 ---
 
-**Authors:** cgross-s, tnuno-mo  
-**Created:** March 2026 | **Last Updated:** June 2026
+## Developers
+
+| [<img src="https://avatars.githubusercontent.com/u/54179576?v=4" width=115><br><sub>Cassiano Gross</sub>](https://github.com/Zorug) | [<img src="https://avatars.githubusercontent.com/u/159490163?v=4" width=115><br><sub>Ti</sub>](https://github.com/CreaTico6) |
+| :---: | :---: |
