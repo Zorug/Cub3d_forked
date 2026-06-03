@@ -1,3 +1,5 @@
+*This project has been created as part of the 42 curriculum by [cgross-s](https://github.com/Zorug), [tnuno-mo](https://github.com/CreaTico6)*
+
 # Cub3D - A RayCaster Maze Engine
 
 A dynamic 3D graphical maze engine built from scratch using ray-casting principles. Inspired by the legendary Wolfenstein 3D, this project demonstrates core computer graphics concepts including rendering pipelines, texture mapping, and collision detection.
@@ -111,6 +113,8 @@ cub3D/
 ├── textures/         # XPM texture files
 └── Makefile
 ```
+
+---
 
 ## Developers
 
